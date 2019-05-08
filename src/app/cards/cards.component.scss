@@ -1,0 +1,137 @@
+
+#three-column
+{
+  overflow: hidden;
+  text-align: center;
+}
+
+#three-column h2
+{
+  margin: 1em 0em;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+#three-column .icon
+{
+  position: relative;
+  display: block;
+  margin: 0px auto 0.80em auto;
+  background: none;
+  line-height: 150px;
+  font-size: 4em;
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+  border: 6px solid #67128F;
+  text-align: center;
+  color: #FFF;
+
+}
+
+#three-column #tbox1,
+#three-column #tbox2,
+#three-column #tbox3
+{
+  float: left;
+  width: 320px;
+  padding: 80px 40px 80px 40px;
+}
+
+#three-column .title
+{
+  text-align: center;
+}
+
+#three-column .title h2
+{
+  font-size: 1.60em;
+}
+
+#three-column .title .byline
+{
+  padding-top: 0.50em;
+  font-size: 0.90em;
+  color: #858585;
+}
+
+#three-column .arrow-down
+{
+  border-top-color: #292929;
+}
+
+/*********************************************************************************/
+/* Portfolio                                                                     */
+/*********************************************************************************/
+
+#portfolio
+{
+}
+
+#portfolio .box
+{
+  text-align: center;
+}
+
+#portfolio h3
+{
+  display: block;
+  padding-bottom: 1em;
+  font-size: 1em;
+  color: rgba(255,255,255,1);
+}
+
+#portfolio .title
+{
+  text-align: center;
+}
+
+#portfolio .title h2
+{
+  color: rgba(0,0,0,0.8);
+}
+
+.column1,
+.column2,
+.column3,
+.column4
+{
+  width: 282px;
+}
+
+.column1,
+.column2,
+.column3
+{
+  float: left;
+  margin-right: 24px;
+}
+
+.column4
+{
+  float: right;
+}
+
+.parallax-window {
+  height: 70vh;
+}
+
+.cards-block {
+  height: 100%;
+}
+
+.cards-opacity {
+  background-color: rgba(230, 248, 251, 0.6);
+}
+
+.card-img-top {
+  width: 50%;
+  height: 50%;
+  align-content: center;
+  display: none;
+}
+
+.card-body .card-text {
+  font-weight: normal ;
+  color: black;
+}

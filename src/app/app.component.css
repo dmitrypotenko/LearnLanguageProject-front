@@ -1,10 +1,5 @@
-.main-body {
-  margin: 0px;
+.no-pad {
   padding: 0px;
-  background: #334467;
-  font-family: 'Questrial', sans-serif;
-  font-size: 12pt;
-  color: #E5EEFF;
+  margin: 0px;
 }
-
 

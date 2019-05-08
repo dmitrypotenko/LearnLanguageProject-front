@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
+import {CardsComponent} from '../cards/cards.component';
+import {FooterComponent} from '../footer/footer.component';
 
 @Component({
   selector: 'app-landing',

@@ -13,6 +13,11 @@ import { AdressComponent } from './adress/adress.component';
 import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule } from '@angular/material';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { CardsComponent } from './cards/cards.component';
+import { MenuComponent } from './menu/menu.component';
+import { MiddleComponent } from './middle/middle.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,11 @@ import { LayoutModule } from '@angular/cdk/layout';
     LoginComponent,
     LandingComponent,
     AdressComponent,
-    DashboardComponent
+    DashboardComponent,
+    CardsComponent,
+    MenuComponent,
+    MiddleComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +46,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatGridListModule,
     MatMenuModule,
     MatIconModule,
-    LayoutModule
+    LayoutModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
