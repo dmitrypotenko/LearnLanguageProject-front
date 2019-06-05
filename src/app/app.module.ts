@@ -18,6 +18,8 @@ import { CardsComponent } from './cards/cards.component';
 import { MenuComponent } from './menu/menu.component';
 import { MiddleComponent } from './middle/middle.component';
 import { FooterComponent } from './footer/footer.component';
+import { CourseComponent } from './course/course.component';
+import { CoursePanelComponent } from './course-panel/course-panel.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { FooterComponent } from './footer/footer.component';
     CardsComponent,
     MenuComponent,
     MiddleComponent,
-    FooterComponent
+    FooterComponent,
+    CourseComponent,
+    CoursePanelComponent
   ],
   imports: [
     BrowserModule,

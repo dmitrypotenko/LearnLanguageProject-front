@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <ul class="nav nav-pills nav-fill m-3">
+      <li class="nav-item">
+        <button type="button" class="btn btn-primary btn-sm" (click)="onSelect('Content')">Content</button>
+      </li>
+      <li class="nav-item" (click)="onSelect('Attachment')">
+        <button type="button" class="btn btn-primary btn-sm">Attachment</button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div style="display: none" [class.displayed]="currentWidget === 'Content'">{{courseData.courseText}}</div>
+    <div style="display: none" [class.displayed]="currentWidget === 'Attachment'">{{courseData.attachmentLink}}</div>
+  </div>
+</div>
