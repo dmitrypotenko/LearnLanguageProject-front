@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="currentLesson!=null" class="container">
   <div class="row">
     <ul class="nav nav-pills nav-fill m-3">
       <li class="nav-item">
@@ -7,11 +7,26 @@
       <li class="nav-item" (click)="onSelect('Attachment')">
         <button type="button" class="btn btn-primary btn-sm">Attachment</button>
       </li>
+      <li class="nav-item" (click)="onSelect('Lessons')">
+        <button type="button" class="btn btn-primary btn-sm">Lessons</button>
+      </li>
     </ul>
   </div>
 
   <div class="row">
-    <div style="display: none" [class.displayed]="currentWidget === 'Content'">{{courseData.courseText}}</div>
-    <div style="display: none" [class.displayed]="currentWidget === 'Attachment'">{{courseData.attachmentLink}}</div>
+    <div style="display: none" [class.displayed]="currentWidget === 'Content'">{{currentLesson.lessonText}}</div>
+    <div style="display: none" [class.displayed]="currentWidget === 'Attachment'">{{currentLesson.attachmentLink}}</div>
+    <div  class="lessons-list"  style="display: none" [class.displayed]="currentWidget === 'Lessons'">
+      <div *ngIf="lessonsOfTheCourse.length">
+        <div class="d-flex flex-column">
+          <div *ngFor='let lesson of lessonsOfTheCourse'>
+            <ul class="list-group">
+              <li class="list-group-item" [class.active]="currentLesson===lesson"
+                  (click)="onLessonChanged(lesson)">{{lesson.name}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

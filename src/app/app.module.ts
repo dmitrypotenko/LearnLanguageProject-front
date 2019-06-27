@@ -18,8 +18,10 @@ import { CardsComponent } from './cards/cards.component';
 import { MenuComponent } from './menu/menu.component';
 import { MiddleComponent } from './middle/middle.component';
 import { FooterComponent } from './footer/footer.component';
-import { CourseComponent } from './course/course.component';
+import { LessonComponent } from './lesson/lesson.component';
 import { CoursePanelComponent } from './course-panel/course-panel.component';
+import { CourseComponent } from './course/course.component';
+import { CourseListComponent } from './course-list/course-list.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +34,10 @@ import { CoursePanelComponent } from './course-panel/course-panel.component';
     MenuComponent,
     MiddleComponent,
     FooterComponent,
+    LessonComponent,
+    CoursePanelComponent,
     CourseComponent,
-    CoursePanelComponent
+    CourseListComponent
   ],
   imports: [
     BrowserModule,

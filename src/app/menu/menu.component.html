@@ -1,14 +1,28 @@
 <ul class="nav nav-pills nav-fill m-3">
   <li class="nav-item">
-    <a class="nav-link" href="#">For learners</a>
+    <a class="nav-link" routerLink="/courses">For learners</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">For teachers</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="course/xxx">About us</a>
+    <a class="nav-link" href="#">About us</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Login</a>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+        Login
+      </button>
+      <div id="loginDrop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a href='{{appUrl}}/oauth2/authorization/facebook' class="dropdown-item">
+          <img src="https://scontent-frt3-1.xx.fbcdn.net/v/t39.2365-6/18928641_251957295286418_4362086450741641216_n.png?_nc_cat=111&_nc_ht=scontent-frt3-1.xx&oh=25bdc7eb3bd2b42cf17d4d15d2bdd457&oe=5D8E0905
+"/>
+        </a>
+        <a href='{{appUrl}}/oauth2/authorization/google' class="dropdown-item">
+          <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"/>
+        </a>
+      </div>
+    </div>
   </li>
 </ul>

@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {appUrl} from './constants';
-import {httpOptions} from './constants';
-import {CompletionObserver} from 'rxjs';
+import {appUrl, httpOptions} from './constants';
 import {Location} from '@angular/common';
+
 
 @Injectable({
   providedIn: 'root'

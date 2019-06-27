@@ -1,0 +1,15 @@
+<div class="courses-list" *ngIf="courses.length">
+
+  <h2>Courses</h2>
+  <div class="d-flex flex-column">
+    <div *ngFor='let course of courses' class="card shadow">
+      <div class="card-body">
+        <h5 class="card-title">{{course.name}}</h5>
+        <p class="card-text">{{course.description}}</p>
+        <p class="card-text">Number of lessons - {{course.lessonsCount}}</p>
+        <a routerLink="/courses/{{course.id}}">Start course</a>
+      </div>
+    </div>
+  </div>
+
+</div>

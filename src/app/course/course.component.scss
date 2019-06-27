@@ -1,16 +1,14 @@
-
 /* The side navigation menu */
-#course-panel {
+#lesson-panel {
   background-color: #c8f2f9;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the course-panel */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the lesson-panel */
   width: 0;
 
   &.collapse {
     &.show {
-      height: 100%;
-      width: 30vh;
+      width: 40vh;
     }
   }
 }
@@ -25,8 +23,10 @@
   transition-property: width;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the course-panel (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .course-panel {padding-top: 15px;}
-  .course-panel a {font-size: 18px;}
+.lesson-content {
+  width: -webkit-fill-available;
+}
+
+.course {
+  height: 100vh;
 }

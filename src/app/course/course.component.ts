@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import { Location } from '@angular/common';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
-import {DomSanitizer} from '@angular/platform-browser';
+import {LessonData, LessonService} from '../lesson.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-course',
@@ -10,36 +9,35 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
-
-  private courseData: CourseData;
-
-  private route: ActivatedRoute;
-
   private courseService: CourseService;
+  private lessonService: LessonService;
+  private route: ActivatedRoute;
+  lessonsOfTheCourse: LessonData[];
+  currentCourse: CourseData;
 
-  private location: Location;
-  private sanitizer: DomSanitizer;
+  private cd: ChangeDetectorRef;
 
-  constructor(
-    route: ActivatedRoute,
-    courseService: CourseService,
-    location: Location,
-    sanitizer: DomSanitizer
-  ) {
-    this.location = location;
+  constructor(courseService: CourseService, lessonService: LessonService, route: ActivatedRoute,
+              cd: ChangeDetectorRef) {
+    this.cd = cd;
     this.courseService = courseService;
+    this.lessonService = lessonService;
     this.route = route;
-    this.sanitizer = sanitizer;
   }
 
-  ngOnInit(): void {
-    this.getHero();
+  ngOnInit() {
+    let id: number = Number(this.route.snapshot.paramMap.get('id'));
+    this.courseService.getCourseById(id).subscribe(course => this.currentCourse = course);
+    this.lessonService.getLessonsFor(id).subscribe(lessons => {
+      this.lessonsOfTheCourse = lessons;
+
+    });
   }
 
-  getHero(): void {
-    const courseName = this.route.snapshot.paramMap.get('courseName');
-    this.courseService.getCourseData(courseName)
-      .subscribe(courseData => this.courseData = courseData);
+  ngAfterViewInit() {
+    if (this.lessonsOfTheCourse.length != 0) {
+      this.lessonService.pushLesson(this.lessonsOfTheCourse[0]);
+      this.cd.detectChanges();
+    }
   }
-
 }

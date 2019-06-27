@@ -1,0 +1,19 @@
+<button class="btn btn-primary btn-sm align-self-start" type="button" data-toggle="collapse" data-target="#lesson-panel"
+        aria-expanded="false"
+        aria-controls="lesson-panel">Show the lesson content
+</button>
+<div *ngIf="lessonData!=null" class="d-flex flex-column ">
+  <div class="embed-responsive embed-responsive-16by9 video container">
+    <iframe class="embed-responsive-item" [src]="sanitizer.bypassSecurityTrustResourceUrl(lessonData.videoLink)"
+            allowfullscreen></iframe>
+  </div>
+  <div>
+    {{lessonData.lessonText}}
+  </div>
+  <div>
+    {{lessonData.attachmentLink}}
+  </div>
+</div>
+
+
+

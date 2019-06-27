@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {CardsComponent} from '../cards/cards.component';
-import {FooterComponent} from '../footer/footer.component';
+import * as $ from 'jquery';
+import * as parallax from 'jquery-parallax.js';
 
 @Component({
   selector: 'app-landing',
@@ -10,6 +10,7 @@ import {FooterComponent} from '../footer/footer.component';
 })
 export class LandingComponent implements OnInit {
   title = 'Kirill website';
+
   constructor(overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('mat-app-background');
   }
@@ -17,4 +18,7 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    //parallax($('parallax-window'), 'destroy');
+  }
 }

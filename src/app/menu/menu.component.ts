@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {appUrl} from '../constants';
 
 @Component({
   selector: 'app-menu',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+  public appUrl: string = appUrl;
 
   constructor() { }
 

@@ -5,3 +5,12 @@
 .nav-link:hover {
   @extend .active
 }
+.dropdown.show .dropdown-menu {
+  opacity: 1;
+}
+
+#loginDrop {
+ img {
+   width: 191px;
+ }
+}
