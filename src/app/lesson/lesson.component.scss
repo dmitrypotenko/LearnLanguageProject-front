@@ -1,8 +1,14 @@
-
 /* On smaller screens, where height is less than 450px, change the style of the lesson-panel (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .lesson-panel {padding-top: 15px;}
-  .lesson-panel a {font-size: 18px;}
+  .lesson-panel {
+    padding-top: 15px;
+  }
+  .lesson-panel a {
+    font-size: 18px;
+  }
 }
 
-
+.attachment-tab {
+  width: 5vw;
+  height: 5vh;
+}

@@ -1,0 +1,70 @@
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+  <label>
+    Course name:
+    <input type="text" formControlName="name" required>
+  </label>
+
+  <label>
+    Description:
+    <input type="text" formControlName="description">
+  </label>
+
+  <label>
+    Category:
+    <input type="text" formControlName="category">
+  </label>
+
+  <div formArrayName="lessons">
+    <h3>Lessons</h3>
+    <button (click)="addLesson()">Add Lesson</button>
+
+    <div *ngFor="let lesson of lessons.controls; let i=index">
+      <div formGroupName="{{i}}">
+        <h3>Lesson: {{ lesson.get("name").value }}</h3>
+        <label>
+          Name:
+          <input type="text" formControlName="name">
+        </label>
+
+        <label>
+          Video Link:
+          <input type="text" formControlName="videoLink">
+        </label>
+
+        <label>
+          Lesson text:
+          <input type="text" formControlName="lessonText">
+        </label>
+
+        <div formArrayName="attachments">
+          <h3>Attachments</h3>
+          <button (click)="addAttachment(lesson)">Add Attachment</button>
+          <div *ngFor="let attachment of attachments(lesson).controls; let j=index">
+            <div formGroupName="{{j}}">
+              <h3>Attachment: {{ attachment.get("attachmentTitle").value }}</h3>
+              <label>
+                Title:
+                <input type="text" formControlName="attachmentTitle">
+              </label>
+              <label>
+                Link to the file in google doc:
+                <input type="text" formControlName="attachmentLink">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <button type="submit" [disabled]="!courseForm.valid">Submit</button>
+</form>
+
+<hr>
+
+
+<p>
+  Form Value: {{ courseForm.value | json }}
+</p>
+

@@ -5,6 +5,7 @@ import {LandingComponent} from './landing/landing.component';
 import {LessonComponent} from './lesson/lesson.component';
 import {CourseListComponent} from './course-list/course-list.component';
 import {CourseComponent} from './course/course.component';
+import {CourseEditComponent} from './course-edit/course-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
@@ -12,8 +13,9 @@ const routes: Routes = [
   {path: 'welcome', component: LandingComponent},
   {path: 'lesson/:lessonName', component: LessonComponent},
   {path: 'lesson', component: LessonComponent},
-  {path: 'courses', component: CourseListComponent},
-  {path: 'courses/:id', component: CourseComponent}
+  {path: 'courses/create', component: CourseEditComponent},
+  {path: 'courses/:id', component: CourseComponent},
+  {path: 'courses', component: CourseListComponent}
 ];
 
 @NgModule({

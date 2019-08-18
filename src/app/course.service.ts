@@ -19,13 +19,15 @@ export class CourseService {
       'Example description',
       'Example course',
       2,
-      []
+      [],
+      ""
     ),
       new CourseData(2,
         'Example description 2',
         'Example course 2',
         154,
-        []
+        [],
+        ""
       )]);
   }
 
@@ -34,7 +36,8 @@ export class CourseService {
       'Example description',
       'Example course',
       2,
-      []
+      [],
+      ""
     ));
   }
 
@@ -46,6 +49,7 @@ export class CourseData {
   private _description: string;
   private _name: string;
   private _lessonsCount: number;
+  private _category: string;
   private _lessons: LessonData[];
 
 
@@ -66,12 +70,13 @@ export class CourseData {
   }
 
 
-  constructor(id: number, description: string, name: string, lessonsCount: number, lessons: LessonData[]) {
+  constructor(id: number, description: string, name: string, lessonsCount: number, lessons: LessonData[], category: string) {
     this._id = id;
     this._description = description;
     this._name = name;
     this._lessonsCount = lessonsCount;
     this._lessons = lessons;
+    this._category = category;
   }
 
   get description(): string {

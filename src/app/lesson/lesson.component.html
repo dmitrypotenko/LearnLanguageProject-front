@@ -2,7 +2,7 @@
         aria-expanded="false"
         aria-controls="lesson-panel">Show the lesson content
 </button>
-<div *ngIf="lessonData!=null" class="d-flex flex-column ">
+<div *ngIf="lessonData!=null" class="d-flex flex-column p-5">
   <div class="embed-responsive embed-responsive-16by9 video container">
     <iframe class="embed-responsive-item" [src]="sanitizer.bypassSecurityTrustResourceUrl(lessonData.videoLink)"
             allowfullscreen></iframe>
@@ -11,7 +11,12 @@
     {{lessonData.lessonText}}
   </div>
   <div>
-    {{lessonData.attachmentLink}}
+    <div *ngFor='let attachment of lessonData.attachment'>
+      <div class="attachment-tab">
+        <app-document [link]="attachment.attachmentLink"
+                      [title]="attachment.attachmentTitle"></app-document>
+      </div>
+    </div>
   </div>
 </div>
 

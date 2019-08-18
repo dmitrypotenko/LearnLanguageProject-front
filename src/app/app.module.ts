@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -22,6 +22,10 @@ import { LessonComponent } from './lesson/lesson.component';
 import { CoursePanelComponent } from './course-panel/course-panel.component';
 import { CourseComponent } from './course/course.component';
 import { CourseListComponent } from './course-list/course-list.component';
+import { DocumentComponent } from './document/document.component';
+import {CookieHandler} from './cookie-handler';
+import {CookieService} from 'ngx-cookie-service';
+import { CourseEditComponent } from './course-edit/course-edit.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,9 @@ import { CourseListComponent } from './course-list/course-list.component';
     LessonComponent,
     CoursePanelComponent,
     CourseComponent,
-    CourseListComponent
+    CourseListComponent,
+    DocumentComponent,
+    CourseEditComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,12 @@ import { CourseListComponent } from './course-list/course-list.component';
     LayoutModule,
     MDBBootstrapModule.forRoot()
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CookieHandler,
+    multi: true
+  },
+    CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

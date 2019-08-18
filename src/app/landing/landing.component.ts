@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
-import * as $ from 'jquery';
-import * as parallax from 'jquery-parallax.js';
+
 
 @Component({
   selector: 'app-landing',
@@ -18,7 +17,4 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnDestroy() {
-    //parallax($('parallax-window'), 'destroy');
-  }
 }
