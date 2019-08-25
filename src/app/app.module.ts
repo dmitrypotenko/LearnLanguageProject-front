@@ -26,6 +26,8 @@ import { DocumentComponent } from './document/document.component';
 import {CookieHandler} from './cookie-handler';
 import {CookieService} from 'ngx-cookie-service';
 import { CourseEditComponent } from './course-edit/course-edit.component';
+import { QuestionComponent } from './question/question.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { CourseEditComponent } from './course-edit/course-edit.component';
     CourseComponent,
     CourseListComponent,
     DocumentComponent,
-    CourseEditComponent
+    CourseEditComponent,
+    QuestionComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+<div *ngIf="testData != null && testData.questions.length">
+  <div class="d-flex flex-column">
+    <div *ngFor='let questionData of testData.questions'>
+      <app-question [questionData]="questionData"></app-question>
+    </div>
+  </div>
+</div>

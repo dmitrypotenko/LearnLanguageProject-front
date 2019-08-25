@@ -1,0 +1,22 @@
+<div class="d-flex flex-column">
+  <div class="p-2 font-weight-bold text-center">{{questionData.question}}</div>
+  <div *ngIf="questionData.variants.length">
+
+    <div *ngFor='let variant of questionData.variants'>
+      <div *ngIf="questionData.isMultiple">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="{{variant.id}}"
+                 [checked]="variant.isTicked || variant.isRight || variant.isWrong">
+          <label class="custom-control-label" for="{{variant.id}}">{{variant.variant}}</label>
+        </div>
+      </div>
+      <div *ngIf="!questionData.isMultiple">
+        <div class="custom-control custom-radio">
+          <input type="radio" class="custom-control-input" id="{{variant.id}}" name="{{questionData.id}}"
+                 [checked]="variant.isTicked || variant.isRight || variant.isWrong">
+          <label class="custom-control-label" for="{{variant.id}}">{{variant.variant}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

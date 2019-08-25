@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {LessonData, LessonService} from '../lesson.service';
+import {TestData, TestService} from '../test.service';
+import {StepSwitcherService} from '../step-switcher.service';
+import {Listable} from '../listable';
 
 @Component({
   selector: 'app-course-panel',
@@ -7,35 +10,41 @@ import {LessonData, LessonService} from '../lesson.service';
   styleUrls: ['./course-panel.component.scss']
 })
 export class CoursePanelComponent implements OnInit {
+  get stepSwitcher(): StepSwitcherService {
+    return this._stepSwitcher;
+  }
 
-  private _lessonsOfTheCourse: LessonData[];
+  @Input()
+  set stepSwitcher(value: StepSwitcherService) {
+    this._stepSwitcher = value;
+  }
+
   currentLesson: LessonData;
+  currentTest: TestData;
   currentWidget: string;
   private lessonService: LessonService;
+  private testService: TestService;
+  private _stepSwitcher: StepSwitcherService;
 
-  constructor(lessonService: LessonService) {
+  constructor(lessonService: LessonService, testService: TestService) {
     this.lessonService = lessonService;
+    this.testService = testService;
   }
 
   ngOnInit() {
     this.lessonService.getCurrentLessonData().subscribe(lesson => this.currentLesson = lesson);
+    this.testService.getCurrentTestData().subscribe(test => this.currentTest = test);
   }
 
   onSelect(widgetName: string) {
     this.currentWidget = widgetName;
   }
 
-  @Input()
-  set lessonsOfTheCourse(value: LessonData[]) {
-    this._lessonsOfTheCourse = value;
+  onStepChanged(listable: Listable) {
+    this.stepSwitcher.switchTo(listable);
   }
 
-
-  get lessonsOfTheCourse(): LessonData[] {
-    return this._lessonsOfTheCourse;
-  }
-
-  onLessonChanged(lesson: LessonData) {
-    this.lessonService.pushLesson(lesson);
+  get ordered(): Listable[] {
+    return this.stepSwitcher.ordered;
   }
 }
