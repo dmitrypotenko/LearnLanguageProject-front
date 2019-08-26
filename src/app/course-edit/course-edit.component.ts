@@ -12,8 +12,7 @@ export class CourseEditComponent implements OnInit {
     name: [''],
     description: [''],
     category: [''],
-    lessons: this.fb.array([]),
-    tests: this.fb.array([])
+    steps: this.fb.array([]),
   });
 
   ngOnInit(): void {
@@ -28,42 +27,109 @@ export class CourseEditComponent implements OnInit {
   }
 
   addLesson() {
-    let lessons = this.courseForm.get('lessons') as FormArray;
+    let lessons = this.courseForm.get('steps') as FormArray;
     lessons.push(this.createLesson());
   }
 
-  get lessons() {
-    return this.courseForm.get('lessons') as FormArray;
+  addTest() {
+    let lessons = this.courseForm.get('steps') as FormArray;
+    lessons.push(this.createTest());
   }
 
-  get tests() {
-    return this.courseForm.get('lessons') as FormArray;
+  isLesson(step: any) {
+    return step.value.attachments != null;
   }
 
-   attachments(lesson: AbstractControl) : FormArray{
-     let lessonGroup = lesson as FormGroup;
-     return lessonGroup.get('attachments') as FormArray;
+  isTest(step: any) {
+    return step.value.questions != null;
+  }
+
+  get steps() {
+    return this.courseForm.get('steps') as FormArray;
+  }
+
+
+  attachments(lesson: AbstractControl): FormArray {
+    let lessonGroup = lesson as FormGroup;
+    return lessonGroup.get('attachments') as FormArray;
   }
 
   createLesson(): FormGroup {
-    return this.fb.group({
-      videoLink: '',
-      lessonText: '',
-      name: '',
-      attachments: this.fb.array([]),
-    });
+    let lessonForm = new LessonForm();
+    lessonForm.attachments = this.fb.array([]);
+    return this.fb.group(lessonForm);
   }
 
-  addAttachment(lesson: AbstractControl) {
-    let lessonGroup = lesson as FormGroup;
+  createTest(): FormGroup {
+    let testForm = new TestForm();
+    testForm.questions = this.fb.array([]);
+    return this.fb.group(testForm);
+  }
+
+  addAttachment(step: AbstractControl) {
+    let lessonGroup = step as FormGroup;
     let attachments = lessonGroup.get('attachments') as FormArray;
     attachments.push(this.createAttachment());
   }
 
   private createAttachment() {
-    return this.fb.group({
-      attachmentLink: '',
-      attachmentTitle: '',
-    });
+    return this.fb.group(new AttachmentForm());
   }
+
+  private createQuestion() {
+    let questionForm = new QuestionForm();
+    questionForm.variants = this.fb.array([]);
+    return this.fb.group(questionForm);
+  }
+
+  private createVariant() {
+    return this.fb.group(new VariantForm());
+  }
+
+  addQuestion(step: AbstractControl) {
+    let testGroup = step as FormGroup;
+    let questions = testGroup.get('questions') as FormArray;
+    questions.push(this.createQuestion());
+  }
+
+  questions(step: AbstractControl) {
+    let testGroup = step as FormGroup;
+    return testGroup.get('questions') as FormArray;
+  }
+
+  addVariant(step: AbstractControl) {
+    let questionGroup = step as FormGroup;
+    let variants = questionGroup.get('variants') as FormArray;
+    variants.push(this.createVariant());
+  }
+
+  variants(step: AbstractControl) {
+    let questionGroup = step as FormGroup;
+    return questionGroup.get('variants') as FormArray;
+  }
+}
+
+class AttachmentForm
+
+class LessonForm {
+  videoLink: '';
+  lessonText: '';
+  name: '';
+  attachments: FormArray;
+}
+
+class TestForm {
+  name: '';
+  questions: FormArray;
+}
+
+class QuestionForm {
+  questionText: '';
+  variants: FormArray;
+  isMultiple: true;
+}
+
+class VariantForm {
+  variantText: '';
+  isRight: false;
 }

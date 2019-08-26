@@ -14,42 +14,89 @@
     <input type="text" formControlName="category">
   </label>
 
-  <div formArrayName="lessons">
-    <h3>Lessons</h3>
+  <div formArrayName="steps">
+    <h3>Steps</h3>
     <button (click)="addLesson()">Add Lesson</button>
+    <button (click)="addTest()">Add Test</button>
 
-    <div *ngFor="let lesson of lessons.controls; let i=index">
-      <div formGroupName="{{i}}">
-        <h3>Lesson: {{ lesson.get("name").value }}</h3>
-        <label>
-          Name:
-          <input type="text" formControlName="name">
-        </label>
+    <div *ngFor="let step of steps.controls; let i=index">
+      <div *ngIf="isLesson(step)">
+        <div formGroupName="{{i}}">
+          <h3>Lesson: {{ step.get("name").value }}</h3>
+          <label>
+            Name:
+            <input type="text" formControlName="name">
+          </label>
 
-        <label>
-          Video Link:
-          <input type="text" formControlName="videoLink">
-        </label>
+          <label>
+            Video Link:
+            <input type="text" formControlName="videoLink">
+          </label>
 
-        <label>
-          Lesson text:
-          <input type="text" formControlName="lessonText">
-        </label>
+          <label>
+            Lesson text:
+            <input type="text" formControlName="lessonText">
+          </label>
 
-        <div formArrayName="attachments">
-          <h3>Attachments</h3>
-          <button (click)="addAttachment(lesson)">Add Attachment</button>
-          <div *ngFor="let attachment of attachments(lesson).controls; let j=index">
-            <div formGroupName="{{j}}">
-              <h3>Attachment: {{ attachment.get("attachmentTitle").value }}</h3>
-              <label>
-                Title:
-                <input type="text" formControlName="attachmentTitle">
-              </label>
-              <label>
-                Link to the file in google doc:
-                <input type="text" formControlName="attachmentLink">
-              </label>
+          <div formArrayName="attachments">
+            <h3>Attachments</h3>
+            <button (click)="addAttachment(step)">Add Attachment</button>
+            <div *ngFor="let attachment of attachments(step).controls; let j=index">
+              <div formGroupName="{{j}}">
+                <h3>Attachment: {{ attachment.get("attachmentTitle").value }}</h3>
+                <label>
+                  Title:
+                  <input type="text" formControlName="attachmentTitle">
+                </label>
+                <label>
+                  Link to the file in google doc:
+                  <input type="text" formControlName="attachmentLink">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isTest(step)">
+        <div formGroupName="{{i}}">
+          <h3>Test: {{ step.get("name").value }}</h3>
+          <label>
+            Name:
+            <input type="text" formControlName="name">
+          </label>
+
+          <div formArrayName="questions">
+            <h3>Questions</h3>
+            <button (click)="addQuestion(step)">Add Question</button>
+            <div *ngFor="let questions of questions(step).controls; let j=index">
+              <div formGroupName="{{j}}">
+                <h3>Question : {{j}}</h3>
+                <label>
+                  Question text:
+                  <input type="text" formControlName="questionText">
+                </label>
+                <label>
+                  Are there several correct answers?:
+                  <input type="checkbox" formControlName="isMultiple">
+                </label>
+                <div formArrayName="variants">
+                  <h3>Variants</h3>
+                  <button (click)="addVariant(step)">Add Variant</button>
+                  <div *ngFor="let variant of variants(step).controls; let z=index">
+                    <div formGroupName="{{z}}">
+                      <h3>Variant : {{z}}</h3>
+                      <label>
+                        Variant:
+                        <input type="text" formControlName="variantText">
+                      </label>
+                      <label>
+                        Is it correct?:
+                        <input type="checkbox" formControlName="isRight">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
