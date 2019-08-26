@@ -12,7 +12,8 @@ export class CourseEditComponent implements OnInit {
     name: [''],
     description: [''],
     category: [''],
-    lessons: this.fb.array([])
+    lessons: this.fb.array([]),
+    tests: this.fb.array([])
   });
 
   ngOnInit(): void {
@@ -32,6 +33,10 @@ export class CourseEditComponent implements OnInit {
   }
 
   get lessons() {
+    return this.courseForm.get('lessons') as FormArray;
+  }
+
+  get tests() {
     return this.courseForm.get('lessons') as FormArray;
   }
 

@@ -1,0 +1,140 @@
+input[type=checkbox] {
+  visibility: hidden;
+}
+
+.checkboxFive {
+  width: 25px;
+  margin-top: 20px;
+  position: relative;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.checkboxFive label {
+  cursor: pointer;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+  background: #eee;
+  border: 1px solid #ddd;
+}
+
+.checkboxFive span {
+  margin-left: 35px;
+}
+
+.checkboxFive  {
+   label {
+     &.isWrong  {
+       &:after {
+         content: '\00274C';
+       }
+     }
+
+     &.isRight  {
+       &:after {
+         content: '\002714';
+         color: green;
+       }
+     }
+     &:after {
+       content: '\002713';
+       opacity: 0;
+       bottom: 0px;
+       position: absolute;
+       background: transparent;
+       border-top: none;
+       border-right: none;
+       right: 2px;
+     }
+
+   }
+}
+
+/**
+ * Create the hover event of the tick
+ */
+/*.checkboxFive label:hover::after {
+  opacity: 0.5;
+}*/
+
+/**
+ * Create the checkbox state for the tick
+ */
+.checkboxFive input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
+
+
+input[type=radio] {
+  visibility: hidden;
+}
+
+.radioFive {
+  width: 25px;
+  margin-top: 20px;
+  position: relative;
+  border-radius: 100%;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.radioFive label {
+  border-radius: 100%;
+  cursor: pointer;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0;
+  left: 0;
+  background: #eee;
+  border: 1px solid #ddd;
+  box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+  transition: all .5s ease;
+}
+
+.radioFive span {
+  margin-left: 35px;
+}
+
+.radioFive  {
+  label {
+    &.isWrong  {
+      &:after {
+        content: '\00274C';
+      }
+    }
+
+    &.isRight  {
+      &:after {
+        content: '\002714';
+        color: green;
+      }
+    }
+    &:after {
+      content: '\002713';
+      opacity: 0;
+      bottom: 0px;
+      position: absolute;
+      background: transparent;
+      border-top: none;
+      border-right: none;
+      right: 2px;
+    }
+
+  }
+}
+
+/**
+ * Create the hover event of the tick
+ */
+/*.checkboxFive label:hover::after {
+  opacity: 0.5;
+}*/
+
+/**
+ * Create the checkbox state for the tick
+ */
+.radioFive input[type=radio]:checked + label:after {
+  opacity: 1;
+}

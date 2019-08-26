@@ -4,17 +4,18 @@
 
     <div *ngFor='let variant of questionData.variants'>
       <div *ngIf="questionData.isMultiple">
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="{{variant.id}}"
+        <div class="checkboxFive">
+          <input type="checkbox" id="{{variant.id}}"
                  [checked]="variant.isTicked || variant.isRight || variant.isWrong">
-          <label class="custom-control-label" for="{{variant.id}}">{{variant.variant}}</label>
+          <label [class.isWrong]="variant.isWrong" [class.isRight]="variant.isRight"
+                 for="{{variant.id}}"><span>{{variant.variant}}</span></label>
         </div>
       </div>
       <div *ngIf="!questionData.isMultiple">
-        <div class="custom-control custom-radio">
-          <input type="radio" class="custom-control-input" id="{{variant.id}}" name="{{questionData.id}}"
+        <div class="radioFive">
+          <input type="radio" id="{{variant.id}}" name="{{questionData.id}}"
                  [checked]="variant.isTicked || variant.isRight || variant.isWrong">
-          <label class="custom-control-label" for="{{variant.id}}">{{variant.variant}}</label>
+          <label for="{{variant.id}}" [class.isWrong]="variant.isWrong" [class.isRight]="variant.isRight"><span>{{variant.variant}}</span></label>
         </div>
       </div>
     </div>

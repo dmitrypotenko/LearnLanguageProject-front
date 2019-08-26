@@ -1,9 +1,13 @@
-<div *ngIf="testData != null && testData.questions.length">
+<div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column">
   <div class="d-flex flex-column">
     <div *ngFor='let questionData of testData.questions'>
       <div class="container">
         <app-question [questionData]="questionData"></app-question>
       </div>
     </div>
+  </div>
+  <div class="submit-btn">
+    <button class="btn btn-primary btn-sm align-self-start new-board-btn" type="button">Submit test
+    </button>
   </div>
 </div>
