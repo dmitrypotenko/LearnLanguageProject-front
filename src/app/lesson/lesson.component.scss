@@ -1,4 +1,6 @@
 /* On smaller screens, where height is less than 450px, change the style of the lesson-panel (less padding and a smaller font size) */
+@import "node_modules/bootstrap/scss/vendor/_rfs.scss";
+
 @media screen and (max-height: 450px) {
   .lesson-panel {
     padding-top: 15px;
@@ -11,4 +13,12 @@
 .attachment-tab {
   width: 5vw;
   height: 5vh;
+}
+
+.lesson-content-text {
+  @include font-size(1em, true);
+}
+
+.new-board-btn {
+  white-space: normal;
 }

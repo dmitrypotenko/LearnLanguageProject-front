@@ -12,13 +12,16 @@ export class StepSwitcherService {
   private lessonService: LessonService;
   private testService: TestService;
   private _ordered: Listable[] = [];
+  currentLesson: LessonData;
+  currentTest: TestData;
 
 
   constructor(lessonService: LessonService, testService: TestService) {
     this.lessonService = lessonService;
     this.testService = testService;
 
-
+    this.lessonService.getCurrentLessonData().subscribe(lesson => this.currentLesson = lesson);
+    this.testService.getCurrentTestData().subscribe(test => this.currentTest = test);
   }
 
   switchTo(listable: Listable) {

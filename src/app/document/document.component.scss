@@ -1,0 +1,14 @@
+@import "node_modules/bootstrap/scss/vendor/_rfs.scss";
+
+.doc-title {
+  @include font-size(1rem)
+}
+
+.doc-image {
+  width: 50%;
+  height: 50%;
+}
+
+.doc-image-wrap {
+  text-align: center;
+}

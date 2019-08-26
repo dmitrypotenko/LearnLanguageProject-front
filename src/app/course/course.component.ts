@@ -1,8 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
-import {LessonService} from '../lesson.service';
+import {LessonData, LessonService} from '../lesson.service';
 import {ActivatedRoute} from '@angular/router';
-import {TestService} from '../test.service';
+import {TestData, TestService} from '../test.service';
 import {StepSwitcherService} from '../step-switcher.service';
 
 @Component({
@@ -49,5 +49,13 @@ export class CourseComponent implements OnInit, AfterViewInit {
       this.stepSwitcher.switchTo(ordered[0]);
       this.cd.detectChanges();
     }
+  }
+
+  get currentLesson(): LessonData {
+    return this.stepSwitcher.currentLesson;
+  }
+
+  get currentTest(): TestData {
+    return this.stepSwitcher.currentTest;
   }
 }

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {LessonData, LessonService} from '../lesson.service';
-import {TestData, TestService} from '../test.service';
+import {LessonData} from '../lesson.service';
+import {TestData} from '../test.service';
 import {StepSwitcherService} from '../step-switcher.service';
 import {Listable} from '../listable';
 
@@ -19,21 +19,21 @@ export class CoursePanelComponent implements OnInit {
     this._stepSwitcher = value;
   }
 
-  currentLesson: LessonData;
-  currentTest: TestData;
   currentWidget: string;
-  private lessonService: LessonService;
-  private testService: TestService;
   private _stepSwitcher: StepSwitcherService;
 
-  constructor(lessonService: LessonService, testService: TestService) {
-    this.lessonService = lessonService;
-    this.testService = testService;
+  constructor() {
   }
 
   ngOnInit() {
-    this.lessonService.getCurrentLessonData().subscribe(lesson => this.currentLesson = lesson);
-    this.testService.getCurrentTestData().subscribe(test => this.currentTest = test);
+  }
+
+  get currentLesson(): LessonData {
+    return this._stepSwitcher.currentLesson;
+  }
+
+  get currentTest(): TestData {
+    return this._stepSwitcher.currentTest;
   }
 
   onSelect(widgetName: string) {

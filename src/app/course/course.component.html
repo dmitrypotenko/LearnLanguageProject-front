@@ -1,10 +1,15 @@
-<div class="d-flex course">
-  <div id="lesson-panel" class="ml-auto flex-grow-1 flex-fill flex-shrink-0 flex-md-shrink-1">
-    <app-course-panel
-      [stepSwitcher]="stepSwitcher"></app-course-panel>
+<div class="course">
+  <div class="d-flex align-items-stretch ">
+    <div id="lesson-panel" class="align-self-stretch">
+      <app-course-panel
+        [stepSwitcher]="stepSwitcher"></app-course-panel>
+    </div>
+    <div class="align-self-stretch align-self-start"
+         [class.flex-grow-1]="currentLesson!=null">
+      <app-lesson></app-lesson>
+    </div>
+    <div [class.flex-grow-1]="currentTest!=null">
+      <app-test></app-test>
+    </div>
   </div>
-  <div class="mr-auto flex-fill lesson-content">
-    <app-lesson></app-lesson>
-  </div>
-  <app-test class="flex-fill"></app-test>
 </div>

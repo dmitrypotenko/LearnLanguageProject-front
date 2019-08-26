@@ -5,11 +5,24 @@
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the lesson-panel */
   width: 0;
+  max-width: 30vw;
 
   &.collapse {
     &.show {
-      width: 40vh;
+      width: 200vw;
     }
+    @media screen and (max-width: 1200px) {
+      &.show {
+        width: 400vw;
+      }
+    }
+    @media screen and (max-width: 600px) {
+      &.show {
+        width: 2000vw;
+      }
+    }
+
+
   }
 }
 
@@ -18,15 +31,15 @@
   height: auto;
   position: relative;
   overflow: hidden;
-  transition-timing-function: ease;
-  transition-duration: .35s;
+  transition-duration: 111s;
   transition-property: width;
 }
 
-.lesson-content {
-  width: -webkit-fill-available;
-}
 
 .course {
-  height: 100vh;
+  height: 100%;
+}
+
+.grow {
+
 }

@@ -1,4 +1,4 @@
-<button class="btn btn-primary btn-sm align-self-start" type="button" data-toggle="collapse" data-target="#lesson-panel"
+<button class="btn btn-primary btn-sm align-self-start new-board-btn" type="button" data-toggle="collapse" data-target="#lesson-panel"
         aria-expanded="false"
         aria-controls="lesson-panel">Show the course content
 </button>
@@ -7,12 +7,12 @@
     <iframe class="embed-responsive-item" [src]="sanitizer.bypassSecurityTrustResourceUrl(lessonData.videoLink)"
             allowfullscreen></iframe>
   </div>
-  <div>
+  <div class="lesson-content-text">
     {{lessonData.lessonText}}
   </div>
   <div>
     <div *ngFor='let attachment of lessonData.attachment'>
-      <div class="attachment-tab">
+      <div class="attachment-tab d-flex flex-column">
         <app-document [link]="attachment.attachmentLink"
                       [title]="attachment.attachmentTitle"></app-document>
       </div>
