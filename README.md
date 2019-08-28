@@ -1,6 +1,5 @@
-# Kirill
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+# The project for language learning - frontend part.
+The angular project that is currently under development. The puprose is to make an educational platform that will hold courses and tests for enlish learners. 
 
 ## Development server
 
