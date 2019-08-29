@@ -28,6 +28,7 @@ import {CookieService} from 'ngx-cookie-service';
 import { CourseEditComponent } from './course-edit/course-edit.component';
 import { QuestionComponent } from './question/question.component';
 import { TestComponent } from './test/test.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { TestComponent } from './test/test.component';
     MatMenuModule,
     MatIconModule,
     LayoutModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    DragDropModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-course-edit',
@@ -107,29 +108,46 @@ export class CourseEditComponent implements OnInit {
     let questionGroup = step as FormGroup;
     return questionGroup.get('variants') as FormArray;
   }
+
+  delete(control: AbstractControl, toDelete: AbstractControl, collectionName: string) {
+    let collection = control.get(collectionName) as FormArray;
+    let indexOf = collection.getRawValue().findIndex((value => JSON.stringify(value) === JSON.stringify(toDelete.value)));
+    collection.removeAt(indexOf);
+  }
+
+  drop(control: AbstractControl, cdkDragDrop: CdkDragDrop<any[]>, collectionName: string) {
+    let collection = control.get(collectionName) as FormArray;
+    let elementToMove = collection.at(cdkDragDrop.previousIndex);
+    collection.removeAt(cdkDragDrop.previousIndex);
+    collection.insert(cdkDragDrop.currentIndex, elementToMove);
+  }
+
 }
 
-class AttachmentForm
+class AttachmentForm {
+  attachmentLink = '';
+  attachmentTitle = '';
+}
 
 class LessonForm {
-  videoLink: '';
-  lessonText: '';
-  name: '';
+  videoLink = '';
+  lessonText = '';
+  name = '';
   attachments: FormArray;
 }
 
 class TestForm {
-  name: '';
+  name = '';
   questions: FormArray;
 }
 
 class QuestionForm {
-  questionText: '';
+  questionText = '';
   variants: FormArray;
-  isMultiple: true;
+  isMultiple = true;
 }
 
 class VariantForm {
-  variantText: '';
-  isRight: false;
+  variantText = '';
+  isRight = false;
 }
