@@ -29,7 +29,8 @@
         </button>
         <button class="btn btn-sm" (click)="delete(courseForm, step,'steps')">Delete</button>
       </div>
-      <div *ngIf="isLesson(step)"  [attr.id]="'collapseLesson'+i" class="collapse show" [attr.aria-labelledby]="'headingLesson'+i"
+      <div *ngIf="isLesson(step)" [attr.id]="'collapseLesson'+i" class="collapse show"
+           [attr.aria-labelledby]="'headingLesson'+i"
            data-parent="#accordion" formGroupName="{{i}}">
         <label>
           Name:
@@ -43,8 +44,33 @@
 
         <label>
           Lesson text:
-          <input type="text" formControlName="lessonText">
         </label>
+        <angular-editor (textSelect)="handleSelection( $event )" formControlName="lessonText" [config]="editorConfig">
+
+        </angular-editor>
+        <!--<mdb-wysiwyg formControlName="lessonText" ></mdb-wysiwyg>-->
+        <div
+          *ngIf="hostRectangle"
+          class="indicator"
+          [style.left.px]="hostRectangle.left"
+          [style.top.px]="hostRectangle.top"
+          [style.width.px]="30"
+          [style.height.px]="0">
+
+          <div class="indicator__cta">
+            <!--
+                NOTE: Because we DON'T WANT the selected text to get deselected
+                when we click on the call-to-action, we have to PREVENT THE
+                DEFAULT BEHAVIOR and STOP PROPAGATION on some of the events. The
+                byproduct of this is that the (click) event won't fire. As such,
+                we then have to consume the click-intent by way of the (mouseup)
+                event.
+            -->
+            <button (click) = "wrapElement()" class="indicator__cta-link"> Share With Friends
+            </button>
+          </div>
+        </div>
+
 
         <div cdkDropList class="attachments" formArrayName="attachments"
              (cdkDropListDropped)="drop(step, $event, 'attachments')">
@@ -82,7 +108,8 @@
         </button>
         <button class="btn btn-sm" (click)="delete(courseForm, step,'steps')">Delete</button>
       </div>
-      <div *ngIf="isTest(step)"  [attr.id]="'collapseTest'+i" class="collapse show" [attr.aria-labelledby]="'headingTest'+i"
+      <div *ngIf="isTest(step)" [attr.id]="'collapseTest'+i" class="collapse show"
+           [attr.aria-labelledby]="'headingTest'+i"
            data-parent="#accordion" formGroupName="{{i}}">
         <label>
           Name:
@@ -151,7 +178,7 @@
 <hr>
 
 
-<p>
+<p style="margin-top: 1000px">
   Form Value: {{ courseForm.value | json }}
 </p>
 

@@ -29,6 +29,8 @@ import { CourseEditComponent } from './course-edit/course-edit.component';
 import { QuestionComponent } from './question/question.component';
 import { TestComponent } from './test/test.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { TextSelectDirective } from './text-select.directive';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     DocumentComponent,
     CourseEditComponent,
     QuestionComponent,
-    TestComponent
+    TestComponent,
+    TextSelectDirective
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatIconModule,
     LayoutModule,
     MDBBootstrapModule.forRoot(),
-    DragDropModule
+    DragDropModule,
+    AngularEditorModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

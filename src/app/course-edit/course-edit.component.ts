@@ -1,6 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {AngularEditorConfig} from '@kolkov/angular-editor';
+import {TextSelectEvent} from '../text-select.directive';
+
+interface SelectionRectangle {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
 
 @Component({
   selector: 'app-course-edit',
@@ -15,6 +24,50 @@ export class CourseEditComponent implements OnInit {
     category: [''],
     steps: this.fb.array([]),
   });
+
+  public hostRectangle: SelectionRectangle | null;
+  private lastEvent: TextSelectEvent;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      {class: 'arial', name: 'Arial'},
+      {class: 'times-new-roman', name: 'Times New Roman'},
+      {class: 'calibri', name: 'Calibri'},
+      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    sanitize: false,
+    toolbarPosition: 'top',
+  };
 
   ngOnInit(): void {
   }
@@ -122,6 +175,34 @@ export class CourseEditComponent implements OnInit {
     collection.insert(cdkDragDrop.currentIndex, elementToMove);
   }
 
+  handleSelection(event: TextSelectEvent) {
+    console.group('Text Select Event');
+    console.log('Text:', event.text);
+    console.log('Viewport Rectangle:', event.viewportRectangle);
+    console.log('Host Rectangle:', event.hostRectangle);
+    console.groupEnd();
+
+    // If a new selection has been created, the viewport and host rectangles will
+    // exist. Or, if a selection is being removed, the rectangles will be null.
+    if (event.viewportRectangle) {
+      this.hostRectangle = event.viewportRectangle;
+      this.lastEvent = event;
+    } else {
+      this.hostRectangle = null;
+      this.lastEvent = null;
+      // this.selectedText = "";
+
+    }
+  }
+
+  wrapElement() {
+    var wrappingNode = document.createElement('u');
+    wrappingNode.className = 'questionWord';
+    wrappingNode.appendChild(this.lastEvent.range.extractContents());
+    this.lastEvent.range.insertNode(wrappingNode);
+    this.hostRectangle = null;
+    this.lastEvent = null;
+  }
 }
 
 class AttachmentForm {
