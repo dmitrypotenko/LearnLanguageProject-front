@@ -31,6 +31,7 @@ import { TestComponent } from './test/test.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TextSelectDirective } from './text-select.directive';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { MatSnackBarModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     LayoutModule,
     MDBBootstrapModule.forRoot(),
     DragDropModule,
-    AngularEditorModule
+    AngularEditorModule,
+    MatSnackBarModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

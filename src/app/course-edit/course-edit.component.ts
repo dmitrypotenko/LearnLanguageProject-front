@@ -3,6 +3,7 @@ import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {TextSelectEvent} from '../text-select.directive';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 interface SelectionRectangle {
   left: number;
@@ -26,7 +27,7 @@ export class CourseEditComponent implements OnInit {
   });
 
   public hostRectangle: SelectionRectangle | null;
-  private lastEvent: TextSelectEvent;
+  public lastEvent: TextSelectEvent;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -73,7 +74,7 @@ export class CourseEditComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar) {
   }
 
   onSubmit() {
@@ -190,19 +191,54 @@ export class CourseEditComponent implements OnInit {
     } else {
       this.hostRectangle = null;
       this.lastEvent = null;
-      // this.selectedText = "";
-
     }
   }
 
   wrapElement() {
+    let range = this.lastEvent.range;
+    let questionWordEnd = this.findParent(range.endContainer, 'questionWord', 'angular-editor-textarea');
+    let questionWordStart = this.findParent(range.startContainer, 'questionWord', 'angular-editor-textarea');
+    if (questionWordEnd != null || questionWordStart != null) {
+      this._snackBar.open('end and start of a question word should be outside of other question words', 'close', {duration: 5000});
+      return;
+    }
+
     var wrappingNode = document.createElement('u');
     wrappingNode.className = 'questionWord';
-    wrappingNode.appendChild(this.lastEvent.range.extractContents());
-    this.lastEvent.range.insertNode(wrappingNode);
+    let child = this.lastEvent.range.extractContents();
+    this.unwrapAllInnerQuestionWords(child.childNodes);
+    wrappingNode.appendChild(child);
+    range.insertNode(wrappingNode);
     this.hostRectangle = null;
     this.lastEvent = null;
   }
+
+  private unwrapAllInnerQuestionWords(childNodes: NodeListOf<ChildNode>) {
+    if (childNodes == null || childNodes.length == 0) {
+      return;
+    }
+    childNodes.forEach(node => {
+      if ((node as HTMLElement).className == 'questionWord' && node.nodeName == "U") {
+        var parent = node.parentNode;
+        while (node.firstChild) {
+          parent.insertBefore(node.firstChild, node);
+        }
+        parent.removeChild(node);
+      } else {
+        this.unwrapAllInnerQuestionWords(node.childNodes);
+      }
+    });
+  }
+
+  private findParent(node: Node, classToFind: string, classToStop: string): Node {
+    if ((node as HTMLElement).className == classToFind && node.nodeName == "U") {
+      return node;
+    } else if ((node as HTMLElement).className == classToStop) {
+      return null;
+    }
+    return this.findParent(node.parentNode, classToFind, classToStop);
+  }
+
 }
 
 class AttachmentForm {
