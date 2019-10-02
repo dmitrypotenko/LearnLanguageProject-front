@@ -1,5 +1,6 @@
 // Import the core angular services.
 import {Directive, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {questionWordCss, questionWordTag} from './constants';
 
 
 // ----------------------------------------------------------------------------------- //
@@ -204,7 +205,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
     var range = selection.getRangeAt(0);
     let fragment = range.cloneContents();
 
-    if ((fragment as Node as HTMLElement).className == 'questionWord' && fragment.nodeName == "U") {
+    if ((fragment as Node as HTMLElement).className == questionWordCss && fragment.nodeName == questionWordTag) {
       return;
     }
 
