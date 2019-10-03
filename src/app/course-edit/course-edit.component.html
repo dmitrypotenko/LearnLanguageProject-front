@@ -153,7 +153,8 @@
                   [style.left.px]="hostRectangle.left"
                   [style.top.px]="hostRectangle.top"
                   [style.width.px]="30"
-                  [style.height.px]="0">
+                  [style.height.px]="0"
+                  [class.invisible]="!isOmittedWords(question)">
 
                   <div class="indicator__cta">
                     <!--
@@ -177,11 +178,11 @@
                 </label>
                 <select id="questionType" class="form-control" formControlName="type">
                   <option *ngFor="let questionType of questionTypes">
-                    {{ questionType.name }}
+                    {{ questionType.value }}
                   </option>
                 </select>
               </div>
-              <div *ngIf="!isOmittedWords(question)" cdkDropList class="variants"
+              <div [class.invisible]="isOmittedWords(question)" cdkDropList class="variants"
                    formArrayName="variants"
                    (cdkDropListDropped)="drop(question, $event, 'variants')">
                 <h5>Variants</h5>

@@ -83,7 +83,7 @@ export class CourseEditComponent implements OnInit {
       {
         name: 'Question word',
         class: questionWordCss,
-        tag: 'span',
+        tag: questionWordTag,
       }
     ],
     uploadUrl: 'v1/image',
@@ -269,7 +269,7 @@ export class CourseEditComponent implements OnInit {
   }
 
   isOmittedWords(question: AbstractControl) {
-    return question.value.type.value == 'OMITTED_WORDS';
+    return question.value.type == 'OMITTED_WORDS';
   }
 }
 
