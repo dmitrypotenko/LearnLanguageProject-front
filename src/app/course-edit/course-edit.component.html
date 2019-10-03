@@ -148,7 +148,7 @@
 
                 </angular-editor>
                 <div
-                  *ngIf="hostRectangle"
+                  *ngIf="hostRectangle && isOmittedWords(question)"
                   class="indicator"
                   [style.left.px]="hostRectangle.left"
                   [style.top.px]="hostRectangle.top"
@@ -181,7 +181,8 @@
                   </option>
                 </select>
               </div>
-              <div cdkDropList class="variants" formArrayName="variants"
+              <div *ngIf="!isOmittedWords(question)" cdkDropList class="variants"
+                   formArrayName="variants"
                    (cdkDropListDropped)="drop(question, $event, 'variants')">
                 <h5>Variants</h5>
                 <button class="btn btn-sm addition" (click)="addVariant(question)">Add Variant</button>
@@ -197,7 +198,8 @@
                        [attr.aria-labelledby]="'headingVariant'+z"
                        [attr.data-parent]="'#collapseQuestion'+j" formGroupName="{{z}}">
                     <div class="form-group">
-                      <input placeholder="Enter the variant" type="text" class="form-control" formControlName="variantText">
+                      <input placeholder="Enter the variant" type="text" class="form-control"
+                             formControlName="variantText">
                     </div>
                     <div class="form-check">
                       <input id="isCorrect" class="form-check-input" type="checkbox" formControlName="isRight">

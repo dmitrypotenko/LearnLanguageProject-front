@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {TextSelectEvent} from '../text-select.directive';
@@ -268,6 +268,9 @@ export class CourseEditComponent implements OnInit {
     return this.findParent(node.parentNode, classToFind, classToStop);
   }
 
+  isOmittedWords(question: AbstractControl) {
+    return question.value.type.value == 'OMITTED_WORDS';
+  }
 }
 
 class AttachmentForm {
@@ -301,7 +304,7 @@ class VariantForm {
 
 
 export const questionTypes = [
-  {name: 'Single choice'},
-  {name: 'Multiple choice'},
-  {name: 'Omitted words'}
+  {name: 'Single choice', value: 'SINGLE_CHOICE'},
+  {name: 'Multiple choice', value: 'MULTIPLE_CHOICE'},
+  {name: 'Omitted words', value: 'OMITTED_WORDS'}
 ];
