@@ -3,7 +3,7 @@
   <div *ngIf="questionData.variants.length">
 
     <div *ngFor='let variant of questionData.variants'>
-      <div *ngIf="questionData.isMultiple">
+      <div *ngIf="questionData.type">
         <div class="checkboxFive">
           <input type="checkbox" id="{{variant.id}}"
                  [checked]="variant.isTicked || variant.isRight || variant.isWrong">
@@ -11,7 +11,7 @@
                  for="{{variant.id}}"><span>{{variant.variant}}</span></label>
         </div>
       </div>
-      <div *ngIf="!questionData.isMultiple">
+      <div *ngIf="!questionData.type">
         <div class="radioFive">
           <input type="radio" id="{{variant.id}}" name="{{questionData.id}}"
                  [checked]="variant.isTicked || variant.isRight || variant.isWrong">

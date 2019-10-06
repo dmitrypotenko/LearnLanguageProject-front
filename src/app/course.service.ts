@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 import {LessonData} from './lesson.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
+import {TestData} from './test.service';
+import {catchError, tap} from 'rxjs/operators';
+import {Util} from './utils/util';
+import {appUrl} from './constants';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +22,18 @@ export class CourseService {
     return of([new CourseData(1,
       'Example description',
       'Example course',
+      '',
       2,
       [],
-      ""
+      [],
     ),
       new CourseData(2,
         'Example description 2',
         'Example course 2',
+        '',
         154,
         [],
-        ""
+        [],
       )]);
   }
 
@@ -35,10 +41,18 @@ export class CourseService {
     return of(new CourseData(1,
       'Example description',
       'Example course',
+      '',
       2,
       [],
-      ""
+      []
     ));
+  }
+
+  saveCourse(courseData: CourseData) {
+    this.http.post(appUrl + '/courses', courseData).pipe(
+      catchError(Util.handleError(false)),
+      tap(isAdmin => sessionStorage.setItem('isAdmin', String(isAdmin)))
+    );
   }
 
 }
@@ -51,6 +65,7 @@ export class CourseData {
   private _lessonsCount: number;
   private _category: string;
   private _lessons: LessonData[];
+  private _tests: TestData[];
 
 
   get id(): number {
@@ -70,7 +85,7 @@ export class CourseData {
   }
 
 
-  constructor(id: number, description: string, name: string, lessonsCount: number, lessons: LessonData[], category: string) {
+  constructor(id: number, description: string, name: string, category: string, lessonsCount: number, lessons: LessonData[], tests: TestData[]) {
     this._id = id;
     this._description = description;
     this._name = name;

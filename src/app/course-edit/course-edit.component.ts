@@ -5,6 +5,10 @@ import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {TextSelectEvent} from '../text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {questionWordCss, questionWordTag} from '../constants';
+import {CourseData, CourseService} from '../course.service';
+import {Attachment, LessonData} from '../lesson.service';
+import {TestData} from '../test.service';
+import {QuestionData, VariantData} from '../question/question.component';
 
 interface SelectionRectangle {
   left: number;
@@ -27,7 +31,7 @@ export class CourseEditComponent implements OnInit {
     steps: this.fb.array([]),
   });
 
-  questionTypes = questionTypes;
+  questionTypes = QuestionType;
   public hostRectangle: SelectionRectangle | null;
   public lastEvent: TextSelectEvent;
 
@@ -95,11 +99,61 @@ export class CourseEditComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService) {
   }
 
   onSubmit() {
+    let allSteps = this.steps;
+    let lessons: LessonData[] = [];
+    let tests: TestData[] = [];
 
+    allSteps.controls.forEach((step, index) => {
+      if (this.isTest(step)) {
+        let questions = this.questions(step).controls.map(question =>
+          new QuestionData(
+            question.get('questionText').value as string,
+            this.variants(question).controls.map(variant => new VariantData(
+              variant.get('variantText').value as string,
+              variant.get('isRight').value as boolean,
+              false,
+              false,
+              null
+            )),
+            null,
+            question.get('type').value as QuestionType
+          ));
+
+        tests.push(new TestData(
+          questions,
+          null,
+          index,
+          step.get('name').value as string
+        ));
+      } else {
+        lessons.push(new LessonData(
+          step.get('videoLink').value as string,
+          step.get('lessonText').value as string,
+          this.attachments(step).controls.map(attachment => new Attachment(
+            attachment.get('attachmentLink').value as string,
+            attachment.get('attachmentTitle').value as string,
+            null)
+          ),
+          step.get('name').value as string,
+          null,
+          index
+        ));
+      }
+    });
+
+    this.courseService.saveCourse(new CourseData(
+      null,
+      this.courseForm.get('description').value as string,
+      this.courseForm.get('name').value as string,
+      this.courseForm.get('category').value as string,
+      null,
+      lessons,
+      tests
+    ));
   }
 
   addLesson() {
@@ -195,6 +249,11 @@ export class CourseEditComponent implements OnInit {
     let elementToMove = collection.at(cdkDragDrop.previousIndex);
     collection.removeAt(cdkDragDrop.previousIndex);
     collection.insert(cdkDragDrop.currentIndex, elementToMove);
+  }
+
+  get questiontTypes() {
+    var keys = Object.keys(QuestionType);
+    return keys.slice(keys.length / 2);
   }
 
   handleSelection(event: TextSelectEvent) {
@@ -293,8 +352,7 @@ class TestForm {
 class QuestionForm {
   questionText = '';
   variants: FormArray;
-  isMultiple = true;
-  type = questionTypes[0];
+  type = QuestionType.SINGLE_CHOICE;
 }
 
 class VariantForm {
@@ -303,8 +361,8 @@ class VariantForm {
 }
 
 
-export const questionTypes = [
-  {name: 'Single choice', value: 'SINGLE_CHOICE'},
-  {name: 'Multiple choice', value: 'MULTIPLE_CHOICE'},
-  {name: 'Omitted words', value: 'OMITTED_WORDS'}
-];
+export enum QuestionType {
+  SINGLE_CHOICE,
+  MULTIPLE_CHOICE,
+  OMITTED_WORDS
+}

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, of, Subject} from 'rxjs';
 import {QuestionData, VariantData} from './question/question.component';
 import {Listable} from './listable';
+import {QuestionType} from './course-edit/course-edit.component';
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +27,15 @@ export class TestService {
   getTestsFor(courseId: number): Observable<TestData[]> {
     return of([new TestData([new QuestionData('Where are you from?', [new VariantData('Belarus', false, false, false, 0),
         new VariantData('Great Britain', false, true, false, 1), new VariantData('America', true, false, false, 2)
-      ], 0, false), new QuestionData('Do you like learning English?', [new VariantData('No', true, false, false, 3),
+      ], 0, QuestionType.SINGLE_CHOICE), new QuestionData('Do you like learning English?', [new VariantData('No', true, false, false, 3),
         new VariantData('No', false, true, false, 4), new VariantData('No...', false, false, false, 5)
-      ], 1, true)
+      ], 1, QuestionType.MULTIPLE_CHOICE)
       ], 0, 1, 'True English learner test'),
         new TestData([new QuestionData('Is it a sample question?', [new VariantData('Yes', false, false, false, 6),
           new VariantData('No', false, false, false, 7)
-        ], 0, false), new QuestionData('Do you like this website?', [new VariantData('Yes', false, false, false, 8),
+        ], 0, QuestionType.SINGLE_CHOICE), new QuestionData('Do you like this website?', [new VariantData('Yes', false, false, false, 8),
           new VariantData('Yes', false, false, false, 9)
-        ], 1, true)
+        ], 1, QuestionType.MULTIPLE_CHOICE)
         ], 1, 3, 'Good user test')
       ]
     );

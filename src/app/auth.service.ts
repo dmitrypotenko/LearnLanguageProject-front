@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {appUrl} from './constants';
 import {Observable, of} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
+import {Util} from './utils/util';
 
 @Injectable({
   providedIn: 'root'
@@ -21,20 +22,12 @@ export class AuthService {
       return of(true);
     } else {
       return this.http.get<Boolean>(appUrl + '/isAdmin').pipe(
-        catchError(this.handleError(false)),
+        catchError(Util.handleError(false)),
         tap(isAdmin => sessionStorage.setItem('isAdmin', String(isAdmin)))
       );
     }
   }
 
-  private handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
-
-      console.error(error);
-      return of(result as T);
-    };
-
-  }
 }
 
 

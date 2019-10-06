@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {QuestionType} from '../course-edit/course-edit.component';
 
 @Component({
   selector: 'app-question',
@@ -24,12 +25,12 @@ export class QuestionComponent implements OnInit {
 }
 
 export class QuestionData {
-  get isMultiple(): boolean {
-    return this._isMultiple;
+  get type(): QuestionType {
+    return this._type;
   }
 
-  set isMultiple(value: boolean) {
-    this._isMultiple = value;
+  set type(type: QuestionType) {
+    this._type = type;
   }
 
   get id(): number {
@@ -42,15 +43,15 @@ export class QuestionData {
 
   private _id: number;
   private _question: string;
-  private _isMultiple: boolean;
+  private _type: QuestionType;
   private _variants: VariantData[];
 
 
-  constructor(question: string, variants: VariantData[], id: number, isMultiple: boolean) {
+  constructor(question: string, variants: VariantData[], id: number, type: QuestionType) {
     this._question = question;
     this._variants = variants;
     this._id = id;
-    this._isMultiple = isMultiple;
+    this._type = type;
 
   }
 
@@ -94,9 +95,6 @@ export class VariantData {
     this._isTicked = isTicked;
     this._id = id;
   }
-
-
-
 
   get variant(): string {
     return this._variant;

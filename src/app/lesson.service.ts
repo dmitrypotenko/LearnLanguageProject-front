@@ -31,7 +31,7 @@ export class LessonService {
       '    Eligendi deserunt efficiantur sed et, eum idque aeque evertitur eu. Summo splendide dissentiet sed ut, ut pro cetero utamur eruditi. Id vix tempor civibus, commodo percipitur mel ne. Cum in quod partiendo, ius summo sensibus partiendo id. Cu erroribus ullamcorper mel, vel legere elaboraret eu.\n' +
       '\n' +
       '    Discere tacimates mandamus at mea, at splendide reformidans necessitatibus vix. Paulo partem repudiare te per, mel no suas magna. Te magna virtute has, quo fabulas ceteros facilisis ex. Eu hinc ipsum feugait eam, et fabulas philosophia eam, at mea primis evertitur. Cu mel habemus accumsan definitionem, nulla tincidunt in per. Vim sententiae appellantur cu, ut vel possim dignissim, case iusto an vel.',
-      [new Attachment('https://docs.google.com/document/d/1Qc3cIYTvjSXiRirr8vEzOJnRifrh94EqvEoSsnweKck/edit?usp=sharing', 'Some document')], 'Lesson 1', 1, 0),
+      [new Attachment('https://docs.google.com/document/d/1Qc3cIYTvjSXiRirr8vEzOJnRifrh94EqvEoSsnweKck/edit?usp=sharing', 'Some document', null)], 'Lesson 1', 1, 0),
       new LessonData('https://www.youtube.com/embed/VWefNT8Lb74', 'The local variable approach is simple and easy. But it is limited because the parent-child wiring must be done entirely within the parent template. The parent component itself has no access to the child.\n' +
         '\n' +
         'You can\'t use the local variable technique if an instance of the parent component class must read or write child component values or must call child component methods.\n' +
@@ -39,7 +39,7 @@ export class LessonService {
         'When the parent component class requires that kind of access, inject the child component into the parent as a ViewChild.\n' +
         '\n' +
         'The following example illustrates this technique with the same Countdown Timer example. Neither its appearance nor its behavior will change. The child CountdownTimerComponent is the same as well.',
-        [new Attachment('https://docs.google.com/document/d/1Qc3cIYTvjSXiRirr8vEzOJnRifrh94EqvEoSsnweKck/edit?usp=sharing', 'Some document2')], 'Lesson 2', 2, 2)]);
+        [new Attachment('https://docs.google.com/document/d/1Qc3cIYTvjSXiRirr8vEzOJnRifrh94EqvEoSsnweKck/edit?usp=sharing', 'Some document2', null)], 'Lesson 2', 2, 2)]);
   }
 
   pushLesson(lessonData: LessonData) {
@@ -126,13 +126,23 @@ export class LessonData implements Listable {
 }
 
 export class Attachment {
+  get id(): number {
+    return this._id;
+  }
+
+  set id(value: number) {
+    this._id = value;
+  }
+
   private _attachmentLink: string;
   private _attachmentTitle: string;
+  private _id: number;
 
 
-  constructor(attachmentLink: string, attachmentTitle: string) {
+  constructor(attachmentLink: string, attachmentTitle: string, id: number) {
     this._attachmentLink = attachmentLink;
     this._attachmentTitle = attachmentTitle;
+    this._id = id;
   }
 
 
