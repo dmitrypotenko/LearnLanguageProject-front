@@ -70,6 +70,19 @@ export class QuestionData {
   set variants(value: VariantData[]) {
     this._variants = value;
   }
+
+  toJSON() {
+    const jsonObj = {};
+    const proto = Object.getPrototypeOf(this);
+    for (const key of Object.getOwnPropertyNames(proto)) {
+      const desc = Object.getOwnPropertyDescriptor(proto, key);
+      const hasGetter = desc && typeof desc.get === 'function';
+      if (hasGetter) {
+        jsonObj[key] = this[key];
+      }
+    }
+    return jsonObj;
+  }
 }
 
 export class VariantData {
@@ -126,5 +139,18 @@ export class VariantData {
 
   set isTicked(value: boolean) {
     this._isTicked = value;
+  }
+
+  toJSON() {
+    const jsonObj = {};
+    const proto = Object.getPrototypeOf(this);
+    for (const key of Object.getOwnPropertyNames(proto)) {
+      const desc = Object.getOwnPropertyDescriptor(proto, key);
+      const hasGetter = desc && typeof desc.get === 'function';
+      if (hasGetter) {
+        jsonObj[key] = this[key];
+      }
+    }
+    return jsonObj;
   }
 }

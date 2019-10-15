@@ -122,6 +122,18 @@ export class LessonData implements Listable {
     return this.order;
   }
 
+  toJSON() {
+    const jsonObj = {};
+    const proto = Object.getPrototypeOf(this);
+    for (const key of Object.getOwnPropertyNames(proto)) {
+      const desc = Object.getOwnPropertyDescriptor(proto, key);
+      const hasGetter = desc && typeof desc.get === 'function';
+      if (hasGetter) {
+        jsonObj[key] = this[key];
+      }
+    }
+    return jsonObj;
+  }
 
 }
 
@@ -161,4 +173,17 @@ export class Attachment {
   set attachmentTitle(value: string) {
     this._attachmentTitle = value;
   }
+  toJSON() {
+    const jsonObj = {};
+    const proto = Object.getPrototypeOf(this);
+    for (const key of Object.getOwnPropertyNames(proto)) {
+      const desc = Object.getOwnPropertyDescriptor(proto, key);
+      const hasGetter = desc && typeof desc.get === 'function';
+      if (hasGetter) {
+        jsonObj[key] = this[key];
+      }
+    }
+    return jsonObj;
+  }
+
 }

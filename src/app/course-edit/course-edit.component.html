@@ -177,7 +177,7 @@
                   Which type of questions is it?
                 </label>
                 <select id="questionType" class="form-control" formControlName="type">
-                  <option *ngFor="let questionType of questiontTypes">
+                  <option *ngFor="let questionType of questionTypes">
                     {{ questionType}}
                   </option>
                 </select>
@@ -219,7 +219,7 @@
   </div>
 
 
-  <button class="btn btn-primary" type="submit" [disabled]="!courseForm.valid">Submit</button>
+  <input type="submit" id="submit" value="Submit" />
 </form>
 
 <hr>

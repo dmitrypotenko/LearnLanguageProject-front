@@ -31,7 +31,6 @@ export class CourseEditComponent implements OnInit {
     steps: this.fb.array([]),
   });
 
-  questionTypes = QuestionType;
   public hostRectangle: SelectionRectangle | null;
   public lastEvent: TextSelectEvent;
 
@@ -120,7 +119,7 @@ export class CourseEditComponent implements OnInit {
               null
             )),
             null,
-            question.get('type').value as QuestionType
+            QuestionType[question.get('type').value as string]
           ));
 
         tests.push(new TestData(
@@ -251,7 +250,7 @@ export class CourseEditComponent implements OnInit {
     collection.insert(cdkDragDrop.currentIndex, elementToMove);
   }
 
-  get questiontTypes() {
+  get questionTypes() {
     var keys = Object.keys(QuestionType);
     return keys.slice(keys.length / 2);
   }

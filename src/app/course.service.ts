@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LessonData} from './lesson.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {TestData} from './test.service';
 import {catchError, tap} from 'rxjs/operators';
@@ -49,10 +49,9 @@ export class CourseService {
   }
 
   saveCourse(courseData: CourseData) {
-    this.http.post(appUrl + '/courses', courseData).pipe(
-      catchError(Util.handleError(false)),
-      tap(isAdmin => sessionStorage.setItem('isAdmin', String(isAdmin)))
-    );
+    this.http.post(appUrl + '/courses', JSON.stringify(courseData), {headers: new HttpHeaders('Content-Type: application/json')}).pipe(
+      catchError(Util.handleError(null)),
+    ).subscribe();
   }
 
 }
@@ -92,6 +91,7 @@ export class CourseData {
     this._lessonsCount = lessonsCount;
     this._lessons = lessons;
     this._category = category;
+    this._tests = tests;
   }
 
   get description(): string {
@@ -116,5 +116,27 @@ export class CourseData {
 
   set lessons(value: LessonData[]) {
     this._lessons = value;
+  }
+
+
+  get category(): string {
+    return this._category;
+  }
+
+  get tests(): TestData[] {
+    return this._tests;
+  }
+
+  toJSON() {
+    const jsonObj = {};
+    const proto = Object.getPrototypeOf(this);
+    for (const key of Object.getOwnPropertyNames(proto)) {
+      const desc = Object.getOwnPropertyDescriptor(proto, key);
+      const hasGetter = desc && typeof desc.get === 'function';
+      if (hasGetter) {
+        jsonObj[key] = this[key];
+      }
+    }
+    return jsonObj;
   }
 }
