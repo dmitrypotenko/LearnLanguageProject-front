@@ -19,9 +19,9 @@
     </div>
     <div *ngIf="currentLesson!=null">
       <div class="attachment-list mx-auto" style="display: none" [class.displayed]="currentWidget === 'Attachment'">
-        <div *ngIf="currentLesson.attachment.length">
+        <div *ngIf="currentLesson.attachments.length">
           <div class="d-flex flex-column">
-            <div *ngFor='let attachment of currentLesson.attachment'>
+            <div *ngFor='let attachment of currentLesson.attachments'>
               <div class="attachment-tab mx-auto">
                 <app-document [link]="attachment.attachmentLink"
                               [title]="attachment.attachmentTitle"></app-document>

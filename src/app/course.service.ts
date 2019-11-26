@@ -3,7 +3,7 @@ import {LessonData} from './lesson.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {TestData} from './test.service';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 import {Util} from './utils/util';
 import {appUrl} from './constants';
 
@@ -48,10 +48,9 @@ export class CourseService {
     ));
   }
 
-  saveCourse(courseData: CourseData) {
-    this.http.post(appUrl + '/courses', JSON.stringify(courseData), {headers: new HttpHeaders('Content-Type: application/json')}).pipe(
-      catchError(Util.handleError(null)),
-    ).subscribe();
+  saveCourse(courseData: CourseData): Observable<CourseData> {
+    return this.http.post(appUrl + '/courses', JSON.stringify(courseData), {headers: new HttpHeaders('Content-Type: application/json')})
+      .pipe(catchError(Util.handleError(null)));
   }
 
 }

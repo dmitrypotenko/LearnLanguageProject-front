@@ -11,7 +11,7 @@
     {{lessonData.lessonText}}
   </div>
   <div>
-    <div *ngFor='let attachment of lessonData.attachment'>
+    <div *ngFor='let attachment of lessonData.attachments'>
       <div class="attachment-tab d-flex flex-column">
         <app-document [link]="attachment.attachmentLink"
                       [title]="attachment.attachmentTitle"></app-document>

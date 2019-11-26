@@ -25,6 +25,7 @@ interface SelectionRectangle {
 export class CourseEditComponent implements OnInit {
 
   courseForm = this.fb.group({
+    id: 0,
     name: [''],
     description: [''],
     category: [''],
@@ -116,15 +117,15 @@ export class CourseEditComponent implements OnInit {
               variant.get('isRight').value as boolean,
               false,
               false,
-              null
+              variant.get('id').value as number
             )),
-            null,
+            question.get('id').value as number,
             QuestionType[question.get('type').value as string]
           ));
 
         tests.push(new TestData(
           questions,
-          null,
+          step.get('id').value as number,
           index,
           step.get('name').value as string
         ));
@@ -135,24 +136,49 @@ export class CourseEditComponent implements OnInit {
           this.attachments(step).controls.map(attachment => new Attachment(
             attachment.get('attachmentLink').value as string,
             attachment.get('attachmentTitle').value as string,
-            null)
+            attachment.get('id').value as number)
           ),
           step.get('name').value as string,
-          null,
+          step.get('id').value as number,
           index
         ));
       }
     });
 
+    let mainForm = this.courseForm;
+
     this.courseService.saveCourse(new CourseData(
-      null,
-      this.courseForm.get('description').value as string,
-      this.courseForm.get('name').value as string,
-      this.courseForm.get('category').value as string,
+      mainForm.get('id').value as number,
+      mainForm.get('description').value as string,
+      mainForm.get('name').value as string,
+      mainForm.get('category').value as string,
       null,
       lessons,
       tests
-    ));
+    )).subscribe(next => {
+      mainForm.get('id').setValue(next.id);
+      next.lessons.forEach(lesson => {
+        let lessonControl = this.steps.controls[lesson.order];
+        lessonControl.get('id').setValue(lesson.id);
+        let attachmentsControl = this.attachments(lessonControl).controls;
+        lesson.attachments.forEach((attachment, index) => attachmentsControl[index].get('id').setValue(attachment.id));
+      });
+      next.tests.forEach(test => {
+        let testControl = this.steps.controls[test.order];
+        testControl.get('id').setValue(test.id);
+        let questionsControls = this.questions(testControl).controls;
+        test.questions.forEach((question, index) => {
+          let questionControl = questionsControls[index];
+          questionControl.get('id').setValue(question.id);
+          let variantControls = this.variants(questionControl).controls;
+          question.variants.forEach((variant, index) => {
+            let variantControl = variantControls[index];
+            variantControl.get('id').setValue(variant.id);
+          });
+        });
+
+      });
+    });
   }
 
   addLesson() {
@@ -334,6 +360,7 @@ export class CourseEditComponent implements OnInit {
 class AttachmentForm {
   attachmentLink = '';
   attachmentTitle = '';
+  id = null;
 }
 
 class LessonForm {
@@ -341,22 +368,26 @@ class LessonForm {
   lessonText = '';
   name = '';
   attachments: FormArray;
+  id = null;
 }
 
 class TestForm {
   name = '';
   questions: FormArray;
+  id = null;
 }
 
 class QuestionForm {
   questionText = '';
   variants: FormArray;
   type = QuestionType.SINGLE_CHOICE;
+  id = null;
 }
 
 class VariantForm {
   variantText = '';
   isRight = false;
+  id = null;
 }
 
 

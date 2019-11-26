@@ -58,7 +58,7 @@ export class LessonData implements Listable {
 
   private _videoLink: string;
   private _lessonText: string;
-  private _attachment: Attachment[];
+  private _attachments: Attachment[];
   private _name: string;
   private _id: number;
   private _order: number;
@@ -67,7 +67,7 @@ export class LessonData implements Listable {
   constructor(videoLink: string, lessonText: string, _attachment: Attachment[], name: string, id: number, order: number) {
     this._videoLink = videoLink;
     this._lessonText = lessonText;
-    this._attachment = _attachment;
+    this._attachments = _attachment;
     this._name = name;
     this._id = id;
     this._order = order;
@@ -106,12 +106,12 @@ export class LessonData implements Listable {
   }
 
 
-  get attachment(): Attachment[] {
-    return this._attachment;
+  get attachments(): Attachment[] {
+    return this._attachments;
   }
 
-  set attachment(value: Attachment[]) {
-    this._attachment = value;
+  set attachments(value: Attachment[]) {
+    this._attachments = value;
   }
 
   getName(): string {
