@@ -34,21 +34,28 @@ export class CourseComponent implements OnInit, AfterViewInit {
     let id: number = Number(this.route.snapshot.paramMap.get('id'));
     this.stepSwitcher = new StepSwitcherService(this.lessonService, this._testService);
 
-    this.courseService.getCourseById(id).subscribe(course => this.currentCourse = course);
-    this.lessonService.getLessonsFor(id).subscribe(lessons => {
-      this.stepSwitcher.lessonsOfTheCourse = lessons;
-    });
-    this._testService.getTestsFor(id).subscribe(tests => {
-      this.stepSwitcher.testsOfTheCourse = tests;
+    this.courseService.getCourseById(id).subscribe(course => {
+      this.currentCourse = course;
+      this.stepSwitcher.lessonsOfTheCourse = course.lessons;
+      this.stepSwitcher.testsOfTheCourse = course.tests;
+
+      this.tryToUpdate();
     });
   }
 
   ngAfterViewInit() {
+    if (this.tryToUpdate()) {
+      this.cd.detectChanges();
+    }
+  }
+
+  private tryToUpdate(): boolean {
     let ordered = this.stepSwitcher.ordered;
     if (ordered.length != 0) {
       this.stepSwitcher.switchTo(ordered[0]);
-      this.cd.detectChanges();
+      return true;
     }
+    return false;
   }
 
   get currentLesson(): LessonData {

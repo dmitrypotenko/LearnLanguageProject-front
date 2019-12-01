@@ -152,7 +152,6 @@ export class CourseEditComponent implements OnInit {
       mainForm.get('description').value as string,
       mainForm.get('name').value as string,
       mainForm.get('category').value as string,
-      null,
       lessons,
       tests
     )).subscribe(next => {

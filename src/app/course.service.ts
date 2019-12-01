@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {LessonData} from './lesson.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {TestData} from './test.service';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Util} from './utils/util';
 import {appUrl} from './constants';
 
@@ -19,33 +19,21 @@ export class CourseService {
   }
 
   getAllCoursesMetadata(): Observable<CourseData[]> {
-    return of([new CourseData(1,
-      'Example description',
-      'Example course',
-      '',
-      2,
-      [],
-      [],
-    ),
-      new CourseData(2,
-        'Example description 2',
-        'Example course 2',
-        '',
-        154,
-        [],
-        [],
-      )]);
+    return this.http.get(appUrl + '/courses', {headers: new HttpHeaders('Content-Type: application/json')})
+      .pipe(catchError(Util.handleError(null)));
   }
 
   getCourseById(id: number): Observable<CourseData> {
-    return of(new CourseData(1,
-      'Example description',
-      'Example course',
-      '',
-      2,
-      [],
-      []
-    ));
+    return this.http.get(appUrl + '/courses/' + id, {headers: new HttpHeaders('Content-Type: application/json')})
+      .pipe(catchError(Util.handleError(null)))
+      .pipe<CourseData>(map<CourseData, CourseData>(course => new CourseData(
+        course.id,
+        course.description,
+        course.name,
+        course.category,
+        course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order)),
+        course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name))
+      )));
   }
 
   saveCourse(courseData: CourseData): Observable<CourseData> {
@@ -60,7 +48,6 @@ export class CourseData {
   private _id: number;
   private _description: string;
   private _name: string;
-  private _lessonsCount: number;
   private _category: string;
   private _lessons: LessonData[];
   private _tests: TestData[];
@@ -74,24 +61,21 @@ export class CourseData {
     this._id = value;
   }
 
-  get lessonsCount(): number {
-    return this._lessonsCount;
-  }
 
-  set lessonsCount(value: number) {
-    this._lessonsCount = value;
-  }
-
-
-  constructor(id: number, description: string, name: string, category: string, lessonsCount: number, lessons: LessonData[], tests: TestData[]) {
+  constructor(id: number,
+              description: string,
+              name: string,
+              category: string,
+              lessons: LessonData[],
+              tests: TestData[]) {
     this._id = id;
     this._description = description;
     this._name = name;
-    this._lessonsCount = lessonsCount;
     this._lessons = lessons;
     this._category = category;
     this._tests = tests;
   }
+
 
   get description(): string {
     return this._description;
