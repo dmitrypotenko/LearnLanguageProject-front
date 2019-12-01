@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
 import {AuthService} from '../auth.service';
+import {MatDialog} from '@angular/material';
+import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 
 @Component({
   selector: 'app-course-list',
@@ -13,7 +15,11 @@ export class CourseListComponent implements OnInit {
   private authService: AuthService;
   isAdmin: boolean;
 
-  constructor(courseService: CourseService, authService: AuthService) {
+  public dialog: MatDialog;
+
+  constructor(courseService: CourseService, authService: AuthService,
+              dialog: MatDialog) {
+    this.dialog = dialog;
     this.courseService = courseService;
     this.authService = authService;
   }
@@ -28,4 +34,18 @@ export class CourseListComponent implements OnInit {
     );
   }
 
+  delete(id: number) {
+    this.dialog.open(ConcessionDialogComponent, {height: '30vh', width: '30vw'})
+      .afterClosed().subscribe(result => {
+      if (result) {
+        this.courseService.deleteCourse(id)
+          .subscribe(response => {
+            if (response.status == 200) {
+              let courseData = this.courses.find(data => data.id == id);
+              this.courses.splice(this.courses.indexOf(courseData), 1);
+            }
+          });
+      }
+    });
+  }
 }

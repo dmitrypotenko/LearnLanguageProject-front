@@ -32,6 +32,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TextSelectDirective } from './text-select.directive';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { MatSnackBarModule} from '@angular/material';
+import { ConcessionDialogComponent } from './course-list/concession-dialog/concession-dialog.component';
+import {MatDialogModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { MatSnackBarModule} from '@angular/material';
     CourseEditComponent,
     QuestionComponent,
     TestComponent,
-    TextSelectDirective
+    TextSelectDirective,
+    ConcessionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,11 @@ import { MatSnackBarModule} from '@angular/material';
     MDBBootstrapModule.forRoot(),
     DragDropModule,
     AngularEditorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    ConcessionDialogComponent
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

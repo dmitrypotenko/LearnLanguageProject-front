@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LessonData} from './lesson.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TestData} from './test.service';
 import {catchError, map} from 'rxjs/operators';
@@ -38,6 +38,11 @@ export class CourseService {
 
   saveCourse(courseData: CourseData): Observable<CourseData> {
     return this.http.post(appUrl + '/courses', JSON.stringify(courseData), {headers: new HttpHeaders('Content-Type: application/json')})
+      .pipe(catchError(Util.handleError(null)));
+  }
+
+  deleteCourse(courseId: number): Observable<Response> {
+    return this.http.delete(appUrl + '/courses/' + courseId, {headers: new HttpHeaders('Content-Type: application/json'), observe:'response'})
       .pipe(catchError(Util.handleError(null)));
   }
 
