@@ -3,17 +3,22 @@
   <h2>Courses</h2>
   <div class="d-flex flex-column">
     <div *ngFor='let course of courses' class="card shadow">
-      <div class="card-body">
-        <h5 class="card-title">{{course.name}}</h5>
-        <p class="card-text">{{course.description}}</p>
-        <button class="btn btn-secondary btn-sm" (click)="delete(course.id)">Delete &#10060;</button>
-        <a routerLink="/courses/{{course.id}}">Start course</a>
+      <div class="row">
+        <div class="col">
+          <div class="card-body">
+            <h5 class="card-title">{{course.name}}</h5>
+            <p class="card-text">{{course.description}}</p>
+            <a routerLink="/courses/{{course.id}}">Start course</a>
+          </div>
+        </div>
+        <div class="col">
+          <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div *ngIf="isAdmin">
-    <a class="btn btn-primary" routerLink="/courses/create" role="button">Create course</a>
-  </div>
+    <div *ngIf="isAdmin">
+      <a class="btn btn-primary" routerLink="/courses/create" role="button">Create course</a>
+    </div>
 
-</div>
+  </div>

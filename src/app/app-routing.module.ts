@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './login/login.component';
 import {LandingComponent} from './landing/landing.component';
 import {LessonComponent} from './lesson/lesson.component';
 import {CourseListComponent} from './course-list/course-list.component';
@@ -9,7 +8,6 @@ import {CourseEditComponent} from './course-edit/course-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
   {path: 'welcome', component: LandingComponent},
   {path: 'lesson/:lessonName', component: LessonComponent},
   {path: 'lesson', component: LessonComponent},

@@ -35,7 +35,7 @@ export class CourseListComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.dialog.open(ConcessionDialogComponent, {height: '30vh', width: '30vw'})
+    this.dialog.open(ConcessionDialogComponent, {height: '20vh', width: '30vw'})
       .afterClosed().subscribe(result => {
       if (result) {
         this.courseService.deleteCourse(id)
