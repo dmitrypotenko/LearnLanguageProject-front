@@ -169,7 +169,7 @@ export class CourseEditComponent implements OnInit {
               variant.get('id').value as number
             )),
             question.get('id').value as number,
-            QuestionType[question.get('type').value as string]
+            question.get('type').value
           ));
 
         tests.push(new TestData(
