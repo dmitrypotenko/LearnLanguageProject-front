@@ -9,6 +9,7 @@ import {CourseData, CourseService} from '../course.service';
 import {Attachment, LessonData} from '../lesson.service';
 import {TestData} from '../test.service';
 import {QuestionData, VariantData} from '../question/question.component';
+import {ActivatedRoute} from '@angular/router';
 
 interface SelectionRectangle {
   left: number;
@@ -96,10 +97,58 @@ export class CourseEditComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    let routeId = this.route.snapshot.paramMap.get('id');
+    if (routeId != null) {
+      let id: number = Number(routeId);
+      this.courseService.getCourseById(id)
+        .subscribe(course => {
+          this.courseForm.get('id').setValue(course.id);
+          this.courseForm.get('name').setValue(course.name);
+          this.courseForm.get('description').setValue(course.description);
+          this.courseForm.get('category').setValue(course.category);
+          course.lessons.forEach(lesson => {
+            let lessonControl = this.createLesson();
+            this.steps.controls[lesson.order] = lessonControl;
+            lessonControl.get('id').setValue(lesson.id);
+            lessonControl.get('videoLink').setValue(lesson.videoLink);
+            lessonControl.get('lessonText').setValue(lesson.lessonText);
+            lessonControl.get('name').setValue(lesson.name);
+            lesson.attachments.forEach(attachment => {
+              let attachmentControl = this.createAttachment();
+              attachmentControl.get('attachmentLink').setValue(attachment.attachmentLink);
+              attachmentControl.get('attachmentTitle').setValue(attachment.attachmentTitle);
+              attachmentControl.get('id').setValue(attachment.id);
+              this.attachments(lessonControl).push(attachmentControl);
+            });
+          });
+          course.tests.forEach(test => {
+            let testControl = this.createTest();
+            this.steps.controls[test.order] = testControl;
+            testControl.get('id').setValue(test.id);
+            testControl.get('name').setValue(test.name);
+            test.questions.forEach(question => {
+              let questionControl = this.createQuestion();
+              questionControl.get('questionText').setValue(question.question);
+              questionControl.get('id').setValue(question.id);
+              questionControl.get('type').setValue(question.type);
+              question.variants.forEach(variant => {
+                let variantControl = this.createVariant();
+                variantControl.get('id').setValue(variant.id);
+                variantControl.get('variantText').setValue(variant.variant);
+                variantControl.get('isRight').setValue(variant.isRight);
+                this.variants(questionControl).push(variantControl);
+              });
+              this.questions(testControl).push(questionControl);
+            });
+          });
+        });
+    }
+
   }
 
 
-  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService) {
+  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService,
+              private route: ActivatedRoute) {
   }
 
   onSubmit() {
@@ -276,8 +325,7 @@ export class CourseEditComponent implements OnInit {
   }
 
   get questionTypes() {
-    var keys = Object.keys(QuestionType);
-    return keys.slice(keys.length / 2);
+    return Object.values(QuestionType);
   }
 
   handleSelection(event: TextSelectEvent) {
@@ -379,7 +427,7 @@ class TestForm {
 class QuestionForm {
   questionText = '';
   variants: FormArray;
-  type = QuestionType.SINGLE_CHOICE;
+  type = QuestionType.SINGLE_CHOICE.valueOf();
   id = null;
 }
 
@@ -391,7 +439,7 @@ class VariantForm {
 
 
 export enum QuestionType {
-  SINGLE_CHOICE,
-  MULTIPLE_CHOICE,
-  OMITTED_WORDS
+  SINGLE_CHOICE = 'SINGLE_CHOICE',
+  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
+  OMITTED_WORDS = 'OMITTED_WORDS'
 }

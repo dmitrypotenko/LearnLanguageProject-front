@@ -176,7 +176,7 @@
                 <label for="questionType">
                   Which type of questions is it?
                 </label>
-                <select id="questionType" class="form-control" formControlName="type">
+                <select id="questionType" class="form-control" formControlName="type" [value]="question.get('type').value.toString()">
                   <option *ngFor="let questionType of questionTypes">
                     {{ questionType}}
                   </option>
@@ -203,7 +203,7 @@
                              formControlName="variantText">
                     </div>
                     <div class="form-check">
-                      <input id="isCorrect" class="form-check-input" type="checkbox" formControlName="isRight">
+                      <input id="isCorrect" class="form-check-input" [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
                       <label class="form-check-label" for="isCorrect">
                         Is it correct?
                       </label>

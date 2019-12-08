@@ -12,6 +12,7 @@
           </div>
         </div>
         <div class="col">
+          <button class="btn btn-primary m-2" routerLink="/courses/edit/{{course.id}}">Edit</button>
           <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
         </div>
       </div>
@@ -22,3 +23,4 @@
     </div>
 
   </div>
+</div>
