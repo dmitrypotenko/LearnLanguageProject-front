@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {LessonData, LessonService} from '../lesson.service';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lesson',
@@ -10,7 +10,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class LessonComponent implements OnInit {
 
-  private lessonData: LessonData;
+  lessonData: LessonData;
+  videoURL: SafeResourceUrl;
 
   private lessonService: LessonService;
 
@@ -34,7 +35,11 @@ export class LessonComponent implements OnInit {
 
   getCurrentLesson(): void {
     this.lessonService.getCurrentLessonData()
-      .subscribe(lessonData => this.lessonData = lessonData);
+      .subscribe(lessonData => {
+        this.lessonData = lessonData;
+        if (this.lessonData.videoLink != null) {
+          this.videoURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.lessonData.videoLink);
+        }
+      });
   }
-
 }

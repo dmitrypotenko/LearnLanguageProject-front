@@ -32,6 +32,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { MatSnackBarModule} from '@angular/material';
 import { ConcessionDialogComponent } from './course-list/concession-dialog/concession-dialog.component';
 import {MatDialogModule} from '@angular/material';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import {MatDialogModule} from '@angular/material';
     DragDropModule,
     AngularEditorModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSidenavModule
   ],
   entryComponents: [
     ConcessionDialogComponent

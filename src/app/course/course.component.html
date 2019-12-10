@@ -1,15 +1,15 @@
 <div class="course">
-  <div class="d-flex align-items-stretch ">
-    <div id="lesson-panel" class="align-self-stretch">
+  <mat-sidenav-container autosize>
+    <mat-sidenav #sidenav position="start" mode="side" class="sidebar" >
       <app-course-panel
         [stepSwitcher]="stepSwitcher"></app-course-panel>
-    </div>
-    <div class="align-self-stretch align-self-start"
-         [class.flex-grow-1]="currentLesson!=null">
+    </mat-sidenav>
+    <mat-sidenav-content class="main-content">
+      <button (click)="sidenav.toggle()" class="btn btn-primary btn-sm" type="button">Show the course
+        content
+      </button>
       <app-lesson></app-lesson>
-    </div>
-    <div [class.flex-grow-1]="currentTest!=null">
       <app-test></app-test>
-    </div>
-  </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

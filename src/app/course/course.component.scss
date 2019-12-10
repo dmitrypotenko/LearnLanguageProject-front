@@ -1,45 +1,11 @@
-/* The side navigation menu */
-#lesson-panel {
-  background-color: #c8f2f9;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the lesson-panel */
-  width: 0;
-  max-width: 30vw;
-
-  &.collapse {
-    &.show {
-      width: 200vw;
-    }
-    @media screen and (max-width: 1200px) {
-      &.show {
-        width: 400vw;
-      }
-    }
-    @media screen and (max-width: 600px) {
-      &.show {
-        width: 2000vw;
-      }
-    }
-
-
-  }
-}
-
-.collapsing {
-  width: 0;
-  height: auto;
-  position: relative;
-  overflow: hidden;
-  transition-duration: 111s;
-  transition-property: width;
-}
-
 
 .course {
   height: 100%;
 }
 
-.grow {
-
+.sidebar {
+  background-color: #9acc9c;
+}
+.main-content {
+  min-height: 100vh;
 }

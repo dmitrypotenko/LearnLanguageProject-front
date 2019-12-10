@@ -1,5 +1,5 @@
 <div class="d-flex flex-column">
-  <div class="p-2 font-weight-bold text-center">{{questionData.question}}</div>
+  <div [innerHTML]="questionData.question" class="p-2 font-weight-bold text-center"></div>
   <div *ngIf="questionData.variants.length">
 
     <div *ngFor='let variant of questionData.variants'>
