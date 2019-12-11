@@ -24,10 +24,11 @@ export class QuestionComponent implements OnInit {
   }
 
   changeVariant(variant: VariantData) {  //TODO сраный костыль
-    if (this.previousVariant != null) {
-      this.previousVariant.isTicked = false;
-    }
-    this.previousVariant = variant;
+    this._questionData.variants.forEach(variant=> {
+      if (variant.isTicked) {
+        variant.isTicked = false
+      }
+    });
     variant.isTicked = true;
   }
 
