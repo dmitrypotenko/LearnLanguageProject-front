@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {QuestionData} from './question/question.component';
 import {Listable} from './listable';
+import {appUrl} from './constants';
+import {catchError, map} from 'rxjs/operators';
+import {Util} from './utils/util';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +25,14 @@ export class TestService {
     return this.currentTestEmitter;
   }
 
-  pushTest(lessonData: TestData) {
-    this.currentTestPusher.next(lessonData);
+  pushTest(testData: TestData) {
+    this.currentTestPusher.next(testData);
+  }
+
+  checkTest(testData: TestData): Observable<TestData> {
+    return this.http.post(appUrl + '/tests/check', JSON.stringify(testData), {headers: new HttpHeaders('Content-Type: application/json')})
+      .pipe(catchError(Util.handleError(null)))
+      .pipe<TestData>(map<TestData, TestData>(test => new TestData(test.questions, test.id, test.order, test.name)));
   }
 }
 

@@ -37,7 +37,7 @@ export class LessonComponent implements OnInit {
     this.lessonService.getCurrentLessonData()
       .subscribe(lessonData => {
         this.lessonData = lessonData;
-        if (this.lessonData.videoLink != null) {
+        if (this.lessonData!=null && lessonData.videoLink != null) {
           this.videoURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.lessonData.videoLink);
         }
       });

@@ -1,21 +1,21 @@
-<div class="d-flex flex-column">
-  <div [innerHTML]="questionData.question" class="p-2 font-weight-bold text-center"></div>
+<div class="d-flex flex-column" [class.failed]="questionData.status=='FAILED'"
+     [class.success]="questionData.status=='SUCCESS'">
+  <div [innerHTML]="questionData.question" class="p-2 text-center"></div>
   <div *ngIf="questionData.variants.length">
 
     <div *ngFor='let variant of questionData.variants'>
-      <div *ngIf="questionData.type">
+      <div class="m-2" *ngIf="questionData.type == 'MULTIPLE_CHOICE'">
         <div class="checkboxFive">
-          <input type="checkbox" id="{{variant.id}}"
-                 [checked]="variant.isTicked || variant.isRight || variant.isWrong">
+          <input type="checkbox" id="{{variant.id}}" [(ngModel)]="variant.isTicked">
           <label [class.isWrong]="variant.isWrong" [class.isRight]="variant.isRight"
                  for="{{variant.id}}"><span>{{variant.variant}}</span></label>
         </div>
       </div>
-      <div *ngIf="!questionData.type">
+      <div class="m-2" *ngIf="questionData.type == 'SINGLE_CHOICE'">
         <div class="radioFive">
-          <input type="radio" id="{{variant.id}}" name="{{questionData.id}}"
-                 [checked]="variant.isTicked || variant.isRight || variant.isWrong">
-          <label for="{{variant.id}}" [class.isWrong]="variant.isWrong" [class.isRight]="variant.isRight"><span>{{variant.variant}}</span></label>
+          <input type="radio" id="{{variant.id}}" name="{{variant.id}}" [checked]="variant.isTicked" (change)="changeVariant(variant)">
+          <label for="{{variant.id}}" [class.isWrong]="variant.isWrong"
+                 [class.isRight]="variant.isRight"><span>{{variant.variant}}</span></label>
         </div>
       </div>
     </div>

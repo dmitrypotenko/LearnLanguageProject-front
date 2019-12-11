@@ -100,7 +100,7 @@ export class CourseEditComponent implements OnInit {
     let routeId = this.route.snapshot.paramMap.get('id');
     if (routeId != null) {
       let id: number = Number(routeId);
-      this.courseService.getCourseById(id)
+      this.courseService.getCourseByIdForEdit(id)
         .subscribe(course => {
           this.courseForm.get('id').setValue(course.id);
           this.courseForm.get('name').setValue(course.name);

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LessonData} from './lesson.service';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TestData} from './test.service';
 import {catchError, map} from 'rxjs/operators';
@@ -26,14 +26,24 @@ export class CourseService {
   getCourseById(id: number): Observable<CourseData> {
     return this.http.get(appUrl + '/courses/' + id, {headers: new HttpHeaders('Content-Type: application/json')})
       .pipe(catchError(Util.handleError(null)))
-      .pipe<CourseData>(map<CourseData, CourseData>(course => new CourseData(
-        course.id,
-        course.description,
-        course.name,
-        course.category,
-        course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order)),
-        course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name))
-      )));
+      .pipe<CourseData>(map<CourseData, CourseData>(course => this.mapCourse(course)));
+  }
+
+  getCourseByIdForEdit(id: number): Observable<CourseData> {
+    return this.http.get(appUrl + '/courses/edit/' + id, {headers: new HttpHeaders('Content-Type: application/json')})
+      .pipe(catchError(Util.handleError(null)))
+      .pipe<CourseData>(map<CourseData, CourseData>(course => this.mapCourse(course)));
+  }
+
+  private mapCourse(course: CourseData) {
+    return new CourseData(
+      course.id,
+      course.description,
+      course.name,
+      course.category,
+      course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order)),
+      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name))
+    );
   }
 
   saveCourse(courseData: CourseData): Observable<CourseData> {
@@ -42,7 +52,10 @@ export class CourseService {
   }
 
   deleteCourse(courseId: number): Observable<Response> {
-    return this.http.delete(appUrl + '/courses/' + courseId, {headers: new HttpHeaders('Content-Type: application/json'), observe:'response'})
+    return this.http.delete(appUrl + '/courses/' + courseId, {
+      headers: new HttpHeaders('Content-Type: application/json'),
+      observe: 'response'
+    })
       .pipe(catchError(Util.handleError(null)));
   }
 

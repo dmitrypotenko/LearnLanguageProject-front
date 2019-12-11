@@ -28,4 +28,8 @@ export class TestComponent implements OnInit {
       .subscribe(testData => this._testData = testData);
   }
 
+  checkTest(testData: TestData) {
+    this.testService.checkTest(testData)
+      .subscribe(checkedTest => this._testData = checkedTest);
+  }
 }

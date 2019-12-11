@@ -17,9 +17,18 @@ export class QuestionComponent implements OnInit {
   }
 
   private _questionData: QuestionData;
+  private previousVariant: VariantData;
 
 
   ngOnInit() {
+  }
+
+  changeVariant(variant: VariantData) {  //TODO сраный костыль
+    if (this.previousVariant != null) {
+      this.previousVariant.isTicked = false;
+    }
+    this.previousVariant = variant;
+    variant.isTicked = true;
   }
 
 }
@@ -44,15 +53,15 @@ export class QuestionData {
   private _id: number;
   private _question: string;
   private _type: QuestionType;
+  private _status: QuestionStatus;
   private _variants: VariantData[];
 
 
-  constructor(question: string, variants: VariantData[], id: number, type: QuestionType) {
+  constructor(question: string, variants: VariantData[], id: number, type: QuestionType, status: QuestionStatus = QuestionStatus.UNDEFINED) {
     this._question = question;
     this._variants = variants;
     this._id = id;
     this._type = type;
-
   }
 
   get question(): string {
@@ -71,6 +80,15 @@ export class QuestionData {
     this._variants = value;
   }
 
+
+  get status(): QuestionStatus {
+    return this._status;
+  }
+
+  set status(value: QuestionStatus) {
+    this._status = value;
+  }
+
   toJSON() {
     const jsonObj = {};
     const proto = Object.getPrototypeOf(this);
@@ -83,6 +101,12 @@ export class QuestionData {
     }
     return jsonObj;
   }
+}
+
+export enum QuestionStatus {
+  FAILED = 'FAILED',
+  SUCCESS = 'SUCCESS',
+  UNDEFINED = 'UNDEFINED'
 }
 
 export class VariantData {

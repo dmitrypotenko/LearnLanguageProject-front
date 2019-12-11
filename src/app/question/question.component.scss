@@ -138,3 +138,11 @@ input[type=radio] {
 .radioFive input[type=radio]:checked + label:after {
   opacity: 1;
 }
+
+.failed {
+  background-color: #ff8e8d;
+}
+
+.success {
+  background-color: #d5ffd7;
+}
