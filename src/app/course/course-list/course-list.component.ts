@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../../auth.service';
 import {MatDialog} from '@angular/material';
 import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 
@@ -11,11 +11,24 @@ import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.c
 })
 export class CourseListComponent implements OnInit {
   private courseService: CourseService;
-  courses: CourseData[];
+  private _courses: CourseData[];
   private authService: AuthService;
   isAdmin: boolean;
+  mode: string = 'all';
 
   public dialog: MatDialog;
+
+
+  get courses(): CourseData[] {
+    return this._courses.filter(course => {
+      if (this.mode == 'completed') {
+        return course.completion.isCompeted;
+      } else if (this.mode == 'started') {
+        return course.completion.isStarted;
+      }
+      return true;
+    });
+  }
 
   constructor(courseService: CourseService, authService: AuthService,
               dialog: MatDialog) {
@@ -25,7 +38,7 @@ export class CourseListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.courseService.getAllCoursesMetadata().subscribe(courses => this.courses = courses);
+    this.courseService.getAllCoursesMetadata().subscribe(courses => this._courses = courses);
     this.authService.isAdmin().subscribe(isAdmin => {
         console.log(isAdmin);
         this.isAdmin =
@@ -35,14 +48,14 @@ export class CourseListComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.dialog.open(ConcessionDialogComponent, {height: '20vh', width: '30vw'})
+    this.dialog.open(ConcessionDialogComponent, {height: '20vh', width: '30vw', hasBackdrop: true})
       .afterClosed().subscribe(result => {
       if (result) {
         this.courseService.deleteCourse(id)
           .subscribe(response => {
             if (response.status == 200) {
-              let courseData = this.courses.find(data => data.id == id);
-              this.courses.splice(this.courses.indexOf(courseData), 1);
+              let courseData = this._courses.find(data => data.id == id);
+              this._courses.splice(this._courses.indexOf(courseData), 1);
             }
           });
       }

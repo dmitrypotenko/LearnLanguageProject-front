@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {LessonData} from './lesson.service';
+import {LessonData} from '../lesson.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestData} from './test.service';
+import {TestData} from '../test.service';
 import {catchError, map} from 'rxjs/operators';
-import {Util} from './utils/util';
-import {appUrl} from './constants';
+import {Util} from '../utils/util';
+import {appUrl} from '../constants';
+import {Completion} from '../completion';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,7 @@ export class CourseData {
   private _category: string;
   private _lessons: LessonData[];
   private _tests: TestData[];
+  private _completion: Completion;
 
 
   get id(): number {
@@ -126,6 +128,15 @@ export class CourseData {
 
   get tests(): TestData[] {
     return this._tests;
+  }
+
+
+  get completion(): Completion{
+    return this._completion;
+  }
+
+  set completion(value: Completion) {
+    this._completion = value;
   }
 
   toJSON() {

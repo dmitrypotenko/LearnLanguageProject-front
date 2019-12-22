@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {QuestionType} from '../course-edit/course-edit.component';
+import {QuestionType} from '../course/course-edit/course-edit.component';
 
 @Component({
   selector: 'app-question',

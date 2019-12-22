@@ -2,13 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
-import {TextSelectEvent} from '../text-select.directive';
+import {TextSelectEvent} from '../../text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {questionWordCss, questionWordTag} from '../constants';
+import {questionWordCss, questionWordTag} from '../../constants';
 import {CourseData, CourseService} from '../course.service';
-import {Attachment, LessonData} from '../lesson.service';
-import {TestData} from '../test.service';
-import {QuestionData, VariantData} from '../question/question.component';
+import {Attachment, LessonData} from '../../lesson.service';
+import {TestData} from '../../test.service';
+import {QuestionData, VariantData} from '../../question/question.component';
 import {ActivatedRoute} from '@angular/router';
 
 interface SelectionRectangle {

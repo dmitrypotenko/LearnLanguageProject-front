@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LandingComponent} from './landing/landing.component';
 import {LessonComponent} from './lesson/lesson.component';
-import {CourseListComponent} from './course-list/course-list.component';
+import {CourseListComponent} from './course/course-list/course-list.component';
 import {CourseComponent} from './course/course.component';
-import {CourseEditComponent} from './course-edit/course-edit.component';
+import {CourseEditComponent} from './course/course-edit/course-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},

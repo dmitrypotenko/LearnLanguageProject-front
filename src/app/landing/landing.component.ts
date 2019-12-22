@@ -8,7 +8,7 @@ import {OverlayContainer} from '@angular/cdk/overlay';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-  title = 'Kirill website';
+  title = 'Learn hard';
 
   constructor(overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('mat-app-background');
