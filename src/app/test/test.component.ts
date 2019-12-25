@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TestData, TestService} from '../test.service';
+import {QuestionStatus} from '../question/question.component';
 
 @Component({
   selector: 'app-test',
@@ -30,6 +31,16 @@ export class TestComponent implements OnInit {
 
   checkTest(testData: TestData) {
     this.testService.checkTest(testData)
-      .subscribe(checkedTest => this._testData = checkedTest);
+      .subscribe(checkedTest => {
+        testData.isCompleted = checkedTest.isCompleted;
+        testData.questions = checkedTest.questions
+      });
+  }
+
+  isFailed(): boolean {
+    if (this.testData != null) {
+      return this.testData.isFailed()
+    }
+    return false;
   }
 }

@@ -42,8 +42,9 @@ export class CourseService {
       course.description,
       course.name,
       course.category,
-      course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order)),
-      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name))
+      course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order, lesson.isCompleted)),
+      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted)),
+      course.completion
     );
   }
 
@@ -87,13 +88,15 @@ export class CourseData {
               name: string,
               category: string,
               lessons: LessonData[],
-              tests: TestData[]) {
+              tests: TestData[],
+              completion: Completion = new Completion(false, false, 0, 0)) {
     this._id = id;
     this._description = description;
     this._name = name;
     this._lessons = lessons;
     this._category = category;
     this._tests = tests;
+    this._completion = completion;
   }
 
 
@@ -131,7 +134,7 @@ export class CourseData {
   }
 
 
-  get completion(): Completion{
+  get completion(): Completion {
     return this._completion;
   }
 

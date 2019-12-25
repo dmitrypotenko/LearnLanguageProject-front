@@ -2,8 +2,8 @@
 
   <h2>Courses</h2>
   <mat-form-field class="m-2">
-    <mat-label>Show all/completed/started courses</mat-label>
-    <mat-select [(value)]="mode">
+    <mat-label>FILTER</mat-label>
+    <mat-select [formControl]="modeControl">
       <mat-option value="all">All</mat-option>
       <mat-option value="started">My started courses</mat-option>
       <mat-option value="completed">My completed courses</mat-option>
@@ -16,15 +16,22 @@
           <div class="card-body">
             <h5 class="card-title">{{course.name}}</h5>
             <p class="card-text">{{course.description}}</p>
-            <a routerLink="/courses/{{course.id}}">Start course</a>
+            <a routerLink="/courses/{{course.id}}">
+              <span *ngIf="!course.completion.isStarted">Start course</span>
+              <span *ngIf="course.completion.isStarted && !course.completion.isCompleted">Continue</span>
+              <span *ngIf="course.completion.isCompleted">View</span>
+            </a>
           </div>
         </div>
         <div class="col">
           <button class="btn btn-primary m-2" routerLink="/courses/edit/{{course.id}}">Edit</button>
           <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
         </div>
-        <div class="col" *ngIf="course.completion.isStarted">
+        <div class="col" *ngIf="course.completion.isStarted && !course.completion.isCompleted">
           <h2><span style="color: green">IN PROGRESS</span></h2>
+        </div>
+        <div class="col" *ngIf="course.completion.isCompleted">
+          <h2><span style="color: gray">COMPLETED</span></h2>
         </div>
       </div>
     </div>

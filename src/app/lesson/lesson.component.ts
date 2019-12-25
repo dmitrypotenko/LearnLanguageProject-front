@@ -42,4 +42,14 @@ export class LessonComponent implements OnInit {
         }
       });
   }
+
+  markAsCompleted(id: number) {
+    this.lessonService.markAsCompleted(id);
+    this.lessonData.isCompleted = true;
+  }
+
+  getRandom(): number {
+    return Math.random()
+  }
+
 }

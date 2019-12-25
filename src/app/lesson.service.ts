@@ -1,7 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {Listable} from './listable';
+import {appUrl} from './constants';
+import {catchError} from 'rxjs/operators';
+import {Util} from './utils/util';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +26,13 @@ export class LessonService {
   pushLesson(lessonData: LessonData) {
     this.currentLessonPusher.next(lessonData);
   }
+
+  markAsCompleted(id: number) {
+    this.http.post(appUrl + '/lessons/completed/' + id, '',
+      {headers: new HttpHeaders('Content-Type: application/json')})
+      .pipe(catchError(Util.handleError(null)))
+      .subscribe();
+  }
 }
 
 export class LessonData implements Listable {
@@ -40,15 +50,29 @@ export class LessonData implements Listable {
   private _name: string;
   private _id: number;
   private _order: number;
+  private _isCompleted: boolean;
 
 
-  constructor(videoLink: string, lessonText: string, _attachment: Attachment[], name: string, id: number, order: number) {
+  get isCompleted(): boolean {
+    return this._isCompleted;
+  }
+
+  set isCompleted(value: boolean) {
+    this._isCompleted = value;
+  }
+
+  completed(): boolean {
+    return this._isCompleted;
+  }
+
+  constructor(videoLink: string, lessonText: string, _attachment: Attachment[], name: string, id: number, order: number, isCompleted = false) {
     this._videoLink = videoLink;
     this._lessonText = lessonText;
     this._attachments = _attachment;
     this._name = name;
     this._id = id;
     this._order = order;
+    this._isCompleted = isCompleted;
   }
 
   get name(): string {

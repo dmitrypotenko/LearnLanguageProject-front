@@ -3,6 +3,7 @@ import {CourseData, CourseService} from '../course.service';
 import {AuthService} from '../../auth.service';
 import {MatDialog} from '@angular/material';
 import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
+import {FormBuilder, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-course-list',
@@ -14,27 +15,34 @@ export class CourseListComponent implements OnInit {
   private _courses: CourseData[];
   private authService: AuthService;
   isAdmin: boolean;
+  modeControl: FormControl;
   mode: string = 'all';
 
   public dialog: MatDialog;
 
 
   get courses(): CourseData[] {
-    return this._courses.filter(course => {
-      if (this.mode == 'completed') {
-        return course.completion.isCompeted;
-      } else if (this.mode == 'started') {
-        return course.completion.isStarted;
-      }
-      return true;
-    });
+    this.mode = this.modeControl.value;
+    if (this._courses != null) {
+      return this._courses.filter(course => {
+        if (this.mode == 'completed') {
+          return course.completion.isCompleted;
+        } else if (this.mode == 'started') {
+          return course.completion.isStarted;
+        }
+        return true;
+      });
+    }
+    return [];
   }
 
   constructor(courseService: CourseService, authService: AuthService,
-              dialog: MatDialog) {
+              dialog: MatDialog,
+              private formBuilder: FormBuilder) {
     this.dialog = dialog;
     this.courseService = courseService;
     this.authService = authService;
+
   }
 
   ngOnInit() {
@@ -45,6 +53,7 @@ export class CourseListComponent implements OnInit {
           isAdmin.valueOf();
       }
     );
+    this.modeControl = new FormControl(this.mode);
   }
 
   delete(id: number) {

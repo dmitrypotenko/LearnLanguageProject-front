@@ -1,23 +1,23 @@
 export class Completion {
-  private _isCompeted: boolean;
+  private _isCompleted: boolean;
   private _isStarted: boolean;
   private _successRate: number;
   private _completionPercent: number;
 
-  constructor(isCompeted: boolean, isStarted: boolean, successRate: number, completionPercent: number) {
-    this._isCompeted = isCompeted;
+  constructor(isCompleted: boolean, isStarted: boolean, successRate: number, completionPercent: number) {
+    this._isCompleted = isCompleted;
     this._isStarted = isStarted;
     this._successRate = successRate;
     this._completionPercent = completionPercent;
   }
 
 
-  get isCompeted(): boolean {
-    return this._isCompeted;
+  get isCompleted(): boolean {
+    return this._isCompleted;
   }
 
-  set isCompeted(value: boolean) {
-    this._isCompeted = value;
+  set isCompleted(value: boolean) {
+    this._isCompleted = value;
   }
 
   get isStarted(): boolean {
