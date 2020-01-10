@@ -33,6 +33,18 @@ import { MatSnackBarModule} from '@angular/material';
 import { ConcessionDialogComponent } from './course/course-list/concession-dialog/concession-dialog.component';
 import {MatDialogModule} from '@angular/material';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import {appUrl} from './constants';
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: appUrl + '/files/',
+  maxFilesize: 50,
+  withCredentials: true
+};
 
 @NgModule({
   declarations: [
@@ -75,7 +87,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     AngularEditorModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatSidenavModule
+    MatSidenavModule,
+    CKEditorModule,
+    DropzoneModule
   ],
   entryComponents: [
     ConcessionDialogComponent
@@ -85,7 +99,11 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     useClass: CookieHandler,
     multi: true
   },
-    CookieService],
+    CookieService,
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

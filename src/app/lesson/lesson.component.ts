@@ -1,22 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {LessonData, LessonService} from '../lesson.service';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import * as Embedo from 'embedo/embedo.js';
 
 @Component({
   selector: 'app-lesson',
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.scss']
 })
-export class LessonComponent implements OnInit {
+export class LessonComponent implements OnInit, AfterViewChecked {
 
   lessonData: LessonData;
-  videoURL: SafeResourceUrl;
+  lessonText: SafeHtml;
 
   private lessonService: LessonService;
 
   private location: Location;
   private sanitizer: DomSanitizer;
+  private embedo: Embedo;
 
 
   constructor(
@@ -31,14 +33,44 @@ export class LessonComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentLesson();
+    this.embedo = new Embedo({
+      twitter: true,  // Enable twitter SDK
+      instagram: true,  // Enable instagram SDK
+      pinterest: true  // Enable pinterest SDK,
+    });
+  }
+
+  ngAfterViewChecked() {
+    let oembeds = document.getElementsByTagName('oembed');
+    for (let i = 0; i < oembeds.length; i++) {
+      if (oembeds[i].firstChild == null) {
+        oembeds[i].className = 'embed-responsive embed-responsive-16by9 video container';
+        this.embedo.load(
+          oembeds[i],
+          oembeds[i].getAttribute('url'),
+          {
+            height: null,
+            width: null,
+            centerize: true
+          }
+        )
+          .done((data) => {
+          })
+          .fail((err) => {
+            console.error(err);
+          });
+      }
+
+    }
   }
 
   getCurrentLesson(): void {
     this.lessonService.getCurrentLessonData()
       .subscribe(lessonData => {
         this.lessonData = lessonData;
-        if (this.lessonData!=null && lessonData.videoLink != null) {
-          this.videoURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.lessonData.videoLink);
+        if (this.lessonData != null && lessonData.videoLink != null) {
+          this.lessonText = this.sanitizer.bypassSecurityTrustHtml(this.lessonData.lessonText);
+
         }
       });
   }
@@ -49,7 +81,7 @@ export class LessonComponent implements OnInit {
   }
 
   getRandom(): number {
-    return Math.random()
+    return Math.random();
   }
 
 }

@@ -64,44 +64,16 @@
           <label for="lessonText">
             Lesson text:
           </label>
-          <angular-editor id="lessonText" formControlName="lessonText" [config]="lessonEditorConfig">
-          </angular-editor>
+         <!-- <angular-editor id="lessonText" formControlName="lessonText" [config]="lessonEditorConfig">
+          </angular-editor>-->
+          <ckeditor [editor]="Editor" id="lessonText" formControlName="lessonText" [config]="ckConfig"></ckeditor>
         </div>
 
 
         <div cdkDropList class="step attachments" formArrayName="attachments"
              (cdkDropListDropped)="drop(step, $event, 'attachments')">
           <h5>Attachments</h5>
-          <button class="addition btn btn-primary btn-sm" (click)="addAttachment(step)">Add Attachment</button>
-          <div *ngFor="let attachment of attachments(step).controls; let j=index">
-            <div cdkDrag class="m-2 card-header d-flex justify-content-between" [attr.id]="'headingAttachment'+j">
-              <button class="btn btn-secondary btn-sm" data-toggle="collapse" [attr.data-target]="'#collapseAttachment'+j"
-                      aria-expanded="true"
-                      [attr.aria-controls]="'collapseAttachment'+j">
-                Attachment: {{ attachment.get("attachmentTitle").value }}
-              </button>
-              <button class="btn btn-secondary btn-sm" (click)="delete(step, attachment, 'attachments')">Delete &#10060;</button>
-            </div>
-            <div [attr.id]="'collapseAttachment'+j" class="p-2 collapse show"
-                 [attr.aria-labelledby]="'headingAttachment'+j"
-                 [attr.data-parent]="'#collapseLesson'+i" formGroupName="{{j}}">
-              <div class="form-group">
-                <label for="attachmentTitle">
-                  Title:
-                </label>
-                <input id="attachmentTitle" class="form-control" placeholder="Enter the title for the attachment"
-                       type="text" formControlName="attachmentTitle">
-              </div>
-              <div class="form-group">
-                <label for="attachmentLink">
-                  Link to the file in google doc:
-                </label>
-                <input id="attachmentLink" class="form-control"
-                       placeholder="Enter the link from the google google doc here" type="text"
-                       formControlName="attachmentLink">
-              </div>
-            </div>
-          </div>
+          <dropzone style="height: 20vh" [message]="'Click or drag images here to upload'"  (success)="onUploadSuccess($event)"></dropzone>
         </div>
       </div>
       <div cdkDrag *ngIf="isTest(step)" class="step card-header d-flex justify-content-between"

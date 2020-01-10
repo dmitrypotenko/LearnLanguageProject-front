@@ -1,15 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {TextSelectEvent} from '../../text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {questionWordCss, questionWordTag} from '../../constants';
+import {appUrl, questionWordCss, questionWordTag} from '../../constants';
 import {CourseData, CourseService} from '../course.service';
 import {Attachment, LessonData} from '../../lesson.service';
 import {TestData} from '../../test.service';
 import {QuestionData, VariantData} from '../../question/question.component';
 import {ActivatedRoute} from '@angular/router';
+import ClassicEditor from '@dpotenko/ckeditor5-build-classic-with-resize';
+import {CustomAdapter} from './CustomAdapter';
+import {HttpClient} from '@angular/common/http';
+import * as Dropzone from 'dropzone';
 
 interface SelectionRectangle {
   left: number;
@@ -24,6 +28,10 @@ interface SelectionRectangle {
   styleUrls: ['./course-edit.component.scss']
 })
 export class CourseEditComponent implements OnInit {
+  public Editor = ClassicEditor;
+
+  public ckConfig: {};
+
 
   courseForm = this.fb.group({
     id: 0,
@@ -58,7 +66,7 @@ export class CourseEditComponent implements OnInit {
       {class: 'comic-sans-ms', name: 'Comic Sans MS'}
     ],
     customClasses: [],
-    uploadUrl: 'v1/image',
+    uploadUrl: appUrl + '/files/',
     sanitize: false,
     toolbarPosition: 'top',
   };
@@ -91,7 +99,7 @@ export class CourseEditComponent implements OnInit {
         tag: questionWordTag,
       }
     ],
-    uploadUrl: 'v1/image',
+    uploadUrl: appUrl + '/files/',
     sanitize: false,
     toolbarPosition: 'top',
   };
@@ -144,11 +152,61 @@ export class CourseEditComponent implements OnInit {
         });
     }
 
+    const httpClient = this.httpClient;
+
+    function MyCustomUploadAdapterPlugin(editor) {
+      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        // Configure the URL to the upload script in your back-end here!
+        return new CustomAdapter(httpClient, loader);
+      };
+    }
+
+    this.ckConfig = {
+      toolbar: [
+        'heading',
+        '|',
+        'bold',
+        'italic',
+        'link',
+        'bulletedList',
+        'numberedList',
+        '|',
+        'indent',
+        'outdent',
+        '|',
+        'imageUpload',
+        'blockQuote',
+        'insertTable',
+        'mediaEmbed',
+        'undo',
+        'redo',
+        'fontFamily',
+        'alignment',
+        'highlight'
+      ],
+      image: {
+        // You need to configure the image toolbar, too, so it uses the new style buttons.
+        toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+
+        styles: [
+          // This option is equal to a situation where no style is applied.
+          'full',
+
+          // This represents an image aligned to the left.
+          'alignLeft',
+
+          // This represents an image aligned to the right.
+          'alignRight'
+        ]
+      },
+      extraPlugins: [MyCustomUploadAdapterPlugin]
+    };
+
   }
 
 
   constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private httpClient: HttpClient) {
   }
 
   onSubmit() {
@@ -204,6 +262,9 @@ export class CourseEditComponent implements OnInit {
       lessons,
       tests
     )).subscribe(next => {
+      if (next == null) {
+        return;
+      }
       mainForm.get('id').setValue(next.id);
       next.lessons.forEach(lesson => {
         let lessonControl = this.steps.controls[lesson.order];
@@ -401,6 +462,10 @@ export class CourseEditComponent implements OnInit {
 
   isOmittedWords(question: AbstractControl) {
     return question.value.type == 'OMITTED_WORDS';
+  }
+
+  onUploadSuccess($event: any) {
+    console.log($event)
   }
 }
 

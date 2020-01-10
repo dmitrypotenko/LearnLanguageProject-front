@@ -1,9 +1,5 @@
 <div *ngIf="lessonData!=null" class="d-flex flex-column p-5">
-  <div *ngIf="videoURL!=null" class="embed-responsive embed-responsive-16by9 video container">
-    <iframe class="embed-responsive-item" [src]="videoURL"
-            allowfullscreen></iframe>
-  </div>
-  <div [innerHTML]="lessonData.lessonText" class="lesson-content-text">
+  <div [innerHTML]="lessonText" class="lesson-content-text ck-content">
   </div>
   <div>
     <div *ngFor='let attachment of lessonData.attachments'>
