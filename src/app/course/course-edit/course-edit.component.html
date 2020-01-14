@@ -45,36 +45,30 @@
            [attr.aria-labelledby]="'headingLesson'+i"
            data-parent="#accordion" formGroupName="{{i}}">
         <div class="form-group">
-          <label for="lessonName">
+          <label for="lessonName{{i}}">
             Name:
           </label>
-          <input id="lessonName" class="form-control" placeholder="Enter the lesson name" type="text"
+          <input id="lessonName{{i}}" class="form-control" placeholder="Enter the lesson name" type="text"
                  formControlName="name">
         </div>
 
         <div class="form-group">
-          <label for="lessonVideo">
-            Video Link:
-          </label>
-          <input id="lessonVideo" class="form-control" placeholder="Enter the video link for the lesson" type="text"
-                 formControlName="videoLink">
-        </div>
-
-        <div class="form-group">
-          <label for="lessonText">
+          <label for="lessonText{{i}}">
             Lesson text:
           </label>
          <!-- <angular-editor id="lessonText" formControlName="lessonText" [config]="lessonEditorConfig">
           </angular-editor>-->
-          <ckeditor [editor]="Editor" id="lessonText" formControlName="lessonText" [config]="ckConfig"></ckeditor>
+          <ckeditor class="lesson-content" [editor]="Editor" id="lessonText{{i}}" formControlName="lessonText" [config]="ckConfig"></ckeditor>
         </div>
 
-
-        <div cdkDropList class="step attachments" formArrayName="attachments"
-             (cdkDropListDropped)="drop(step, $event, 'attachments')">
-          <h5>Attachments</h5>
-          <dropzone style="height: 20vh" [message]="'Click or drag images here to upload'"  (success)="onUploadSuccess($event)"></dropzone>
-        </div>
+        <h5>Attachments</h5>
+        <!--<dropzone style="height: 20vh" [message]="'Click or drag images here to upload'"  (success)="onUploadSuccess($event)"></dropzone>-->
+        <ngx-dropzone id="dropzone{{i}}" (change)="onSelect($event, step)">
+          <ngx-dropzone-label>Add files here</ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let f of step.get('attachments').value" [removable]="true" (removed)="onRemove(f, step)">
+            <ngx-dropzone-label>{{ f.attachmentTitle }}</ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
       </div>
       <div cdkDrag *ngIf="isTest(step)" class="step card-header d-flex justify-content-between"
            [attr.id]="'headingTest'+i">

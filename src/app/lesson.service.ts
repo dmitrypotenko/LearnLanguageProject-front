@@ -139,7 +139,7 @@ export class LessonData implements Listable {
 
 }
 
-export class Attachment {
+export class Attachment implements File {
   get id(): number {
     return this._id;
   }
@@ -188,5 +188,17 @@ export class Attachment {
     }
     return jsonObj;
   }
+
+  readonly lastModified: number;
+  get name() {
+    return this.attachmentTitle;
+  }
+  readonly size: number;
+  readonly type: string;
+
+  slice(start?: number, end?: number, contentType?: string): Blob {
+    return undefined;
+  }
+
 
 }

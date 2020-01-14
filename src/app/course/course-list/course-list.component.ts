@@ -28,7 +28,7 @@ export class CourseListComponent implements OnInit {
         if (this.mode == 'completed') {
           return course.completion.isCompleted;
         } else if (this.mode == 'started') {
-          return course.completion.isStarted;
+          return course.completion.isStarted && !course.completion.isCompleted;
         }
         return true;
       });

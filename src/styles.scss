@@ -3,6 +3,16 @@
 
 $enable-responsive-font-sizes: true;
 
+.table {
+  width: auto;
+}
+
+.media {
+  width: 50%;
+  height: 50%;
+  margin: auto !important;
+}
+
 .button-small {
 }
 
@@ -17,6 +27,3 @@ h1, h2, h3, p, h5, h4 {
 a {
   color: rgb(14, 139, 155);
 }
-
-
-

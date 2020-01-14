@@ -37,7 +37,7 @@
     "jquery": "^3.4.1",
     "jquery-parallax.js": "^1.5.0",
     "ngx-cookie-service": "^2.2.0",
-    "ngx-dropzone-wrapper": "^8.0.0",
+    "ngx-dropzone": "^2.2.2",
     "npm-registry-client": "^8.6.0",
     "popper.js": "^1.15.0",
     "rxjs": "~6.5.3",

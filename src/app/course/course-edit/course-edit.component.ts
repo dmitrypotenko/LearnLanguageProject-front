@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
@@ -13,7 +13,8 @@ import {ActivatedRoute} from '@angular/router';
 import ClassicEditor from '@dpotenko/ckeditor5-build-classic-with-resize';
 import {CustomAdapter} from './CustomAdapter';
 import {HttpClient} from '@angular/common/http';
-import * as Dropzone from 'dropzone';
+import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
+import {FileSender} from './FileSender';
 
 interface SelectionRectangle {
   left: number;
@@ -43,6 +44,7 @@ export class CourseEditComponent implements OnInit {
 
   public hostRectangle: SelectionRectangle | null;
   public lastEvent: TextSelectEvent;
+  public fileSender: FileSender;
 
   lessonEditorConfig: AngularEditorConfig = {
     editable: true,
@@ -121,13 +123,7 @@ export class CourseEditComponent implements OnInit {
             lessonControl.get('videoLink').setValue(lesson.videoLink);
             lessonControl.get('lessonText').setValue(lesson.lessonText);
             lessonControl.get('name').setValue(lesson.name);
-            lesson.attachments.forEach(attachment => {
-              let attachmentControl = this.createAttachment();
-              attachmentControl.get('attachmentLink').setValue(attachment.attachmentLink);
-              attachmentControl.get('attachmentTitle').setValue(attachment.attachmentTitle);
-              attachmentControl.get('id').setValue(attachment.id);
-              this.attachments(lessonControl).push(attachmentControl);
-            });
+            lessonControl.get('attachments').setValue(lesson.attachments);
           });
           course.tests.forEach(test => {
             let testControl = this.createTest();
@@ -153,6 +149,7 @@ export class CourseEditComponent implements OnInit {
     }
 
     const httpClient = this.httpClient;
+    this.fileSender = new FileSender(httpClient);
 
     function MyCustomUploadAdapterPlugin(editor) {
       editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -199,6 +196,10 @@ export class CourseEditComponent implements OnInit {
           'alignRight'
         ]
       },
+      indentBlock: {
+        offset: 1,
+        unit: 'em'
+      },
       extraPlugins: [MyCustomUploadAdapterPlugin]
     };
 
@@ -240,11 +241,7 @@ export class CourseEditComponent implements OnInit {
         lessons.push(new LessonData(
           step.get('videoLink').value as string,
           step.get('lessonText').value as string,
-          this.attachments(step).controls.map(attachment => new Attachment(
-            attachment.get('attachmentLink').value as string,
-            attachment.get('attachmentTitle').value as string,
-            attachment.get('id').value as number)
-          ),
+          this.attachments(step),
           step.get('name').value as string,
           step.get('id').value as number,
           index
@@ -269,8 +266,8 @@ export class CourseEditComponent implements OnInit {
       next.lessons.forEach(lesson => {
         let lessonControl = this.steps.controls[lesson.order];
         lessonControl.get('id').setValue(lesson.id);
-        let attachmentsControl = this.attachments(lessonControl).controls;
-        lesson.attachments.forEach((attachment, index) => attachmentsControl[index].get('id').setValue(attachment.id));
+        let attachmentsControl = this.attachments(lessonControl);
+        lesson.attachments.forEach((attachment, index) => attachmentsControl[index].id = attachment.id);
       });
       next.tests.forEach(test => {
         let testControl = this.steps.controls[test.order];
@@ -313,31 +310,22 @@ export class CourseEditComponent implements OnInit {
   }
 
 
-  attachments(lesson: AbstractControl): FormArray {
+  attachments(lesson: AbstractControl): Attachment[] {
     let lessonGroup = lesson as FormGroup;
-    return lessonGroup.get('attachments') as FormArray;
+    return lessonGroup.get('attachments').value as Attachment[];
   }
 
   createLesson(): FormGroup {
     let lessonForm = new LessonForm();
-    lessonForm.attachments = this.fb.array([]);
-    return this.fb.group(lessonForm);
+    let formGroup = this.fb.group(lessonForm);
+    formGroup.get('attachments').setValue([]);
+    return formGroup;
   }
 
   createTest(): FormGroup {
     let testForm = new TestForm();
     testForm.questions = this.fb.array([]);
     return this.fb.group(testForm);
-  }
-
-  addAttachment(step: AbstractControl) {
-    let lessonGroup = step as FormGroup;
-    let attachments = lessonGroup.get('attachments') as FormArray;
-    attachments.push(this.createAttachment());
-  }
-
-  private createAttachment() {
-    return this.fb.group(new AttachmentForm());
   }
 
   private createQuestion() {
@@ -464,22 +452,32 @@ export class CourseEditComponent implements OnInit {
     return question.value.type == 'OMITTED_WORDS';
   }
 
-  onUploadSuccess($event: any) {
-    console.log($event)
-  }
-}
+  onSelect($event: NgxDropzoneChangeEvent, step: AbstractControl) {
+    console.log($event);
+    let lessonGroup = step as FormGroup;
+    let attachments = lessonGroup.get('attachments').value as Attachment[];
+    $event.addedFiles.map(file => {
+      this.fileSender.sendFile(file).subscribe(response => {
+          attachments.push(new Attachment(response.fileUrl, file.name, null));
+        }
+      );
+    });
 
-class AttachmentForm {
-  attachmentLink = '';
-  attachmentTitle = '';
-  id = null;
+  }
+
+  onRemove(f: any, step: AbstractControl) {
+    console.log(event);
+    let lessonGroup = step as FormGroup;
+    let attachments = lessonGroup.get('attachments').value as Attachment[];
+    attachments.splice(attachments.indexOf(f), 1);
+  }
 }
 
 class LessonForm {
   videoLink = '';
   lessonText = '';
   name = '';
-  attachments: FormArray;
+  attachments: Attachment[] = [];
   id = null;
 }
 
