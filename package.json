@@ -25,7 +25,6 @@
     "@ckeditor/ckeditor5-upload": "^16.0.0",
     "@dpotenko/ckeditor5-build-classic-with-resize": "^16.0.1",
     "@fortawesome/fontawesome-free": "^5.11.2",
-    "@kolkov/angular-editor": "^1.0.0",
     "@types/chart.js": "^2.8.7",
     "angular-bootstrap-md": "^8.4.0",
     "animate.css": "^3.7.2",

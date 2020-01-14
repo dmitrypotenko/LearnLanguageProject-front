@@ -58,7 +58,7 @@
           </label>
          <!-- <angular-editor id="lessonText" formControlName="lessonText" [config]="lessonEditorConfig">
           </angular-editor>-->
-          <ckeditor class="lesson-content" [editor]="Editor" id="lessonText{{i}}" formControlName="lessonText" [config]="ckConfig"></ckeditor>
+          <ckeditor [editor]="Editor" id="lessonText{{i}}" formControlName="lessonText" [config]="ckConfig"></ckeditor>
         </div>
 
         <h5>Attachments</h5>
@@ -103,16 +103,15 @@
               <button class="btn btn-secondary btn-sm" (click)="delete(step, question, 'questions')">Delete &#10060;</button>
             </div>
             <div [attr.id]="'collapseQuestion'+j" class="p-2 collapse show" [attr.aria-labelledby]="'headingQuestion'+j"
-                 [attr.data-parent]="'#collapseTest'+i" formGroupName="{{j}}">
+                 [attr.data-parent]="'#collapseTest'+j" formGroupName="{{j}}">
               <div class="form-group">
-                <label for="questionText">
+                <label for="questionText{{j}}">
                   Question text:
                 </label>
-                <angular-editor id="questionText" (textSelect)="handleSelection( $event )"
-                                formControlName="questionText"
-                                [config]="questionEditorConfig">
+                <ckeditor [editor]="Editor" id="questionText{{j}}" formControlName="questionText" [config]="ckConfigQuestion">
+                  Type text here
+                </ckeditor>
 
-                </angular-editor>
                 <div
                   *ngIf="hostRectangle && isOmittedWords(question)"
                   class="indicator"

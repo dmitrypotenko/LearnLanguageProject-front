@@ -28,7 +28,6 @@ import { QuestionComponent } from './question/question.component';
 import { TestComponent } from './test/test.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TextSelectDirective } from './text-select.directive';
-import { AngularEditorModule } from '@kolkov/angular-editor';
 import { MatSnackBarModule} from '@angular/material';
 import { ConcessionDialogComponent } from './course/course-list/concession-dialog/concession-dialog.component';
 import {MatDialogModule} from '@angular/material';
@@ -74,7 +73,6 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
     LayoutModule,
     MDBBootstrapModule.forRoot(),
     DragDropModule,
-    AngularEditorModule,
     MatSnackBarModule,
     MatDialogModule,
     MatSidenavModule,

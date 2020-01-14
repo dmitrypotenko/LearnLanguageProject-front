@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {TextSelectEvent} from '../../text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {appUrl, questionWordCss, questionWordTag} from '../../constants';
@@ -45,65 +44,26 @@ export class CourseEditComponent implements OnInit {
   public hostRectangle: SelectionRectangle | null;
   public lastEvent: TextSelectEvent;
   public fileSender: FileSender;
-
-  lessonEditorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: false,
-    height: 'auto',
-    minHeight: '0',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
-    ],
-    customClasses: [],
-    uploadUrl: appUrl + '/files/',
-    sanitize: false,
-    toolbarPosition: 'top',
-  };
-
-  questionEditorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: false,
-    height: 'auto',
-    minHeight: '0',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
-    ],
-    customClasses: [
-      {
-        name: 'Question word',
-        class: questionWordCss,
-        tag: questionWordTag,
-      }
-    ],
-    uploadUrl: appUrl + '/files/',
-    sanitize: false,
-    toolbarPosition: 'top',
+  private ckConfigQuestion: {
+    toolbar: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'link',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'indent',
+      'outdent',
+      '|',
+      'blockQuote',
+      'undo',
+      'redo',
+      'fontFamily',
+      'alignment',
+      'highlight'
+    ]
   };
 
   ngOnInit(): void {
