@@ -44,7 +44,7 @@ export class CourseEditComponent implements OnInit {
   public hostRectangle: SelectionRectangle | null;
   public lastEvent: TextSelectEvent;
   public fileSender: FileSender;
-  private ckConfigQuestion: {
+  private ckConfigQuestion = {
     toolbar: [
       'heading',
       '|',
@@ -185,7 +185,8 @@ export class CourseEditComponent implements OnInit {
               variant.get('isRight').value as boolean,
               false,
               false,
-              variant.get('id').value as number
+              variant.get('id').value as number,
+              variant.get('explanation').value as string
             )),
             question.get('id').value as number,
             question.get('type').value
@@ -456,6 +457,7 @@ class QuestionForm {
 
 class VariantForm {
   variantText = '';
+  explanation = '';
   isRight = false;
   id = null;
 }

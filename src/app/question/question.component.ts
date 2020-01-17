@@ -17,16 +17,15 @@ export class QuestionComponent implements OnInit {
   }
 
   private _questionData: QuestionData;
-  private previousVariant: VariantData;
 
 
   ngOnInit() {
   }
 
   changeVariant(variant: VariantData) {  //TODO сраный костыль
-    this._questionData.variants.forEach(variant=> {
+    this._questionData.variants.forEach(variant => {
       if (variant.isTicked) {
-        variant.isTicked = false
+        variant.isTicked = false;
       }
     });
     variant.isTicked = true;
@@ -120,18 +119,20 @@ export class VariantData {
   }
 
   private _variant: string;
+  private _explanation: string;
   private _isRight: boolean;
   private _isWrong: boolean;
   private _isTicked: boolean;
   private _id: number;
 
 
-  constructor(variant: string, isRight: boolean, isWrong: boolean, isTicked: boolean, id: number) {
+  constructor(variant: string, isRight: boolean, isWrong: boolean, isTicked: boolean, id: number, explanation: string) {
     this._variant = variant;
     this._isRight = isRight;
     this._isWrong = isWrong;
     this._isTicked = isTicked;
     this._id = id;
+    this._explanation = explanation;
   }
 
   get variant(): string {
@@ -164,6 +165,15 @@ export class VariantData {
 
   set isTicked(value: boolean) {
     this._isTicked = value;
+  }
+
+
+  get explanation(): string {
+    return this._explanation;
+  }
+
+  set explanation(value: string) {
+    this._explanation = value;
   }
 
   toJSON() {

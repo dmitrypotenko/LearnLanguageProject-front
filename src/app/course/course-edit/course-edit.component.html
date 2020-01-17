@@ -103,7 +103,7 @@
               <button class="btn btn-secondary btn-sm" (click)="delete(step, question, 'questions')">Delete &#10060;</button>
             </div>
             <div [attr.id]="'collapseQuestion'+j" class="p-2 collapse show" [attr.aria-labelledby]="'headingQuestion'+j"
-                 [attr.data-parent]="'#collapseTest'+j" formGroupName="{{j}}">
+                 [attr.data-parent]="'#collapseTest'+i" formGroupName="{{j}}">
               <div class="form-group">
                 <label for="questionText{{j}}">
                   Question text:
@@ -138,10 +138,10 @@
               </div>
 
               <div class="form-group w-25">
-                <label for="questionType">
+                <label for="questionType{{j}}">
                   Which type of questions is it?
                 </label>
-                <select id="questionType" class="form-control" formControlName="type" [value]="question.get('type').value.toString()">
+                <select id="questionType{{j}}" class="form-control" formControlName="type" [value]="question.get('type').value.toString()">
                   <option *ngFor="let questionType of questionTypes">
                     {{ questionType}}
                   </option>
@@ -160,16 +160,20 @@
                     </button>
                     <button class="btn btn-secondary btn-sm" (click)="delete(question, variant, 'variants')">Delete &#10060;</button>
                   </div>
-                  <div [attr.id]="'collapseVariant'+z" class="p-2 collapse show"
+                  <div [attr.id]="'collapseVariant'+z" class="p-2 collapse show d-flex"
                        [attr.aria-labelledby]="'headingVariant'+z"
                        [attr.data-parent]="'#collapseQuestion'+j" formGroupName="{{z}}">
-                    <div class="form-group">
+                    <div class="form-group flex-fill m-1">
                       <input placeholder="Enter the variant" type="text" class="form-control"
                              formControlName="variantText">
                     </div>
-                    <div class="form-check">
-                      <input id="isCorrect" class="form-check-input" [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
-                      <label class="form-check-label" for="isCorrect">
+                    <div class="form-group flex-fill m-1">
+                      <input placeholder="Enter the explanation" type="text" class="form-control"
+                             formControlName="explanation">
+                    </div>
+                    <div class="form-check flex-fill m-1">
+                      <input id="isCorrect{{z}}" class="form-check-input" [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
+                      <label class="form-check-label" for="isCorrect{{z}}">
                         Is it correct?
                       </label>
                     </div>
