@@ -152,33 +152,31 @@
                    (cdkDropListDropped)="drop(question, $event, 'variants')">
                 <h5>Variants</h5>
                 <button class="btn btn-primary btn-sm addition" (click)="addVariant(question)">Add Variant</button>
-                <div *ngFor="let variant of variants(question).controls; let z=index">
-                  <div cdkDrag class="m-2 card-header d-flex justify-content-between" [attr.id]="'headingVariant'+z">
-                    <button class="btn btn-secondary btn-sm" data-toggle="collapse" [attr.data-target]="'#collapseVariant'+z"
-                            aria-expanded="true"
-                            [attr.aria-controls]="'collapseVariant'+ z">Variant : {{variant.get('variantText').value}}
-                    </button>
-                    <button class="btn btn-secondary btn-sm" (click)="delete(question, variant, 'variants')">Delete &#10060;</button>
-                  </div>
-                  <div [attr.id]="'collapseVariant'+z" class="p-2 collapse show d-flex"
-                       [attr.aria-labelledby]="'headingVariant'+z"
-                       [attr.data-parent]="'#collapseQuestion'+j" formGroupName="{{z}}">
-                    <div class="form-group flex-fill m-1">
-                      <input placeholder="Enter the variant" type="text" class="form-control"
-                             formControlName="variantText">
+                  <mat-expansion-panel *ngFor="let variant of variants(question).controls; let z=index"  cdkDrag>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title  class="m-2 d-flex justify-content-between">
+                          <button class="btn btn-secondary btn-sm">Variant : {{variant.get('variantText').value}}
+                          </button>
+                          <button class="btn btn-secondary btn-sm" (click)="delete(question, variant, 'variants')">Delete &#10060;</button>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div  class="p-2  show d-flex" formGroupName="{{z}}">
+                      <div class="form-group flex-fill m-1">
+                        <input placeholder="Enter the variant" type="text" class="form-control"
+                               formControlName="variantText">
+                      </div>
+                      <div class="form-group flex-fill m-1">
+                        <input placeholder="Enter the explanation" type="text" class="form-control"
+                               formControlName="explanation">
+                      </div>
+                      <div class="form-check flex-fill m-1">
+                        <input id="isCorrect{{z}}" class="form-check-input" [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
+                        <label class="form-check-label" for="isCorrect{{z}}">
+                          Is it correct?
+                        </label>
+                      </div>
                     </div>
-                    <div class="form-group flex-fill m-1">
-                      <input placeholder="Enter the explanation" type="text" class="form-control"
-                             formControlName="explanation">
-                    </div>
-                    <div class="form-check flex-fill m-1">
-                      <input id="isCorrect{{z}}" class="form-check-input" [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
-                      <label class="form-check-label" for="isCorrect{{z}}">
-                        Is it correct?
-                      </label>
-                    </div>
-                  </div>
-                </div>
+                  </mat-expansion-panel>
               </div>
             </div>
           </div>

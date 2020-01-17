@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {TextSelectEvent} from '../../text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {appUrl, questionWordCss, questionWordTag} from '../../constants';
@@ -329,9 +329,7 @@ export class CourseEditComponent implements OnInit {
 
   drop(control: AbstractControl, cdkDragDrop: CdkDragDrop<any[]>, collectionName: string) {
     let collection = control.get(collectionName) as FormArray;
-    let elementToMove = collection.at(cdkDragDrop.previousIndex);
-    collection.removeAt(cdkDragDrop.previousIndex);
-    collection.insert(cdkDragDrop.currentIndex, elementToMove);
+    moveItemInArray(collection.controls, cdkDragDrop.previousIndex, cdkDragDrop.currentIndex);
   }
 
   get questionTypes() {

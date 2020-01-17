@@ -8,7 +8,17 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LandingComponent} from './landing/landing.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
-import { MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule } from '@angular/material';
+import {
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    MatGridListModule,
+    MatMenuModule,
+    MatIconModule,
+    MatExpansionModule
+} from '@angular/material';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
@@ -55,30 +65,31 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
     TextSelectDirective,
     ConcessionDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatGridListModule,
-    MatMenuModule,
-    MatIconModule,
-    LayoutModule,
-    MDBBootstrapModule.forRoot(),
-    DragDropModule,
-    MatSnackBarModule,
-    MatDialogModule,
-    MatSidenavModule,
-    CKEditorModule,
-    NgxDropzoneModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatGridListModule,
+        MatMenuModule,
+        MatIconModule,
+        LayoutModule,
+        MDBBootstrapModule.forRoot(),
+        DragDropModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        MatSidenavModule,
+        CKEditorModule,
+        NgxDropzoneModule,
+        MatExpansionModule
+    ],
   entryComponents: [
     ConcessionDialogComponent
   ],
