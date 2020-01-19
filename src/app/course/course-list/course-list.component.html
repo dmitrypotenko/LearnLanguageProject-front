@@ -1,5 +1,14 @@
-<div class="courses-list" >
-
+<div class="courses-list">
+  <div class="center " *ngIf="role!='ROLE_USER' && role!='ROLE_ADMIN'">
+    <p class="warning"><span>
+      WARNING!
+    </span>
+    </p>
+    <p class="warning"><span>
+      We can't track your progress if you are not logged in!
+    </span>
+    </p>
+  </div>
   <h2>Courses</h2>
   <mat-form-field class="m-2">
     <mat-label>FILTER</mat-label>
@@ -10,7 +19,7 @@
     </mat-select>
   </mat-form-field>
   <div class="d-flex flex-column" *ngIf="courses?.length">
-    <div *ngFor='let course of courses' class="card shadow">
+    <div *ngFor='let course of courses' class="card shadow m-2">
       <div class="row">
         <div class="col">
           <div class="card-body">
@@ -23,7 +32,7 @@
             </a>
           </div>
         </div>
-        <div class="col">
+        <div class="col" *ngIf="isAdmin">
           <button class="btn btn-primary m-2" routerLink="/courses/edit/{{course.id}}">Edit</button>
           <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
         </div>
@@ -36,17 +45,17 @@
       </div>
     </div>
 
-   <!-- <div *ngIf="courses?.length">
-      <mat-card *ngFor='let course of courses' >
-        <mat-card-title></mat-card-title>
-      </mat-card>
-      &lt;!&ndash;<mat-card-title>	Card title
-<mat-card-subtitle>	Card subtitle
-<mat-card-content>	Primary card content. Intended for blocks of text
-<img mat-card-image>	Card image. Stretches the image to the container width
-<mat-card-actions>	Container for buttons at the bottom of the card
-<mat-card-footer>	Section anchored to the bottom of the card&ndash;&gt;
-    </div>-->
+    <!-- <div *ngIf="courses?.length">
+       <mat-card *ngFor='let course of courses' >
+         <mat-card-title></mat-card-title>
+       </mat-card>
+       &lt;!&ndash;<mat-card-title>	Card title
+ <mat-card-subtitle>	Card subtitle
+ <mat-card-content>	Primary card content. Intended for blocks of text
+ <img mat-card-image>	Card image. Stretches the image to the container width
+ <mat-card-actions>	Container for buttons at the bottom of the card
+ <mat-card-footer>	Section anchored to the bottom of the card&ndash;&gt;
+     </div>-->
 
     <div *ngIf="isAdmin">
       <a class="btn btn-primary" routerLink="/courses/create" role="button">Create course</a>

@@ -33,14 +33,31 @@ export class TestComponent implements OnInit {
     this.testService.checkTest(testData)
       .subscribe(checkedTest => {
         testData.isCompleted = checkedTest.isCompleted;
-        testData.questions = checkedTest.questions
+        testData.questions = checkedTest.questions;
       });
   }
 
   isFailed(): boolean {
     if (this.testData != null) {
-      return this.testData.isFailed()
+      return this.testData.isFailed();
     }
     return false;
+  }
+
+  invalidateTest(testData: TestData) {
+    this.testService.invalidateTest(testData)
+      .subscribe(response => {
+        if (response.status == 200) {
+          testData.isCompleted = false;
+          testData.questions.forEach(question => {
+            question.status = QuestionStatus.UNDEFINED;
+            question.variants.forEach(variant => {
+              variant.isRight = false;
+              variant.isWrong = false;
+              variant.isTicked = false;
+            });
+          });
+        }
+      });
   }
 }

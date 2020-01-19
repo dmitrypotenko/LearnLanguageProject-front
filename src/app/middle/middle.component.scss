@@ -2,7 +2,38 @@
   height: 30vh;
 
 }*/
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+@import url('https://fonts.googleapis.com/css?family=Palanquin+Dark');
+@import "node_modules/bootstrap/scss/vendor/_rfs.scss";
 
 .middle-text {
   column-count: 3;
 }
+
+.advantages {
+  //  font-family: "Palanquin Dark", sans-serif;
+  text-align: center;
+  font-size: calc(0.75em + 2vmin);
+  letter-spacing: -1px;
+  word-spacing: 3px;
+  color: rgb(0, 0, 0);
+  text-shadow: rgba(0, 0, 0, 0) 2px 2px 2px;
+  margin: 7px;
+  font-weight: 400;
+  border-bottom: 2px solid #e5e5e5;
+}
+
+.advantages-section {
+  margin: auto;
+  margin-top: 3vh;
+  width: 70%;
+}
+
+@media screen and (max-width: 1000px){
+  .advantages-section {
+    margin: auto;
+    margin-top: 3vh;
+    width: 80%;
+  }
+}
+

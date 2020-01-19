@@ -6,17 +6,24 @@
     <div *ngFor='let variant of questionData.variants'>
       <div class="m-2" *ngIf="questionData.type == 'MULTIPLE_CHOICE'">
         <div class="checkboxFive">
-          <input type="checkbox" id="{{variant.id}}" [(ngModel)]="variant.isTicked">
+          <input type="checkbox" id="{{variant.id}}" (change)="changeMultipleChoice(variant)" [checked]="variant.isTicked || variant.isRight || variant.isWrong">
           <label [class.isWrong]="variant.isWrong" [class.isRight]="variant.isRight"
                  for="{{variant.id}}"><span>{{variant.variant}}</span></label>
         </div>
+        <label *ngIf="(variant.isWrong || variant.isRight) && notEmpty(variant.explanation)"
+               [class.isWrong]="variant.isWrong"
+               [class.isRight]="variant.isRight"><span class="explanation"><b>Explanation: {{variant.explanation}}</b></span></label>
       </div>
       <div class="m-2" *ngIf="questionData.type == 'SINGLE_CHOICE'">
         <div class="radioFive">
-          <input type="radio" id="{{variant.id}}" name="{{variant.id}}" [checked]="variant.isTicked" (change)="changeVariant(variant)">
+          <input type="radio" id="{{variant.id}}" name="{{variant.id}}" [checked]="variant.isTicked || variant.isRight || variant.isWrong"
+                 (change)="changeVariant(variant)">
           <label for="{{variant.id}}" [class.isWrong]="variant.isWrong"
                  [class.isRight]="variant.isRight"><span>{{variant.variant}}</span></label>
         </div>
+        <label *ngIf="(variant.isWrong || variant.isRight) && notEmpty(variant.explanation)"
+               [class.isWrong]="variant.isWrong"
+               [class.isRight]="variant.isRight"><span><b>Explanation: {{variant.explanation}}</b></span></label>
       </div>
     </div>
   </div>

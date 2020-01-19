@@ -22,7 +22,6 @@ import {
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { CardsComponent } from './cards/cards.component';
 import { MenuComponent } from './menu/menu.component';
 import { MiddleComponent } from './middle/middle.component';
 import { FooterComponent } from './footer/footer.component';
@@ -44,13 +43,13 @@ import {MatDialogModule} from '@angular/material';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {NgxDropzoneModule} from 'ngx-dropzone';
+import { AboutmeComponent } from './aboutme/aboutme.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     DashboardComponent,
-    CardsComponent,
     MenuComponent,
     MiddleComponent,
     FooterComponent,
@@ -63,7 +62,8 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
     QuestionComponent,
     TestComponent,
     TextSelectDirective,
-    ConcessionDialogComponent
+    ConcessionDialogComponent,
+    AboutmeComponent
   ],
     imports: [
         BrowserModule,

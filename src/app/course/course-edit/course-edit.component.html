@@ -32,7 +32,7 @@
     <button class="btn btn-primary m-2" (click)="addTest()">Add Test</button>
 
     <mat-expansion-panel *ngFor="let step of steps.controls; let i=index" cdkDrag>
-      <mat-expansion-panel-header *ngIf="isLesson(step)">
+      <mat-expansion-panel-header *ngIf="isLesson(step)" cdkDragHandle>
         <mat-panel-title  class="m-2 d-flex justify-content-between">
         <button class="btn btn-secondary btn-sm">
           Lesson: {{ step.get("name").value }}
@@ -67,7 +67,7 @@
           </ngx-dropzone-preview>
         </ngx-dropzone>
       </div>
-      <mat-expansion-panel-header *ngIf="isTest(step)">
+      <mat-expansion-panel-header *ngIf="isTest(step)" cdkDragHandle>
         <mat-panel-title  class="m-2 d-flex justify-content-between">
         <button class="btn btn-secondary btn-sm">
           Test: {{ step.get("name").value }}
@@ -89,7 +89,7 @@
           <h5>Questions</h5>
           <button class="btn btn-primary btn-sm addition" (click)="addQuestion(step)">Add Question</button>
           <mat-expansion-panel *ngFor="let question of questions(step).controls; let j=index" cdkDrag>
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header cdkDragHandle>
               <mat-panel-title  class="m-2 d-flex justify-content-between">
                 <button class="btn btn-secondary btn-sm">
                   Question : {{question.get('questionText').value.substring(0, 10)}}
@@ -147,7 +147,7 @@
                 <h5>Variants</h5>
                 <button class="btn btn-primary btn-sm addition" (click)="addVariant(question)">Add Variant</button>
                   <mat-expansion-panel *ngFor="let variant of variants(question).controls; let z=index"  cdkDrag>
-                    <mat-expansion-panel-header>
+                    <mat-expansion-panel-header cdkDragHandle>
                       <mat-panel-title  class="m-2 d-flex justify-content-between">
                           <button class="btn btn-secondary btn-sm">Variant : {{variant.get('variantText').value}}
                           </button>

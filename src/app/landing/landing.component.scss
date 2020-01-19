@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Akronim');
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+@import "node_modules/bootstrap/scss/vendor/_rfs.scss";
+
 .banner {
   max-height: 40vh !important;
   width: 100%;
@@ -57,11 +61,10 @@
 
 .main-body {
   background-position: center;
-  background-image: url("https://images.pexels.com/photos/247819/pexels-photo-247819.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255,255,255,0.3);
   background-blend-mode: lighten;
 
-  height: 50vh;
+  height: 70vh;
   font-family: 'Questrial', sans-serif;
   font-size: 12pt;
 }
@@ -93,3 +96,22 @@
 .main-body .row {
   margin: 6vh;
 }
+
+
+
+#slogan{
+  font-family: "Permanent Marker", cursive;
+  text-transform: capitalize;
+  text-align: center;
+  font-size: calc(1.8em + 1vmin);
+  letter-spacing: 5px;
+  word-spacing: 3px;
+  color: rgb(0, 0, 0);
+  //text-shadow: rgb(0, 0, 0) 5px 2px 2px;
+}
+
+.center {
+  display: block;
+  text-align: center;
+}
+

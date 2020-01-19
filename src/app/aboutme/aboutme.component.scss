@@ -1,0 +1,36 @@
+//@import "~node_modules/bootstrap/scss/f";
+.aboutme {
+  line-height: 1.37;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: #fbfff6;
+}
+
+.aboutme-section {
+  background-color: #333333;
+}
+
+
+@media screen and (max-width: 1500px) {
+  .aboutme {
+    line-height: 1.37;
+    font-weight: 500;
+    font-size: 1.1em;
+    color: #fbfff6;
+  }
+}
+
+.aboutme-section-min {
+  display: none !important;
+  background-color: #333333;
+}
+
+@media screen and (max-width: 800px) {
+  .aboutme-section {
+    display: none !important;
+  //  @extend .flex-column
+  }
+  .aboutme-section-min {
+    display: block !important;
+  }
+}

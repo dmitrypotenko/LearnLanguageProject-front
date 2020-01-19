@@ -3,13 +3,13 @@
     <a class="nav-link" routerLink="/courses">For learners</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">For teachers</a>
+    <a class="nav-link" routerLink="/welcome">Home</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">About us</a>
+    <a class="nav-link" href="#">Donate</a>
   </li>
   <li class="nav-item">
-    <div class="dropdown">
+    <div *ngIf="!role || role == 'undefined' || role == 'null'" class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
         Login
@@ -22,6 +22,9 @@
           <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"/>
         </a>
       </div>
+    </div>
+    <div *ngIf="role && role != 'undefined' &&  role != 'null'">
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
     </div>
   </li>
 </ul>

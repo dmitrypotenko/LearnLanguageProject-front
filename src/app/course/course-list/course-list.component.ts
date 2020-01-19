@@ -17,6 +17,7 @@ export class CourseListComponent implements OnInit {
   isAdmin: boolean;
   modeControl: FormControl;
   mode: string = 'all';
+  private _role = 'undefined';
 
   public dialog: MatDialog;
 
@@ -46,9 +47,9 @@ export class CourseListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.role().subscribe(role => this._role = role);
     this.courseService.getAllCoursesMetadata().subscribe(courses => this._courses = courses);
     this.authService.isAdmin().subscribe(isAdmin => {
-        console.log(isAdmin);
         this.isAdmin =
           isAdmin.valueOf();
       }
@@ -69,5 +70,10 @@ export class CourseListComponent implements OnInit {
           });
       }
     });
+  }
+
+
+  get role(): string {
+    return this._role;
   }
 }

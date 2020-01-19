@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {appUrl} from './constants';
 import {Observable, of} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {Util} from './utils/util';
 
 @Injectable({
@@ -16,14 +16,37 @@ export class AuthService {
   }
 
   isAdmin(): Observable<Boolean> {
-    let isAdminVar = sessionStorage.getItem('isAdmin');
+    let role = sessionStorage.getItem('role');
 
-    if (isAdminVar == 'true') {
+    if (role == 'ROLE_ADMIN') {
       return of(true);
     } else {
-      return this.http.get<Boolean>(appUrl + '/isAdmin').pipe(
+      return this.http.get<String[]>(appUrl + '/role').pipe(
         catchError(Util.handleError(false)),
-        tap(isAdmin => sessionStorage.setItem('isAdmin', String(isAdmin)))
+        tap(roles => sessionStorage.setItem('role', String(roles[0]))),
+        map(roles => roles[0] == 'ROLE_ADMIN')
+      );
+    }
+  }
+
+  logout(): Observable<Response> {
+    return this.http.get(appUrl + '/logout', {
+      headers: new HttpHeaders('Content-Type: application/json'),
+      observe: 'response'
+    })
+      .pipe(catchError(Util.handleError(null)));
+  }
+
+  role() : Observable<string> {
+    let role = sessionStorage.getItem('role');
+
+    if (role == 'ROLE_ADMIN' || role == 'ROLE_USER') {
+      return of(role);
+    } else {
+      return this.http.get<String[]>(appUrl + '/role').pipe(
+        catchError(Util.handleError(false)),
+        tap(roles => sessionStorage.setItem('role', String(roles[0]))),
+        map(roles => roles[0])
       );
     }
   }
