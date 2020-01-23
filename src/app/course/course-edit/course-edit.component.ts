@@ -3,7 +3,7 @@ import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {TextSelectEvent} from '../../text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {appUrl, questionWordCss, questionWordTag} from '../../constants';
+import {questionWordCss, questionWordTag} from '../../constants';
 import {CourseData, CourseService} from '../course.service';
 import {Attachment, LessonData} from '../../lesson.service';
 import {TestData} from '../../test.service';
@@ -14,6 +14,7 @@ import {CustomAdapter} from './CustomAdapter';
 import {HttpClient} from '@angular/common/http';
 import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {FileSender} from './FileSender';
+import {appUrl} from '../../../environments/environment';
 
 interface SelectionRectangle {
   left: number;

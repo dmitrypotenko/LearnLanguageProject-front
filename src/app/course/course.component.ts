@@ -15,7 +15,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
   private lessonService: LessonService;
   private route: ActivatedRoute;
   currentCourse: CourseData;
-  private stepSwitcher: StepSwitcherService;
+  stepSwitcher: StepSwitcherService;
 
   private cd: ChangeDetectorRef;
   private _testService: TestService;

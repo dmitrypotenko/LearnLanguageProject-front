@@ -5,8 +5,8 @@ import {Observable} from 'rxjs';
 import {TestData} from '../test.service';
 import {catchError, map} from 'rxjs/operators';
 import {Util} from '../utils/util';
-import {appUrl} from '../constants';
 import {Completion} from '../completion';
+import {appUrl} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import FileLoader from '@ckeditor/ckeditor5-upload/src/filerepository';
-import {appUrl} from '../../constants';
+import {appUrl} from '../../../environments/environment';
 
 export class CustomAdapter {
   constructor(private http: HttpClient, private loader: FileLoader) {

@@ -13,7 +13,7 @@
 .advantages {
   //  font-family: "Palanquin Dark", sans-serif;
   text-align: center;
-  font-size: calc(0.75em + 2vmin);
+  font-size: calc(0.5vmax + 2vmin);
   letter-spacing: -1px;
   word-spacing: 3px;
   color: rgb(0, 0, 0);
@@ -29,11 +29,16 @@
   width: 70%;
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1000px) {
   .advantages-section {
     margin: auto;
     margin-top: 3vh;
     width: 80%;
   }
+
+  .advantages {
+    font-weight: 500;
+  }
+
 }
 

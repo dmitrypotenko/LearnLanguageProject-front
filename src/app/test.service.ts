@@ -3,9 +3,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import {QuestionData, QuestionStatus} from './question/question.component';
 import {Listable} from './listable';
-import {appUrl} from './constants';
 import {catchError, map} from 'rxjs/operators';
 import {Util} from './utils/util';
+import {appUrl} from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'

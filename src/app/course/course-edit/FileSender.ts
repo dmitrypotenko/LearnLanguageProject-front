@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {appUrl} from '../../constants';
+import {appUrl} from '../../../environments/environment';
 
 export class FileSender {
   constructor(private http: HttpClient) {

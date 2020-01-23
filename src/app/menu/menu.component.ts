@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {appUrl} from '../constants';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
+import {appUrl} from '../../environments/environment';
 
 @Component({
   selector: 'app-menu',
