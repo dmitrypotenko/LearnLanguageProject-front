@@ -5,6 +5,7 @@ import {LessonComponent} from './lesson/lesson.component';
 import {CourseListComponent} from './course/course-list/course-list.component';
 import {CourseComponent} from './course/course.component';
 import {CourseEditComponent} from './course/course-edit/course-edit.component';
+import {DonateComponent} from './donate/donate.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'courses/create', component: CourseEditComponent},
   {path: 'courses/edit/:id', component: CourseEditComponent},
   {path: 'courses/:id', component: CourseComponent},
-  {path: 'courses', component: CourseListComponent}
+  {path: 'courses', component: CourseListComponent},
+  {path: 'donate', component: DonateComponent}
 ];
 
 @NgModule({

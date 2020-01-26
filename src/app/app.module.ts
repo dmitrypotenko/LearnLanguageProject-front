@@ -44,6 +44,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 import { AboutmeComponent } from './aboutme/aboutme.component';
+import { DonateComponent } from './donate/donate.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AboutmeComponent } from './aboutme/aboutme.component';
     TestComponent,
     TextSelectDirective,
     ConcessionDialogComponent,
-    AboutmeComponent
+    AboutmeComponent,
+    DonateComponent
   ],
     imports: [
         BrowserModule,

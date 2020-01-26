@@ -10,9 +10,9 @@ handlers:
     static_files: dist/kirill/index.html
     upload: dist/kirill/index.html
 
-  - url: /(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2))
+  - url: /(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
     static_files: dist/kirill/\1
-    upload: dist/kirill/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2))
+    upload: dist/kirill/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
 
   - url: /.*
     static_files: dist/kirill/index.html
