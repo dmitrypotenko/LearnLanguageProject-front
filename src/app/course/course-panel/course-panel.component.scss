@@ -22,3 +22,13 @@
 .invisible {
   display: none;
 }
+
+.panel-step-item {
+  max-width: 30vw;
+}
+
+@media screen and (max-width: 800px){
+  .panel-step-item {
+    max-width: 70vw;
+  }
+}

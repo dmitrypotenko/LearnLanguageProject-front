@@ -51,6 +51,8 @@ export class CourseEditComponent implements OnInit {
       '|',
       'bold',
       'italic',
+      'strikethrough',
+      'underline',
       'link',
       'bulletedList',
       'numberedList',
@@ -100,6 +102,7 @@ export class CourseEditComponent implements OnInit {
                 let variantControl = this.createVariant();
                 variantControl.get('id').setValue(variant.id);
                 variantControl.get('variantText').setValue(variant.variant);
+                variantControl.get('explanation').setValue(variant.explanation);
                 variantControl.get('isRight').setValue(variant.isRight);
                 this.variants(questionControl).push(variantControl);
               });
@@ -125,6 +128,8 @@ export class CourseEditComponent implements OnInit {
         '|',
         'bold',
         'italic',
+        'strikethrough',
+        'underline',
         'link',
         'bulletedList',
         'numberedList',

@@ -23,7 +23,7 @@
     "@angular/router": "~8.2.9",
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@ckeditor/ckeditor5-upload": "^16.0.0",
-    "@dpotenko/ckeditor5-build-classic-with-resize": "^16.0.1",
+    "@dpotenko/ckeditor5-build-classic-with-resize": "^16.0.3",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@types/chart.js": "^2.8.7",
     "angular-bootstrap-md": "^8.4.0",

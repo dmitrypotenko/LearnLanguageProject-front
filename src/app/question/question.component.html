@@ -8,7 +8,7 @@
         <div class="checkboxFive">
           <input type="checkbox" id="{{variant.id}}" (change)="changeMultipleChoice(variant)" [checked]="variant.isTicked || variant.isRight || variant.isWrong">
           <label [class.isWrong]="variant.isWrong" [class.isRight]="variant.isRight"
-                 for="{{variant.id}}"><span>{{variant.variant}}</span></label>
+                 for="{{variant.id}}"><span class="text-nowrap">{{variant.variant}}</span></label>
         </div>
         <label *ngIf="(variant.isWrong || variant.isRight) && notEmpty(variant.explanation)"
                [class.isWrong]="variant.isWrong"
@@ -19,7 +19,7 @@
           <input type="radio" id="{{variant.id}}" name="{{variant.id}}" [checked]="variant.isTicked || variant.isRight || variant.isWrong"
                  (change)="changeVariant(variant)">
           <label for="{{variant.id}}" [class.isWrong]="variant.isWrong"
-                 [class.isRight]="variant.isRight"><span>{{variant.variant}}</span></label>
+                 [class.isRight]="variant.isRight"><span class="text-nowrap">{{variant.variant}}</span></label>
         </div>
         <label *ngIf="(variant.isWrong || variant.isRight) && notEmpty(variant.explanation)"
                [class.isWrong]="variant.isWrong"
