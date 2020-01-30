@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
-import {AuthService} from '../../auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {MatDialog} from '@angular/material';
 import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 import {FormBuilder, FormControl} from '@angular/forms';
