@@ -48,6 +48,8 @@
     "ngx-dropzone": "^2.2.2",
     "npm-registry-client": "^8.6.0",
     "popper.js": "^1.15.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
     "rxjs": "~6.5.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

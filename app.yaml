@@ -3,24 +3,28 @@ api_version: 1
 threadsafe: true
 
 error_handlers:
-  - file: dist/kirill/index.html
+  - file: dist/browser/index.html
 
 handlers:
   - url: /
-    static_files: dist/kirill/index.html
-    upload: dist/kirill/index.html
+    static_files: dist/browser/index.html
+    upload: dist/browser/index.html
     secure: always
 
   - url: /(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
-    static_files: dist/kirill/\1
-    upload: dist/kirill/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
+    static_files: dist/browser/\1
+    upload: dist/browser/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
     secure: always
 
   - url: /.*
-    static_files: dist/kirill/index.html
-    upload: dist/kirill/index.html
+    static_files: dist/browser/index.html
+    upload: dist/browser/index.html
     secure: always
 
+  - url: /donate
+      static_files: dist/browser/donate/index.html
+      upload: dist/browser/donate/index.html
+      secure: always
 skip_files:
   - e2e/
   - node_modules/
