@@ -36,7 +36,6 @@ import { CourseEditComponent } from './course/course-edit/course-edit.component'
 import { QuestionComponent } from './question/question.component';
 import { TestComponent } from './test/test.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { TextSelectDirective } from './text-select.directive';
 import { MatSnackBarModule} from '@angular/material';
 import { ConcessionDialogComponent } from './course/course-list/concession-dialog/concession-dialog.component';
 import {MatDialogModule} from '@angular/material';
@@ -62,13 +61,12 @@ import { DonateComponent } from './donate/donate.component';
     CourseEditComponent,
     QuestionComponent,
     TestComponent,
-    TextSelectDirective,
     ConcessionDialogComponent,
     AboutmeComponent,
     DonateComponent
   ],
     imports: [
-        BrowserModule,
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         AppRoutingModule,
         FormsModule,
         HttpClientModule,

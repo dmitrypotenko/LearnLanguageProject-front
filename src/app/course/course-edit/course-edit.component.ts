@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {TextSelectEvent} from '../../text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {questionWordCss, questionWordTag} from '../../constants';
 import {CourseData, CourseService} from '../course.service';
@@ -43,7 +42,6 @@ export class CourseEditComponent implements OnInit {
   });
 
   public hostRectangle: SelectionRectangle | null;
-  public lastEvent: TextSelectEvent;
   public fileSender: FileSender;
   private ckConfigQuestion = {
     toolbar: [
@@ -340,77 +338,6 @@ export class CourseEditComponent implements OnInit {
 
   get questionTypes() {
     return Object.values(QuestionType);
-  }
-
-  handleSelection(event: TextSelectEvent) {
-    console.group('Text Select Event');
-    console.log('Text:', event.text);
-    console.log('Viewport Rectangle:', event.viewportRectangle);
-    console.log('Host Rectangle:', event.hostRectangle);
-    console.groupEnd();
-
-    // If a new selection has been created, the viewport and host rectangles will
-    // exist. Or, if a selection is being removed, the rectangles will be null.
-    if (event.viewportRectangle) {
-      this.hostRectangle = event.viewportRectangle;
-      this.lastEvent = event;
-    } else {
-      this.hostRectangle = null;
-      this.lastEvent = null;
-    }
-  }
-
-  wrapElement() {
-    let range = this.lastEvent.range;
-    let questionWordEnd = this.findParent(range.endContainer, questionWordCss, 'angular-editor-textarea');
-    let questionWordStart = this.findParent(range.startContainer, questionWordCss, 'angular-editor-textarea');
-    if (questionWordEnd != null || questionWordStart != null) {
-      this._snackBar.open('end and start of a question word should be outside of other question words', 'close', {duration: 5000});
-      return;
-    }
-
-    var wrappingNode = document.createElement(questionWordTag);
-    wrappingNode.style.cursor = 'not-allowed';
-    wrappingNode.style.backgroundColor = '#c9bacc';
-    let child = this.lastEvent.range.extractContents();
-    this.unwrapAllInnerQuestionWords(child.childNodes);
-    wrappingNode.addEventListener('click', function() {
-      while (wrappingNode.firstChild) {
-        wrappingNode.parentNode.insertBefore(wrappingNode.firstChild, wrappingNode);
-      }
-      wrappingNode.remove();
-    });
-    wrappingNode.appendChild(child);
-    wrappingNode.className = questionWordCss;
-    range.insertNode(wrappingNode);
-    this.hostRectangle = null;
-    this.lastEvent = null;
-  }
-
-  private unwrapAllInnerQuestionWords(childNodes: NodeListOf<ChildNode>) {
-    if (childNodes == null || childNodes.length == 0) {
-      return;
-    }
-    childNodes.forEach(node => {
-      if ((node as HTMLElement).className == questionWordCss && node.nodeName == questionWordTag) {
-        var parent = node.parentNode;
-        while (node.firstChild) {
-          parent.insertBefore(node.firstChild, node);
-        }
-        parent.removeChild(node);
-      } else {
-        this.unwrapAllInnerQuestionWords(node.childNodes);
-      }
-    });
-  }
-
-  private findParent(node: Node, classToFind: string, classToStop: string): Node {
-    if ((node as HTMLElement).className == classToFind && node.nodeName == questionWordTag) {
-      return node;
-    } else if ((node as HTMLElement).className == classToStop) {
-      return null;
-    }
-    return this.findParent(node.parentNode, classToFind, classToStop);
   }
 
   isOmittedWords(question: AbstractControl) {
