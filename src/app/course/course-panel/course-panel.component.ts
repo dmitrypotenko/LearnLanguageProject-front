@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {LessonData} from '../../lesson.service';
-import {TestData} from '../../test.service';
-import {StepSwitcherService} from '../../step-switcher.service';
-import {Listable} from '../../listable';
+import {LessonData} from '../../shared/services/lesson.service';
+import {TestData} from '../../shared/test.service';
+import {StepSwitcherService} from '../../shared/step-switcher.service';
+import {Listable} from '../../shared/listable';
 
 @Component({
   selector: 'app-course-panel',

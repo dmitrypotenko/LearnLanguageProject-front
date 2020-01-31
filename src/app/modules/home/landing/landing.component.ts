@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
+
 declare var jQuery: any;
 
 
@@ -22,7 +23,7 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if (jQuery('.parallax-mirror').length == 0) {
+    if (jQuery('.parallax-mirror').length === 0) { // TODO: replace this!
       jQuery('.parallax-window').parallax();
     }
 

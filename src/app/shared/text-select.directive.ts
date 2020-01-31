@@ -1,10 +1,5 @@
-// Import the core angular services.
 import {Directive, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {questionWordCss, questionWordTag} from './constants';
-
-
-// ----------------------------------------------------------------------------------- //
-// ----------------------------------------------------------------------------------- //
 
 export interface TextSelectEvent {
   text: string;
@@ -33,7 +28,6 @@ export class TextSelectDirective implements OnInit, OnDestroy {
   private hasSelection: boolean;
   private zone: NgZone;
 
-  // I initialize the text-select directive.
   constructor(
     elementRef: ElementRef,
     zone: NgZone
@@ -47,11 +41,6 @@ export class TextSelectDirective implements OnInit, OnDestroy {
 
   }
 
-  // ---
-  // PUBLIC METHODS.
-  // ---
-
-  // I get called once when the directive is being unmounted.
   public ngOnDestroy(): void {
 
     // Unbind all handlers, even ones that may not be bounds at this moment.
@@ -61,8 +50,6 @@ export class TextSelectDirective implements OnInit, OnDestroy {
 
   }
 
-
-  // I get called once after the inputs have been bound for the first time.
   public ngOnInit(): void {
 
     // Since not all interactions will lead to an event that is meaningful to the
@@ -87,44 +74,31 @@ export class TextSelectDirective implements OnInit, OnDestroy {
 
   }
 
-  // ---
-  // PRIVATE METHODS.
-  // ---
-
   // I get the deepest Element node in the DOM tree that contains the entire range.
   private getRangeContainer(range: Range): Node {
-
-    var container = range.commonAncestorContainer;
+    let container = range.commonAncestorContainer;
 
     // If the selected node is a Text node, climb up to an element node - in Internet
     // Explorer, the .contains() method only works with Element nodes.
     while (container.nodeType !== Node.ELEMENT_NODE) {
-
       container = container.parentNode;
-
     }
 
     return (container);
-
   }
 
 
   // I handle mousedown events inside the current element.
   private handleMousedown = (): void => {
-
     document.addEventListener('mouseup', this.handleMouseup, false);
-
-  };
+  }
 
 
   // I handle mouseup events anywhere in the document.
   private handleMouseup = (): void => {
-
     document.removeEventListener('mouseup', this.handleMouseup, false);
-
     this.processSelection();
-
-  };
+  }
 
 
   // I handle selectionchange events anywhere in the document.
@@ -137,26 +111,21 @@ export class TextSelectDirective implements OnInit, OnDestroy {
     // "selectionchange" event when there is a current selection that is in danger
     // of being removed.
     if (this.hasSelection) {
-
       this.processSelection();
-
     }
-
-  };
+  }
 
 
   // I determine if the given range is fully contained within the host element.
   private isRangeFullyContained(range: Range): boolean {
 
-    var hostElement = this.elementRef.nativeElement;
-    var selectionContainer = range.commonAncestorContainer;
+    const hostElement = this.elementRef.nativeElement;
+    let selectionContainer = range.commonAncestorContainer;
 
     // If the selected node is a Text node, climb up to an element node - in Internet
     // Explorer, the .contains() method only works with Element nodes.
     while (selectionContainer.nodeType !== Node.ELEMENT_NODE) {
-
       selectionContainer = selectionContainer.parentNode;
-
     }
 
     return (hostElement.contains(selectionContainer));
@@ -168,7 +137,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
   // emitted as a TextSelectEvent within the current element.
   private processSelection(): void {
 
-    var selection = document.getSelection();
+    const selection = document.getSelection();
 
     // If there is a new selection and an existing selection, let's clear out the
     // existing selection first.
@@ -191,33 +160,30 @@ export class TextSelectDirective implements OnInit, OnDestroy {
 
         }
       );
-
     }
 
     // If the new selection is empty (for example, the user just clicked somewhere
     // in the document), then there's no new selection event to emit.
     if (!selection.rangeCount || !selection.toString()) {
-
       return;
-
     }
 
-    var range = selection.getRangeAt(0);
-    let fragment = range.cloneContents();
+    const range = selection.getRangeAt(0);
+    const fragment = range.cloneContents();
 
     if ((fragment as Node as HTMLElement).className == questionWordCss && fragment.nodeName == questionWordTag) {
       return;
     }
 
-    var rangeContainer = this.getRangeContainer(range);
+    const rangeContainer = this.getRangeContainer(range);
 
     // We only want to emit events for selections that are fully contained within the
     // host element. If the selection bleeds out-of or in-to the host, then we'll
     // just ignore it since we don't control the outer portions.
     if (this.elementRef.nativeElement.contains(rangeContainer)) {
 
-      var viewportRectangle = range.getBoundingClientRect();
-      var localRectangle = this.viewportToHost(viewportRectangle, rangeContainer);
+      const viewportRectangle = range.getBoundingClientRect();
+      const localRectangle = this.viewportToHost(viewportRectangle, rangeContainer);
 
       // Since emitting event may cause the calling context to change state, we
       // want to run the .emit() inside of the Angular Zone. This way, it can
@@ -246,9 +212,7 @@ export class TextSelectDirective implements OnInit, OnDestroy {
 
         }
       );
-
     }
-
   }
 
 
@@ -261,25 +225,23 @@ export class TextSelectDirective implements OnInit, OnDestroy {
     rangeContainer: Node
   ): SelectionRectangle {
 
-    var host = this.elementRef.nativeElement;
-    var hostRectangle = host.getBoundingClientRect();
+    const host = this.elementRef.nativeElement;
+    const hostRectangle = host.getBoundingClientRect();
 
     // Both the selection rectangle and the host rectangle are calculated relative to
     // the browser viewport. As such, the local position of the selection within the
     // host element should just be the delta of the two rectangles.
-    var localLeft = (viewportRectangle.left - hostRectangle.left);
-    var localTop = (viewportRectangle.top - hostRectangle.top);
+    let localLeft = (viewportRectangle.left - hostRectangle.left);
+    let localTop = (viewportRectangle.top - hostRectangle.top);
 
-    var node = rangeContainer;
+    let node = rangeContainer;
     // Now that we have the local position, we have to account for any scrolling
     // being performed within the host element. Let's walk from the range container
     // up to the host element and add any relevant scroll offsets to the calculated
     // local position.
     do {
-
-      localLeft += (<Element> node).scrollLeft;
-      localTop += (<Element> node).scrollTop;
-
+      localLeft += (node as Element).scrollLeft;
+      localTop += (node as Element).scrollTop;
     } while ((node !== host) && (node = node.parentNode));
 
     return ({
@@ -288,7 +250,5 @@ export class TextSelectDirective implements OnInit, OnDestroy {
       width: viewportRectangle.width,
       height: viewportRectangle.height
     });
-
   }
-
 }

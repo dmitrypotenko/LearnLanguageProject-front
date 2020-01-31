@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {TextSelectEvent} from '../../text-select.directive';
+import {TextSelectEvent} from '../../shared/text-select.directive';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {questionWordCss, questionWordTag} from '../../constants';
+import {questionWordCss, questionWordTag} from '../../shared/constants';
 import {CourseData, CourseService} from '../course.service';
-import {Attachment, LessonData} from '../../lesson.service';
-import {TestData} from '../../test.service';
+import {Attachment, LessonData} from '../../shared/services/lesson.service';
+import {TestData} from '../../shared/test.service';
 import {QuestionData, VariantData} from '../../question/question.component';
 import {ActivatedRoute} from '@angular/router';
 import ClassicEditor from '@dpotenko/ckeditor5-build-classic-with-resize';

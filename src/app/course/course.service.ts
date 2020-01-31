@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {LessonData} from '../lesson.service';
+import {LessonData} from '../shared/services/lesson.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestData} from '../test.service';
+import {TestData} from '../shared/test.service';
 import {catchError, map} from 'rxjs/operators';
-import {Util} from '../utils/util';
-import {Completion} from '../completion';
+import {Util} from '../shared/utils/util';
+import {Completion} from '../shared/completion';
 import {appUrl} from '../../environments/environment';
 
 @Injectable({

@@ -8,7 +8,7 @@
   <li class="nav-item">
     <a class="nav-link" routerLink="/donate">Donate</a>
   <li class="nav-item">
-    <div *ngIf="!role || role == 'undefined' || role == 'null'" class="dropdown">
+    <div *ngIf="notLoggerIn()" class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
         Login
@@ -22,7 +22,7 @@
         </a>
       </div>
     </div>
-    <div *ngIf="role && role != 'undefined' &&  role != 'null'">
+    <div *ngIf="isLoggerIn()">
       <button class="btn btn-secondary" (click)="logout()">Logout</button>
     </div>
   </li>

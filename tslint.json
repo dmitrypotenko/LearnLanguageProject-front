@@ -77,6 +77,13 @@
     "restrict-plus-operands": true,
     "no-invalid-template-strings": true,
     "no-boolean-literal-compare": true,
-    "cyclomatic-complexity": true
+    "cyclomatic-complexity": true,
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore"
+      ]
+    }
   }
 }

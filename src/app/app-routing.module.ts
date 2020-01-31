@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LandingComponent} from './landing/landing.component';
+import {LandingComponent} from './modules/home/landing/landing.component';
 import {LessonComponent} from './lesson/lesson.component';
 import {CourseListComponent} from './course/course-list/course-list.component';
 import {CourseComponent} from './course/course.component';

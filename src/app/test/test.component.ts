@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TestData, TestService} from '../test.service';
+import {TestData, TestService} from '../shared/test.service';
 import {QuestionStatus} from '../question/question.component';
 
 @Component({
@@ -47,7 +47,7 @@ export class TestComponent implements OnInit {
   invalidateTest(testData: TestData) {
     this.testService.invalidateTest(testData)
       .subscribe(response => {
-        if (response.status == 200) {
+        if (response.status === 200) { // TODO: what response except 200 might be here?
           testData.isCompleted = false;
           testData.questions.forEach(question => {
             question.status = QuestionStatus.UNDEFINED;

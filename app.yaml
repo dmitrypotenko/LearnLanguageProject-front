@@ -3,22 +3,22 @@ api_version: 1
 threadsafe: true
 
 error_handlers:
-  - file: dist/kirill/index.html
+  - file: dist/lessons-box/index.html
 
 handlers:
   - url: /
-    static_files: dist/kirill/index.html
-    upload: dist/kirill/index.html
+    static_files: dist/lessons-box/index.html
+    upload: dist/lessons-box/index.html
     secure: always
 
   - url: /(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
-    static_files: dist/kirill/\1
-    upload: dist/kirill/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
+    static_files: dist/lessons-box/\1
+    upload: dist/lessons-box/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
     secure: always
 
   - url: /.*
-    static_files: dist/kirill/index.html
-    upload: dist/kirill/index.html
+    static_files: dist/lessons-box/index.html
+    upload: dist/lessons-box/index.html
     secure: always
 
 skip_files:

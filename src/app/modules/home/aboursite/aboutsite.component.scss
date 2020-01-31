@@ -1,10 +1,6 @@
-/*.advantages {
-  height: 30vh;
-
-}*/
 @import url('https://fonts.googleapis.com/css?family=Titillium+Web');
 @import url('https://fonts.googleapis.com/css?family=Palanquin+Dark');
-@import "node_modules/bootstrap/scss/vendor/_rfs.scss";
+@import "node_modules/bootstrap/scss/vendor/rfs";
 
 .middle-text {
   column-count: 3;
@@ -35,7 +31,5 @@
     margin-top: 3vh;
     width: 80%;
   }
-
-
 }
 

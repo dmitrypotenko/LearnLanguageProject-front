@@ -1,9 +1,9 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from './course.service';
-import {LessonData, LessonService} from '../lesson.service';
+import {LessonData, LessonService} from '../shared/services/lesson.service';
 import {ActivatedRoute} from '@angular/router';
-import {TestData, TestService} from '../test.service';
-import {StepSwitcherService} from '../step-switcher.service';
+import {TestData, TestService} from '../shared/test.service';
+import {StepSwitcherService} from '../shared/step-switcher.service';
 
 @Component({
   selector: 'app-course',

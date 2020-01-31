@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LessonData, LessonService} from './lesson.service';
+import {LessonData, LessonService} from './services/lesson.service';
 import {TestData, TestService} from './test.service';
 import {Listable} from './listable';
 

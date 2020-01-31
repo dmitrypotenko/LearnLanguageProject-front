@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {httpOptions} from './constants';
+import {httpOptions} from '../constants';
 import {Location} from '@angular/common';
-import {appUrl} from '../environments/environment';
+import {appUrl} from '../../../environments/environment';
 
 
 @Injectable({
