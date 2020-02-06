@@ -10,9 +10,13 @@ export class DocumentComponent implements OnInit {
   @Input() link: string;
   @Input() title: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
+  isPdf(): boolean {
+    return this.title.substring(this.title.length - 4, this.title.length) == '.pdf';
+  }
 }

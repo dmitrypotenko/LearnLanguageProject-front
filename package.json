@@ -28,7 +28,7 @@
     "@angular/router": "~8.2.9",
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@ckeditor/ckeditor5-upload": "^16.0.0",
-    "@dpotenko/ckeditor5-build-classic-with-resize": "^16.0.3",
+    "@dpotenko/ckeditor5-build-classic-with-resize": "^16.0.4",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@nguniversal/express-engine": "v8.2.6",
     "@nguniversal/module-map-ngfactory-loader": "v8.2.6",

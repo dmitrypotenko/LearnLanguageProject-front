@@ -1,8 +1,8 @@
-<div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column">
+<div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
   <div class="d-flex flex-column">
-    <div *ngFor='let questionData of testData.questions'>
-      <div class="container">
-        <app-question [questionData]="questionData"></app-question>
+    <div *ngFor='let questionData of testData.questions; let i=index'>
+      <div class="container rounded">
+        <app-question [questionIndex]="i" [questionData]="questionData"></app-question>
       </div>
     </div>
   </div>

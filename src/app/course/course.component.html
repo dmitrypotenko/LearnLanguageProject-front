@@ -1,15 +1,14 @@
 <div class="course">
-  <mat-sidenav-container autosize>
+  <mat-sidenav-container class="full-height" autosize>
     <mat-sidenav #sidenav position="start" mode="side" class="sidebar" >
       <app-course-panel
         [stepSwitcher]="stepSwitcher"></app-course-panel>
     </mat-sidenav>
     <mat-sidenav-content class="main-content">
-      <button (click)="sidenav.toggle()" class="btn btn-primary btn-sm" type="button">Show the course
-        content
+      <button (click)="sidenav.toggle()" class="btn btn-primary btn" type="button"><b>Content&bull;&bull;&bull;</b>
       </button>
-      <app-lesson></app-lesson>
-      <app-test></app-test>
+      <app-lesson class="content-page"></app-lesson>
+      <app-test class="content-page"></app-test>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

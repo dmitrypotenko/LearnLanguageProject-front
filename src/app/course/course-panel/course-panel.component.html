@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-primary btn-sm" (click)="onSelect('Content')">Content</button>
       </li>-->
       <li class="nav-item m-2" [class.invisible]="currentLesson==null" (click)="onSelect('Attachment')">
-        <button type="button" class="btn btn-primary btn-sm">Attachment</button>
+        <button type="button" class="btn btn-primary btn-sm">Attachments</button>
       </li>
       <li class="nav-item m-2" (click)="onSelect('Lessons')">
         <button type="button" class="btn btn-primary btn-sm">Lessons</button>
@@ -37,7 +37,7 @@
           <div *ngFor='let step of ordered'>
             <ul class="list-group">
               <li class="list-group-item panel-step-item" [class.active]="currentLesson===step || currentTest === step"
-                  (click)="onStepChanged(step)"><span *ngIf="step.completed() && isFailedTest(step)" style="color: red">&#10006;  </span><span *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>{{step.getName()}}</li>
+                  (click)="onStepChanged(step)"><span *ngIf="step.completed() && isFailedTest(step)" style="color: red">&#x274C;</span><span *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>{{step.getName()}}</li>
             </ul>
           </div>
         </div>

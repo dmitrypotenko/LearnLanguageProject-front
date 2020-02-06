@@ -7,10 +7,15 @@ $enable-responsive-font-sizes: true;
   width: auto;
 }
 
-.media {
-  width: 50%;
-  height: 50%;
-  margin: auto !important;
+.ck-content .table table {
+  border: 1px solid !important;
+}
+
+.ck-content .table table td,
+.ck-content .table table th {
+  min-width: 2em;
+  padding: .4em;
+  border: 1px solid !important;
 }
 
 .button-small {

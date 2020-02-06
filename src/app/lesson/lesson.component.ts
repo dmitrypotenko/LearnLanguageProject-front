@@ -84,4 +84,7 @@ export class LessonComponent implements OnInit, AfterViewChecked {
     return Math.random();
   }
 
+  getAttachmentsCount(): number {
+    return this.lessonData.attachments.length
+  }
 }

@@ -7,6 +7,9 @@ import {QuestionType} from '../course/course-edit/course-edit.component';
     styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent implements OnInit {
+
+  @Input() questionIndex: number;
+
     get questionData(): QuestionData {
         return this._questionData;
     }
