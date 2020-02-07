@@ -1,15 +1,14 @@
-<a href="{{link}}" class="m-2 ">
-  <div class="d-flex">
+<a href="{{link}}" class="m-2"  >
+  <div class="d-flex justify-content-center" style="max-width: 155px; margin: auto">
 
-    <div class="d-flex flex-column text-center ">
-      <div>
-        <p class="doc-title ">{{title}}</p>
-      </div>
+    <div class="d-flex flex-column">
+
       <div class="doc-image-wrap">
-
-        <img *ngIf="!isPdf()" class="img-fluid doc-image" src="assets/doc.png"/>
-        <img *ngIf="isPdf()" class="img-fluid doc-image" src="assets/pdf.png"/>
-
+        <img *ngIf="!isPdf()" class="doc-image d-block" src="assets/doc.png"/>
+        <img *ngIf="isPdf()" class="doc-image d-block" src="assets/pdf.png"/>
+      </div>
+      <div>
+        <p class="doc-title text-center">{{title}}</p>
       </div>
     </div>
 

@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import {CourseData, CourseService} from './course.service';
 import {LessonData, LessonService} from '../lesson.service';
 import {ActivatedRoute} from '@angular/router';
@@ -65,4 +65,25 @@ export class CourseComponent implements OnInit, AfterViewInit {
   get currentTest(): TestData {
     return this.stepSwitcher.currentTest;
   }
+
+
+  @HostListener('window:scroll', []) onWindowScroll() {
+    this.scrollFunction();
+  }
+
+  // When the user scrolls down 20px from the top of the document, show the button
+  scrollFunction() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      document.getElementById('upBtn').style.display = 'block';
+    } else {
+      document.getElementById('upBtn').style.display = 'none';
+    }
+  }
+
+// When the user clicks on the button, scroll to the top of the document
+  topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+
 }

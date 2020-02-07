@@ -1,6 +1,6 @@
 <div class="d-flex flex-column " [class.failed]="questionData.status=='FAILED'"
      [class.success]="questionData.status=='SUCCESS'">
-  <div [innerHTML]="questionIndex + 1 + '. ' + questionData.question" class="question-text"></div>
+  <div [innerHTML]="questionIndex + 1 + '. ' + questionData.question" class="question-text d-flex"></div>
   <div *ngIf="questionData.variants.length">
 
     <div *ngFor='let variant of questionData.variants'>

@@ -4,10 +4,19 @@
 }
 
 .test-content {
-  margin-right: 10vw;
-  margin-left: 10vw;
+  width: 67vw;
+  margin-bottom: 5vh;
   background-color: white;
+  margin-right: auto;
+  margin-left: auto;
 }
+
+@media screen and (max-width: 800px) {
+  .test-content {
+    width: 100%;
+  }
+}
+
 
 svg {
   width: 100px;

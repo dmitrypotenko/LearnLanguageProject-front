@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, HostListener, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {LessonData, LessonService} from '../lesson.service';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -85,6 +85,7 @@ export class LessonComponent implements OnInit, AfterViewChecked {
   }
 
   getAttachmentsCount(): number {
-    return this.lessonData.attachments.length
+    return this.lessonData.attachments.length;
   }
+
 }

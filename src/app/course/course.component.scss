@@ -4,12 +4,18 @@
 }
 
 .sidebar {
-  background-color: #9acc9c;
+  background-color: #d8faff;
 }
 .main-content {
-  display: inline;
-
+  display: block;
 }
+
+@media screen and (max-width: 800px) {
+  .main-content {
+    display: inline;
+  }
+}
+
 .full-height {
   min-height: 100vh;
 }
@@ -23,3 +29,12 @@
 
   }
 }*/
+
+.up-arrow {
+  position: fixed;
+  right: 2vw;
+  bottom: 10px;
+  display: none;
+  max-width: 70px;
+  cursor: pointer;
+}

@@ -32,6 +32,21 @@ export class CourseEditComponent implements OnInit {
 
   public ckConfig: {};
 
+  fontSize = {
+    options: [
+      9,
+      11,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  };
 
   courseForm = this.fb.group({
     id: 0,
@@ -44,6 +59,7 @@ export class CourseEditComponent implements OnInit {
   public hostRectangle: SelectionRectangle | null;
   public fileSender: FileSender;
   private ckConfigQuestion = {
+    fontSize : this.fontSize,
     toolbar: [
       'heading',
       '|',
@@ -62,6 +78,7 @@ export class CourseEditComponent implements OnInit {
       'undo',
       'redo',
       'fontFamily',
+      'fontSize',
       'alignment',
       'highlight'
     ]
@@ -121,6 +138,7 @@ export class CourseEditComponent implements OnInit {
     }
 
     this.ckConfig = {
+      fontSize : this.fontSize,
       toolbar: [
         'heading',
         '|',
@@ -142,6 +160,7 @@ export class CourseEditComponent implements OnInit {
         'undo',
         'redo',
         'fontFamily',
+        'fontSize',
         'alignment',
         'highlight'
       ],

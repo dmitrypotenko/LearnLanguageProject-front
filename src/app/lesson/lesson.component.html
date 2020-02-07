@@ -2,8 +2,9 @@
   <div [innerHTML]="lessonText" class="lesson-content-text ck-content">
   </div>
   <div class="d-flex flex-column">
-    <div class="d-flex big-attachments justify-content-around">
-      <div class="flex-fill" *ngFor='let attachment of lessonData.attachments'>
+    <div class="d-flex big-attachments" >
+      <div *ngFor='let attachment of lessonData.attachments'>
+       <!-- [ngStyle]="{ 'width': 100/lessonData.attachments.length+ '%' }"-->
         <div>
           <app-document [link]="attachment.attachmentLink"
                         [title]="attachment.attachmentTitle"></app-document>
@@ -11,13 +12,13 @@
       </div>
     </div>
     <div class="d-flex flex-column small-attachments">
-      <mat-expansion-panel>
+      <mat-expansion-panel class="text-center">
         <mat-expansion-panel-header>
           <mat-panel-title>
             Show attachments ({{getAttachmentsCount()}})
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="d-flex "  *ngFor='let attachment of lessonData.attachments'>
+        <div  *ngFor='let attachment of lessonData.attachments'>
           <div>
             <app-document [link]="attachment.attachmentLink"
                           [title]="attachment.attachmentTitle"></app-document>
@@ -41,7 +42,6 @@
 
     </div>
   </div>
-
 
 </div>
 
