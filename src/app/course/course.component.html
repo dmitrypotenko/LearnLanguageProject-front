@@ -1,15 +1,24 @@
 <div class="course">
+
   <mat-sidenav-container class="full-height" autosize>
-    <mat-sidenav #sidenav position="start" mode="side" class="sidebar" >
+    <mat-sidenav id="sidenavStep" #sidenav position="start"
+                 [mode]="sidenavmode()? 'side': 'push'" class="sidebar" [fixedInViewport]="true"
+                 [fixedTopGap]="menuHeight()">
       <app-course-panel
         [stepSwitcher]="stepSwitcher"></app-course-panel>
-    </mat-sidenav>
-    <mat-sidenav-content class="main-content">
-      <button (click)="sidenav.toggle()" class="btn btn-primary btn" type="button"><b>Content&bull;&bull;&bull;</b>
+      <button type="button" class="close" aria-label="Close" (click)="sidenav.toggle()">
+        <span aria-hidden="true">×</span>
       </button>
-      <app-lesson class="content-page"></app-lesson>
-      <app-test class="content-page"></app-test>
-      <img src="assets/up.png" class="up-arrow" id="upBtn" (click)="topFunction()">
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <button (click)="sidenav.toggle()" class="btn btn-primary btn toggleBtn" type="button" id="toggleBtn"
+              [ngStyle]="{ 'top': menuHeight()+ 'px'}"><b>Content&bull;&bull;&bull;</b>
+      </button> <!--//TODO replace with material menu icon-->
+      <div class="main-content">
+        <app-lesson class="content-page"></app-lesson>
+        <app-test class="content-page"></app-test>
+        <img src="assets/up.png" class="up-arrow" id="upBtn" (click)="topFunction()">
+      </div>
     </mat-sidenav-content>
 
   </mat-sidenav-container>

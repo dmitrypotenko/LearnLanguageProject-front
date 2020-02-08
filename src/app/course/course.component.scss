@@ -6,6 +6,7 @@
 .sidebar {
   background-color: #d8faff;
 }
+
 .main-content {
   display: block;
 }
@@ -37,4 +38,20 @@
   display: none;
   max-width: 70px;
   cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.toggleBtn {
+  position: fixed;
+  z-index: 99999;
+  -moz-transition: all 0.8s ease 0s;
+}
+
+.mat-drawer-content {
+  z-index: auto;
 }
