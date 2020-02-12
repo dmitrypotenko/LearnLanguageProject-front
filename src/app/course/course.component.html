@@ -12,7 +12,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <button (click)="sidenav.toggle()" class="btn btn-primary btn toggleBtn" type="button" id="toggleBtn"
-              [ngStyle]="{ 'top': menuHeight()+ 'px'}"><b>Content&bull;&bull;&bull;</b>
+              [ngStyle]="{ 'top': menuHeight()+ 'px'}"><span style="position: relative; top: -6px">Menu</span> <mat-icon>menu</mat-icon>
       </button> <!--//TODO replace with material menu icon-->
       <div class="main-content">
         <app-lesson class="content-page"></app-lesson>

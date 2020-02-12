@@ -10,9 +10,7 @@
           <label [class.isWrong]="variant.isWrong" [class.isRight]="variant.isRight"
                  for="{{variant.id}}"><span class="text-nowrap">{{variant.variant}}</span></label>
         </div>
-        <label *ngIf="(variant.isWrong || variant.isRight) && notEmpty(variant.explanation)"
-               [class.isWrong]="variant.isWrong"
-               [class.isRight]="variant.isRight"><span class="explanation"><b>Explanation: {{variant.explanation}}</b></span></label>
+        <label *ngIf="notEmpty(variant.explanation)"><span class="explanation"><b>Explanation: {{variant.explanation}}</b></span></label>
       </div>
       <div class="m-2" *ngIf="questionData.type == 'SINGLE_CHOICE'">
         <div class="radioFive">
@@ -21,9 +19,7 @@
           <label for="{{variant.id}}" [class.isWrong]="variant.isWrong"
                  [class.isRight]="variant.isRight"><span class="text-nowrap">{{variant.variant}}</span></label>
         </div>
-        <label *ngIf="(variant.isWrong || variant.isRight) && notEmpty(variant.explanation)"
-               [class.isWrong]="variant.isWrong"
-               [class.isRight]="variant.isRight"><span><b>Explanation: {{variant.explanation}}</b></span></label>
+        <label *ngIf="notEmpty(variant.explanation)"><span><b>Explanation: {{variant.explanation}}</b></span></label>
       </div>
     </div>
   </div>

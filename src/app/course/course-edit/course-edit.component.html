@@ -31,7 +31,7 @@
     <button class="btn btn-primary m-2" (click)="addLesson()">Add Lesson</button>
     <button class="btn btn-primary m-2" (click)="addTest()">Add Test</button>
 
-    <mat-expansion-panel *ngFor="let step of steps.controls; let i=index" cdkDrag>
+    <mat-expansion-panel (opened)="setExpandedTrue(step)"  *ngFor="let step of steps.controls; let i=index" cdkDrag>
       <mat-expansion-panel-header *ngIf="isLesson(step)" cdkDragHandle>
         <mat-panel-title  class="m-2 d-flex justify-content-between">
         <button class="btn btn-secondary btn-sm">
@@ -40,7 +40,7 @@
         <button class="btn btn-secondary btn-sm" (click)="delete(courseForm, step,'steps')">Delete &#10060;</button>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngIf="isLesson(step)" class="p-2" formGroupName="{{i}}">
+      <div *ngIf="isLesson(step) && shouldBeRendered(step)" class="p-2" formGroupName="{{i}}">
         <div class="form-group">
           <label for="lessonName{{i}}">
             Name:
@@ -75,12 +75,12 @@
         <button class="btn btn-secondary btn-sm" (click)="delete(courseForm, step,'steps')">Delete &#10060;</button>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngIf="isTest(step)" class="p-2" formGroupName="{{i}}">
+      <div *ngIf="isTest(step) && shouldBeRendered(step)"  class="p-2" formGroupName="{{i}}">
         <div class="form-group">
-          <label for="testName">
+          <label for="testName{{i}}">
             Name:
           </label>
-          <input id="testName" class="form-control"
+          <input id="testName{{i}}" class="form-control"
                  placeholder="Enter the test name" type="text" formControlName="name">
         </div>
 
@@ -88,7 +88,7 @@
              (cdkDropListDropped)="drop(step, $event, 'questions')">
           <h5>Questions</h5>
           <button class="btn btn-primary btn-sm addition" (click)="addQuestion(step)">Add Question</button>
-          <mat-expansion-panel *ngFor="let question of questions(step).controls; let j=index" cdkDrag>
+          <mat-expansion-panel (opened)="setExpandedTrue(question)" *ngFor="let question of questions(step).controls; let j=index" cdkDrag>
             <mat-expansion-panel-header cdkDragHandle>
               <mat-panel-title  class="m-2 d-flex justify-content-between">
                 <button class="btn btn-secondary btn-sm">
@@ -97,12 +97,12 @@
                 <button class="btn btn-secondary btn-sm" (click)="delete(step, question, 'questions')">Delete &#10060;</button>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="p-2"  formGroupName="{{j}}">
+            <div *ngIf="shouldBeRendered(question)"  class="p-2"  formGroupName="{{j}}">
               <div class="form-group">
-                <label for="questionText{{j}}">
+                <label for="questionText-{{i}}-{{j}}">
                   Question text:
                 </label>
-                <ckeditor [editor]="Editor" id="questionText{{j}}" formControlName="questionText" [config]="ckConfigQuestion">
+                <ckeditor [editor]="Editor" id="questionText-{{i}}-{{j}}" formControlName="questionText" [config]="ckConfigQuestion">
                   Type text here
                 </ckeditor>
 
@@ -124,18 +124,18 @@
                         we then have to consume the click-intent by way of the (mouseup)
                         event.
                     -->
-                    <button class="btn btn-secondary btn-sm" (click)="wrapElement()" class="indicator__cta-link btn btn-secondary btn-sm"> Question
+                    <!--<button class="btn btn-secondary btn-sm" (click)="wrapElement()" class="indicator__cta-link btn btn-secondary btn-sm"> Question
                       word?
-                    </button>
+                    </button>-->
                   </div>
                 </div>
               </div>
 
               <div class="form-group w-25">
-                <label for="questionType{{j}}">
+                <label for="questionType-{{i}}-{{j}}">
                   Which type of questions is it?
                 </label>
-                <select id="questionType{{j}}" class="form-control" formControlName="type" [value]="question.get('type').value.toString()">
+                <select id="questionType-{{i}}-{{j}}" class="form-control" formControlName="type" [value]="question.get('type').value.toString()">
                   <option *ngFor="let questionType of questionTypes">
                     {{ questionType}}
                   </option>
@@ -164,8 +164,8 @@
                                formControlName="explanation">
                       </div>
                       <div class="form-check flex-fill m-1">
-                        <input id="isCorrect{{z}}" class="form-check-input" [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
-                        <label class="form-check-label" for="isCorrect{{z}}">
+                        <input id="isCorrect-{{i}}-{{j}}-{{z}}" class="form-check-input" [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
+                        <label class="form-check-label" for="isCorrect-{{i}}-{{j}}-{{z}}">
                           Is it correct?
                         </label>
                       </div>

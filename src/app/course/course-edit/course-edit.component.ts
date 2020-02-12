@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -90,6 +90,7 @@ export class CourseEditComponent implements OnInit {
       let id: number = Number(routeId);
       this.courseService.getCourseByIdForEdit(id)
         .subscribe(course => {
+          console.log("Course is retrieved from server");
           this.courseForm.get('id').setValue(course.id);
           this.courseForm.get('name').setValue(course.name);
           this.courseForm.get('description').setValue(course.description);
@@ -126,6 +127,7 @@ export class CourseEditComponent implements OnInit {
           });
         });
     }
+
 
     const httpClient = this.httpClient;
     this.fileSender = new FileSender(httpClient);
@@ -382,6 +384,14 @@ export class CourseEditComponent implements OnInit {
     let attachments = lessonGroup.get('attachments').value as Attachment[];
     attachments.splice(attachments.indexOf(f), 1);
   }
+
+  shouldBeRendered(control: AbstractControl): boolean {
+   return (control.get("expanded").value as boolean) == true
+  }
+
+  setExpandedTrue(control: AbstractControl) {
+    control.get("expanded").setValue(true)
+  }
 }
 
 class LessonForm {
@@ -390,12 +400,14 @@ class LessonForm {
   name = '';
   attachments: Attachment[] = [];
   id = null;
+  expanded = false;
 }
 
 class TestForm {
   name = '';
   questions: FormArray;
   id = null;
+  expanded = false;
 }
 
 class QuestionForm {
@@ -403,6 +415,7 @@ class QuestionForm {
   variants: FormArray;
   type = QuestionType.SINGLE_CHOICE.valueOf();
   id = null;
+  expanded = false;
 }
 
 class VariantForm {

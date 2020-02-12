@@ -4,6 +4,7 @@
 .content-page {
   background-color: white;
   margin-bottom: 5vh;
+  margin-top: 2vh;
   width: 67vw;
   margin-right: auto;
   margin-left: auto;
@@ -87,21 +88,6 @@ svg {
     animation: dash-check .9s .35s ease-in-out forwards;
   }
 }
-
-p {
-  text-align: center;
-  margin: 20px 0 60px;
-  font-size: 1.25em;
-
-  &.success {
-    color: #73AF55;
-  }
-
-  &.error {
-    color: #D06079;
-  }
-}
-
 
 @-webkit-keyframes dash {
   0% {

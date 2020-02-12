@@ -19,7 +19,7 @@ export class CoursePanelComponent implements OnInit {
     this._stepSwitcher = value;
   }
 
-  currentWidget: string;
+  currentWidget: string = 'Lessons';
   private _stepSwitcher: StepSwitcherService;
 
   constructor() {
