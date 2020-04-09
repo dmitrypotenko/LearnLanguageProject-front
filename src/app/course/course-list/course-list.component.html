@@ -1,5 +1,5 @@
 <div class="courses-list">
-  <div class="center " *ngIf="role!='ROLE_USER' && role!='ROLE_ADMIN'">
+  <div class="center" *ngIf="role!='ROLE_USER' && role!='ROLE_ADMIN'">
     <p class="warning"><span>
       WARNING!
     </span>
@@ -18,6 +18,11 @@
       <mat-option value="completed">My completed courses</mat-option>
     </mat-select>
   </mat-form-field>
+  <div style="width: 100%; height: 50vh;" class="d-flex justify-content-center" *ngIf="spinnerVisible">
+    <mat-progress-spinner  [mode]="'indeterminate'"  style="margin: auto">
+    </mat-progress-spinner>
+  </div>
+
   <div class="d-flex flex-column" *ngIf="courses?.length">
     <div *ngFor='let course of courses' class="card shadow m-2">
       <div class="row">

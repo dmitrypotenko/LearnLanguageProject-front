@@ -1,6 +1,9 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {OverlayContainer} from '@angular/cdk/overlay';
-declare var jQuery: any;
+import {
+  jarallax
+} from 'jarallax';
+
+
 
 
 @Component({
@@ -11,27 +14,16 @@ declare var jQuery: any;
 export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'Learn hard';
 
-
-  private parallaxMirror: any;
-
-  constructor(overlayContainer: OverlayContainer) {
-    overlayContainer.getContainerElement().classList.add('mat-app-background');
-  }
-
   ngOnInit() {
+    jarallax(document.querySelectorAll('.jarallax'), {
+      speed: 0.2,
+      imgSrc: 'assets/parallax_new_york.jpg'
+    });
   }
 
   ngAfterViewInit(): void {
-    if (jQuery('.parallax-mirror').length == 0) {
-      jQuery('.parallax-window').parallax();
-    }
-
   }
 
   ngOnDestroy(): void {
-    this.parallaxMirror = jQuery('.parallax-mirror');
-    this.parallaxMirror.remove()
   }
-
-
 }

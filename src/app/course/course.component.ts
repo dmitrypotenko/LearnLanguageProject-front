@@ -23,6 +23,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
   private cd: ChangeDetectorRef;
   private _testService: TestService;
   private sidenav: any;
+  spinnerVisible: boolean = true;
 
   constructor(courseService: CourseService, lessonService: LessonService, route: ActivatedRoute,
               cd: ChangeDetectorRef,
@@ -40,6 +41,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
     this.stepSwitcher = new StepSwitcherService(this.lessonService, this._testService);
 
     this.courseService.getCourseById(id).subscribe(course => {
+      this.spinnerVisible = false;
       this.currentCourse = course;
       this.stepSwitcher.lessonsOfTheCourse = course.lessons;
       this.stepSwitcher.testsOfTheCourse = course.tests;
@@ -49,10 +51,10 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.sidenav = jQuery('#sidenavStep');
+ /*   this.sidenav = jQuery('#sidenavStep');
     if (this.tryToUpdate()) {
       this.cd.detectChanges();
-    }
+    }*/
   }
 
   private tryToUpdate(): boolean {
@@ -73,9 +75,9 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
 
-  @HostListener('window:scroll', []) onWindowScroll() {
+ /* @HostListener('window:scroll', []) onWindowScroll() {
     this.scrollFunction();
-  }
+  }*/
 
   // When the user scrolls down 20px from the top of the document, show the button
   scrollFunction() {

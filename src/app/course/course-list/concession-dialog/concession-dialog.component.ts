@@ -1,5 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-concession-dialog',
@@ -18,10 +18,10 @@ export class ConcessionDialogComponent implements OnInit {
   }
 
   yes() {
-    this.dialogRef.close(true)
+    this.dialogRef.close(true);
   }
 
   no() {
-    this.dialogRef.close(false)
+    this.dialogRef.close(false);
   }
 }

@@ -1,19 +1,20 @@
-import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {questionWordCss, questionWordTag} from '../../constants';
 import {CourseData, CourseService} from '../course.service';
 import {Attachment, LessonData} from '../../lesson.service';
 import {TestData} from '../../test.service';
 import {QuestionData, VariantData} from '../../question/question.component';
 import {ActivatedRoute} from '@angular/router';
-import ClassicEditor from '@dpotenko/ckeditor5-build-classic-with-resize';
-import {CustomAdapter} from './CustomAdapter';
 import {HttpClient} from '@angular/common/http';
 import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {FileSender} from './FileSender';
-import {appUrl} from '../../../environments/environment';
+import {MatDialog} from '@angular/material/dialog';
+import {NewOptionDialogComponent} from './new-option-dialog/new-option-dialog.component';
+import {QuestionType} from './QuestionType';
+
+declare var CKEDITOR: any;
 
 interface SelectionRectangle {
   left: number;
@@ -28,25 +29,8 @@ interface SelectionRectangle {
   styleUrls: ['./course-edit.component.scss']
 })
 export class CourseEditComponent implements OnInit {
-  public Editor = ClassicEditor;
 
   public ckConfig: {};
-
-  fontSize = {
-    options: [
-      9,
-      11,
-      13,
-      14,
-      15,
-      16,
-      17,
-      18,
-      19,
-      20,
-      21
-    ]
-  };
 
   courseForm = this.fb.group({
     id: 0,
@@ -56,32 +40,9 @@ export class CourseEditComponent implements OnInit {
     steps: this.fb.array([]),
   });
 
-  public hostRectangle: SelectionRectangle | null;
-  public fileSender: FileSender;
+  public static fileSender: FileSender;
   private ckConfigQuestion = {
-    fontSize : this.fontSize,
-    toolbar: [
-      'heading',
-      '|',
-      'bold',
-      'italic',
-      'strikethrough',
-      'underline',
-      'link',
-      'bulletedList',
-      'numberedList',
-      '|',
-      'indent',
-      'outdent',
-      '|',
-      'blockQuote',
-      'undo',
-      'redo',
-      'fontFamily',
-      'fontSize',
-      'alignment',
-      'highlight'
-    ]
+    allowedContent: true
   };
 
   ngOnInit(): void {
@@ -90,7 +51,7 @@ export class CourseEditComponent implements OnInit {
       let id: number = Number(routeId);
       this.courseService.getCourseByIdForEdit(id)
         .subscribe(course => {
-          console.log("Course is retrieved from server");
+          console.log('Course is retrieved from server');
           this.courseForm.get('id').setValue(course.id);
           this.courseForm.get('name').setValue(course.name);
           this.courseForm.get('description').setValue(course.description);
@@ -130,69 +91,31 @@ export class CourseEditComponent implements OnInit {
 
 
     const httpClient = this.httpClient;
-    this.fileSender = new FileSender(httpClient);
-
-    function MyCustomUploadAdapterPlugin(editor) {
-      editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-        // Configure the URL to the upload script in your back-end here!
-        return new CustomAdapter(httpClient, loader);
-      };
-    }
+    CourseEditComponent.fileSender = new FileSender(httpClient);
 
     this.ckConfig = {
-      fontSize : this.fontSize,
-      toolbar: [
-        'heading',
-        '|',
-        'bold',
-        'italic',
-        'strikethrough',
-        'underline',
-        'link',
-        'bulletedList',
-        'numberedList',
-        '|',
-        'indent',
-        'outdent',
-        '|',
-        'imageUpload',
-        'blockQuote',
-        'insertTable',
-        'mediaEmbed',
-        'undo',
-        'redo',
-        'fontFamily',
-        'fontSize',
-        'alignment',
-        'highlight'
-      ],
-      image: {
-        // You need to configure the image toolbar, too, so it uses the new style buttons.
-        toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
-
-        styles: [
-          // This option is equal to a situation where no style is applied.
-          'full',
-
-          // This represents an image aligned to the left.
-          'alignLeft',
-
-          // This represents an image aligned to the right.
-          'alignRight'
-        ]
+      allowedContent: true,
+      on: {
+        fileUploadRequest: function(evt) {
+          CourseEditComponent.fileSender.sendFile(evt.data.requestData.upload.file).subscribe(response => {
+              evt.data.fileLoader.status = 'uploaded';
+              evt.data.fileLoader.responseData = response;
+              evt.data.fileLoader.url = response.fileUrl;
+              evt.data.fileLoader.fire('update');
+            }
+          );
+          evt.stop();
+        }
       },
-      indentBlock: {
-        offset: 1,
-        unit: 'em'
-      },
-      extraPlugins: [MyCustomUploadAdapterPlugin]
+      extraPlugins: 'uploadimage',
+      uploadUrl: 'http://localhost:8080/files/upload',
     };
 
   }
 
 
   constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService,
-              private route: ActivatedRoute, private httpClient: HttpClient) {
+              private route: ActivatedRoute, private httpClient: HttpClient, private dialog: MatDialog) {
   }
 
   onSubmit() {
@@ -211,7 +134,8 @@ export class CourseEditComponent implements OnInit {
               false,
               false,
               variant.get('id').value as number,
-              variant.get('explanation').value as string
+              variant.get('explanation').value as string,
+              null
             )),
             question.get('id').value as number,
             question.get('type').value
@@ -354,6 +278,7 @@ export class CourseEditComponent implements OnInit {
 
   drop(control: AbstractControl, cdkDragDrop: CdkDragDrop<any[]>, collectionName: string) {
     let collection = control.get(collectionName) as FormArray;
+    collection.controls.forEach(step => step.get('expanded').setValue('false'));
     moveItemInArray(collection.controls, cdkDragDrop.previousIndex, cdkDragDrop.currentIndex);
   }
 
@@ -361,8 +286,8 @@ export class CourseEditComponent implements OnInit {
     return Object.values(QuestionType);
   }
 
-  isOmittedWords(question: AbstractControl) {
-    return question.value.type == 'OMITTED_WORDS';
+  isVariantsVisible(question: AbstractControl) {
+    return question.value.type == 'OMITTED_WORDS' || question.value.type == 'SELECT_WORDS';
   }
 
   onSelect($event: NgxDropzoneChangeEvent, step: AbstractControl) {
@@ -370,7 +295,7 @@ export class CourseEditComponent implements OnInit {
     let lessonGroup = step as FormGroup;
     let attachments = lessonGroup.get('attachments').value as Attachment[];
     $event.addedFiles.map(file => {
-      this.fileSender.sendFile(file).subscribe(response => {
+      CourseEditComponent.fileSender.sendFile(file).subscribe(response => {
           attachments.push(new Attachment(response.fileUrl, file.name, null));
         }
       );
@@ -386,11 +311,25 @@ export class CourseEditComponent implements OnInit {
   }
 
   shouldBeRendered(control: AbstractControl): boolean {
-   return (control.get("expanded").value as boolean) == true
+    return (control.get('expanded').value as boolean) == true;
   }
 
   setExpandedTrue(control: AbstractControl) {
-    control.get("expanded").setValue(true)
+    control.get('expanded').setValue(true);
+  }
+
+  addNewOmittedOption(question: AbstractControl) {
+    let questionGroup = question as FormGroup;
+    let variants = questionGroup.get('variants') as FormArray;
+
+    this.dialog.open(NewOptionDialogComponent, {height: '20vh', width: '30vw', hasBackdrop: true})
+      .afterClosed().subscribe(result => {
+      if (result) {
+        let variant = this.createVariant();
+        variants.push(variant);
+        variant.get('variantText').setValue(result);
+      }
+    });
   }
 }
 
@@ -426,8 +365,4 @@ class VariantForm {
 }
 
 
-export enum QuestionType {
-  SINGLE_CHOICE = 'SINGLE_CHOICE',
-  MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
-  OMITTED_WORDS = 'OMITTED_WORDS'
-}
+

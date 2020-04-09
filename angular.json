@@ -41,8 +41,7 @@
               "node_modules/hammerjs/hammer.min.js",
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/jquery-parallax.js/parallax.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "es5BrowserSupport": true
           },
@@ -128,7 +127,7 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
+            "main": "server.ts",
             "tsConfig": "src/tsconfig.server.json"
           },
           "configurations": {
@@ -142,6 +141,32 @@
               "sourceMap": false,
               "optimization": true
             }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "kirill:build",
+            "serverTarget": "kirill:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "kirill:build:production",
+              "serverTarget": "kirill:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "kirill:build:production",
+            "serverTarget": "kirill:server:production",
+            "routes": [
+              "/donate"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }
@@ -175,5 +200,8 @@
       }
     }
   },
-  "defaultProject": "kirill"
+  "defaultProject": "kirill",
+  "cli": {
+    "analytics": "ab23583b-b7a3-44a7-89d8-d8fd7157d074"
+  }
 }

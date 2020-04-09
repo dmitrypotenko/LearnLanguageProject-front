@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 
@@ -8,49 +8,50 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LandingComponent} from './landing/landing.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
-import {
-  MatInputModule,
-  MatButtonModule,
-  MatSelectModule,
-  MatRadioModule,
-  MatCardModule,
-  MatGridListModule,
-  MatMenuModule,
-  MatIconModule,
-  MatExpansionModule
-} from '@angular/material';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { MenuComponent } from './menu/menu.component';
-import { MiddleComponent } from './middle/middle.component';
-import { FooterComponent } from './footer/footer.component';
-import { LessonComponent } from './lesson/lesson.component';
-import { CoursePanelComponent } from './course/course-panel/course-panel.component';
-import { CourseComponent } from './course/course.component';
-import { CourseListComponent } from './course/course-list/course-list.component';
-import { DocumentComponent } from './document/document.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {LayoutModule} from '@angular/cdk/layout';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {MenuComponent} from './menu/menu.component';
+import {MiddleComponent} from './middle/middle.component';
+import {FooterComponent} from './footer/footer.component';
+import {LessonComponent} from './lesson/lesson.component';
+import {CoursePanelComponent} from './course/course-panel/course-panel.component';
+import {CourseComponent} from './course/course.component';
+import {CourseListComponent} from './course/course-list/course-list.component';
+import {DocumentComponent} from './document/document.component';
 import {CookieHandler} from './cookie-handler';
 import {CookieService} from 'ngx-cookie-service';
-import { CourseEditComponent } from './course/course-edit/course-edit.component';
-import { QuestionComponent } from './question/question.component';
-import { TestComponent } from './test/test.component';
+import {CourseEditComponent} from './course/course-edit/course-edit.component';
+import {QuestionComponent} from './question/question.component';
+import {TestComponent} from './test/test.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { MatSnackBarModule} from '@angular/material';
-import { ConcessionDialogComponent } from './course/course-list/concession-dialog/concession-dialog.component';
-import {MatDialogModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {ConcessionDialogComponent} from './course/course-list/concession-dialog/concession-dialog.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {NgxDropzoneModule} from 'ngx-dropzone';
-import { AboutmeComponent } from './aboutme/aboutme.component';
-import { DonateComponent } from './donate/donate.component';
+import {AboutmeComponent} from './aboutme/aboutme.component';
+import {DonateComponent} from './donate/donate.component';
 import {RouterModule} from '@angular/router';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { NewOptionDialogComponent } from './course/course-edit/new-option-dialog/new-option-dialog.component';
+import {CKEditorModule} from 'ckeditor4-angular';
+import {EscapeHtmlPipe} from './utils/keepHtmlPipe';
+import { SelectComponent } from './question/select/select.component';
+import {SelectDirective} from './question/select/select.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    DashboardComponent,
     MenuComponent,
     MiddleComponent,
     FooterComponent,
@@ -64,7 +65,11 @@ import {RouterModule} from '@angular/router';
     TestComponent,
     ConcessionDialogComponent,
     AboutmeComponent,
-    DonateComponent
+    DonateComponent,
+    NewOptionDialogComponent,
+    EscapeHtmlPipe,
+    SelectDirective,
+    SelectComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -89,10 +94,13 @@ import {RouterModule} from '@angular/router';
     CKEditorModule,
     NgxDropzoneModule,
     MatExpansionModule,
-    RouterModule
+    MatProgressSpinnerModule,
+    RouterModule,
+    CKEditorModule
   ],
   entryComponents: [
-    ConcessionDialogComponent
+    ConcessionDialogComponent,
+    SelectComponent
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
@@ -100,6 +108,8 @@ import {RouterModule} from '@angular/router';
     multi: true
   },
     CookieService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
-export class CoreModule { }
+export class CoreModule {
+}

@@ -1,0 +1,3 @@
+<select [name]="name" (change)="onChange($event)" >
+  <option *ngFor="let option of options; let z=index" [selected]="option.isTicked">{{option.variant}}</option>
+</select>

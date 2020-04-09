@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
 import {AuthService} from '../../auth.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 import {FormBuilder, FormControl} from '@angular/forms';
 
@@ -18,6 +18,7 @@ export class CourseListComponent implements OnInit {
   modeControl: FormControl;
   mode: string = 'all';
   private _role = 'undefined';
+  spinnerVisible = true;
 
   public dialog: MatDialog;
 
@@ -48,7 +49,10 @@ export class CourseListComponent implements OnInit {
 
   ngOnInit() {
     this.authService.role().subscribe(role => this._role = role);
-    this.courseService.getAllCoursesMetadata().subscribe(courses => this._courses = courses);
+    this.courseService.getAllCoursesMetadata().subscribe(courses => {
+      this._courses = courses;
+      this.spinnerVisible = false;
+    });
     this.authService.isAdmin().subscribe(isAdmin => {
         this.isAdmin =
           isAdmin.valueOf();

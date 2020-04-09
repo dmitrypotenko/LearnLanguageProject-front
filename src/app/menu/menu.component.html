@@ -1,4 +1,4 @@
-<ul class="nav nav-pills nav-fill m-3" id="mainMenu">
+<ul class="nav nav-pills nav-fill p-3" id="mainMenu">
   <li class="nav-item">
     <a class="nav-link" routerLink="/courses">For learners</a>
   </li>
@@ -23,7 +23,11 @@
       </div>
     </div>
     <div *ngIf="role && role != 'undefined' &&  role != 'null'">
-      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+
+      <button class="btn btn-secondary" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span class="icon-btn-text ">Logout</span>
+      </button>
     </div>
   </li>
 </ul>

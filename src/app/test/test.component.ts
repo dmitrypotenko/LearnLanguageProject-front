@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {TestData, TestService} from '../test.service';
 import {QuestionStatus} from '../question/question.component';
 
@@ -16,7 +16,8 @@ export class TestComponent implements OnInit {
     private testService: TestService;
 
 
-    constructor(testService: TestService) {
+    constructor(testService: TestService,
+                private cd: ChangeDetectorRef) {
         this.testService = testService;
     }
 
@@ -60,6 +61,7 @@ export class TestComponent implements OnInit {
                             variant.explanation = '';
                         });
                     });
+                    this.cd.detectChanges();
                 }
             });
     }

@@ -1,4 +1,4 @@
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 
 $enable-responsive-font-sizes: true;
@@ -38,6 +38,7 @@ html {
   -webkit-overflow-scrolling: touch;
 }
 
-.mat-app-background {
-  background-color: transparent;
+.icon-btn-text {
+  position: relative;
+  top: -6px;
 }
