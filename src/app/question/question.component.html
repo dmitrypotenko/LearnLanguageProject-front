@@ -1,11 +1,13 @@
 <div class="d-flex flex-column " [class.failed]="questionData.status=='FAILED'"
-     [class.success]="questionData.status=='SUCCESS'">
+     [class.success]="questionData.status=='SUCCESS'" id="question{{questionData.id}}">
 
   <div [innerHTML]="safeQuestionHtml" class="question-text d-flex"></div>
 
   <div *ngIf="questionData.variants.length">
-
-    <div *ngFor='let variant of questionData.variants'>
+    <div class="m-2" *ngIf="questionData.type == 'SELECT_WORDS'">
+       <p *ngIf="questionData.status=='FAILED'"><b>Correct answers are </b></p>
+    </div>
+    <div *ngFor='let variant of questionData.variants' [class.correctSelectedWords] = "questionData.type == 'SELECT_WORDS'">
       <div class="m-2" *ngIf="questionData.type == 'MULTIPLE_CHOICE'">
         <div class="checkboxFive">
           <input type="checkbox" id="{{variant.id}}" (change)="changeMultipleChoice(variant)" [checked]="variant.isTicked || variant.isRight || variant.isWrong">
@@ -23,6 +25,7 @@
         </div>
         <label *ngIf="notEmpty(variant.explanation)"><span><b>Explanation: {{variant.explanation}}</b></span></label>
       </div>
+      <b><span *ngIf="questionData.status=='FAILED' && questionData.type == 'SELECT_WORDS' && variant.isRight"> {{variant.variant}};</span></b>
     </div>
   </div>
 </div>

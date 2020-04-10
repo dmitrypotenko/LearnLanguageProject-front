@@ -47,10 +47,16 @@
 }
 
 .toggleBtn {
-  position: fixed;
+  position: sticky;
+  top: 0;
   z-index: 99999;
   -moz-transition: all 0.8s ease 0s;
   vertical-align: middle;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
 }
 
 .mat-drawer-content {

@@ -1,17 +1,5 @@
-import {
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren
-} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {QuestionType} from '../course/course-edit/QuestionType';
-import {SelectDirective} from './select/select.directive';
 import {NgElement, WithProperties} from '@angular/elements';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
@@ -35,7 +23,7 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   @Input()
   set questionData(value: QuestionData) {
-    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml(value.question);
+    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml(this.questionIndex + 1 + '. ' + value.question);
     this._questionData = value;
 
   }
@@ -53,13 +41,15 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   ngAfterViewChecked(): void {
     console.log('ngAfterViewChecked Start');
-    let allSelects = document.querySelectorAll('select-element') as NodeListOf<NgElement & WithProperties<{
+    let allSelects = document.querySelector('#question' + this.questionData.id).querySelectorAll(' select-element') as NodeListOf<NgElement & WithProperties<{
       name: string,
       question: QuestionData
     }>>;
     allSelects.forEach(select => {
       console.log('ngAfterViewChecked');
-      select.question = this._questionData;
+      if (select.question == null) {
+        select.question = this._questionData;
+      }
     });
   }
 
@@ -67,7 +57,7 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   }
 
-  changeVariant(variant: VariantData) {  //TODO сраный костыль
+  changeVariant(variant: VariantData) {
     this._questionData.variants.forEach(variant => {
       if (variant.isTicked) {
         variant.isTicked = false;

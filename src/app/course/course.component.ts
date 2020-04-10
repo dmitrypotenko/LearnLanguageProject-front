@@ -24,6 +24,8 @@ export class CourseComponent implements OnInit, AfterViewInit {
   private _testService: TestService;
   private sidenav: any;
   spinnerVisible: boolean = true;
+  toggleBtn: any;
+  menu: any;
 
   constructor(courseService: CourseService, lessonService: LessonService, route: ActivatedRoute,
               cd: ChangeDetectorRef,
@@ -51,10 +53,30 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
- /*   this.sidenav = jQuery('#sidenavStep');
+    let sidenav = jQuery('#sidenavStep');
     if (this.tryToUpdate()) {
       this.cd.detectChanges();
-    }*/
+    }
+    let menu = jQuery('#mainMenu');
+    let toggleBtn = jQuery('#toggleBtn');
+
+    window.onscroll = function() {
+      myFunction();
+    };
+
+    function myFunction() {
+      if (window.pageYOffset >= menu.outerHeight(true)) {
+        if (toggleBtn != null) {
+          toggleBtn.addClass('sticky');
+        }
+        sidenav.addClass('sticky');
+      } else {
+        if (toggleBtn != null) {
+          toggleBtn.removeClass('sticky');
+        }
+        sidenav.removeClass('sticky');
+      }
+    }
   }
 
   private tryToUpdate(): boolean {
@@ -75,8 +97,10 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
 
- /* @HostListener('window:scroll', []) onWindowScroll() {
+/*  @HostListener('window:scroll', []) onWindowScroll() {
     this.scrollFunction();
+    /!*if
+    }*!/
   }*/
 
   // When the user scrolls down 20px from the top of the document, show the button
@@ -102,29 +126,4 @@ export class CourseComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  private menu: any;
-
-  menuHeight(): number {
-    let visibleHeight = jQuery('#mainMenu').outerHeight(true) - jQuery(window).scrollTop();
-    if (visibleHeight > 0) {
-      return visibleHeight;
-    }
-    return 0;
-  }
-
-  sideWidth(): number {
-    if (this.sidenav == null) {
-      return 0;
-    }
-    return this.sidenav.width() + this.sidenav.position().left;
-  }
-
-  changeToggleButton() {
-    /*  let toggleBtn = jQuery('#toggleBtn');
-      if (this.opened) {
-        toggleBtn.css({left: this.sidenav.width().toString()});
-      } else {
-        toggleBtn.css({left: '0'});
-      }*/
-  }
 }

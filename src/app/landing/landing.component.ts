@@ -25,5 +25,6 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    jarallax(document.querySelectorAll('.jarallax'), 'destroy');
   }
 }

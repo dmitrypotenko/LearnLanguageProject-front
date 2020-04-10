@@ -2,8 +2,7 @@
 
   <mat-sidenav-container class="full-height" autosize>
     <mat-sidenav id="sidenavStep" #sidenav position="start"
-                 [mode]="sidenavmode()? 'side': 'push'" class="sidebar" [fixedInViewport]="true"
-                 >
+                 [mode]="sidenavmode()? 'side': 'push'" class="sidebar">
       <app-course-panel
         [stepSwitcher]="stepSwitcher"></app-course-panel>
       <button type="button" class="close" aria-label="Close" (click)="sidenav.toggle()">
@@ -11,9 +10,9 @@
       </button>
     </mat-sidenav>
     <mat-sidenav-content>
-      <button (click)="sidenav.toggle()" class="btn btn-primary btn toggleBtn" type="button" id="toggleBtn">  <!--[ngStyle]="{ 'top': menuHeight()+ 'px'}"-->
+      <button (click)="sidenav.toggle()" class="btn btn-primary btn toggleBtn" type="button" id="toggleBtn">
              <span class="icon-btn-text">Menu</span> <mat-icon>menu</mat-icon>
-      </button> <!--//TODO replace with material menu icon-->
+      </button>
       <div class="main-content">
         <div style="width: 100%; height: 70vh;" class="d-flex justify-content-center" *ngIf="spinnerVisible">
           <mat-progress-spinner  [mode]="'indeterminate'"  style="margin: auto">
