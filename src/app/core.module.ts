@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 
@@ -42,11 +42,13 @@ import {AboutmeComponent} from './aboutme/aboutme.component';
 import {DonateComponent} from './donate/donate.component';
 import {RouterModule} from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { NewOptionDialogComponent } from './course/course-edit/new-option-dialog/new-option-dialog.component';
+import {NewOptionDialogComponent} from './course/course-edit/new-option-dialog/new-option-dialog.component';
 import {CKEditorModule} from 'ckeditor4-angular';
 import {EscapeHtmlPipe} from './utils/keepHtmlPipe';
-import { SelectComponent } from './question/select/select.component';
+import {SelectComponent} from './question/select/select.component';
 import {SelectDirective} from './question/select/select.directive';
+import {ErrorComponent} from './error/error.component';
+import {GlobalErrorHandler} from './error/GlobalErrorHandler';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import {SelectDirective} from './question/select/select.directive';
     NewOptionDialogComponent,
     EscapeHtmlPipe,
     SelectDirective,
-    SelectComponent
+    SelectComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -107,7 +110,8 @@ import {SelectDirective} from './question/select/select.directive';
     useClass: CookieHandler,
     multi: true
   },
-    CookieService],
+    CookieService,
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })

@@ -72,6 +72,7 @@ export class CourseData {
   private _lessons: LessonData[];
   private _tests: TestData[];
   private _completion: Completion;
+  private _ownerIds: number[];
 
 
   get id(): number {
@@ -89,7 +90,8 @@ export class CourseData {
               category: string,
               lessons: LessonData[],
               tests: TestData[],
-              completion: Completion = new Completion(false, false, 0, 0)) {
+              completion: Completion = new Completion(false, false, 0, 0),
+              ownerIds: number[] = []) {
     this._id = id;
     this._description = description;
     this._name = name;
@@ -133,6 +135,14 @@ export class CourseData {
     return this._tests;
   }
 
+
+  get ownerIds(): number[] {
+    return this._ownerIds;
+  }
+
+  set ownerIds(value: number[]) {
+    this._ownerIds = value;
+  }
 
   get completion(): Completion {
     return this._completion;

@@ -13,6 +13,7 @@ import {FileSender} from './FileSender';
 import {MatDialog} from '@angular/material/dialog';
 import {NewOptionDialogComponent} from './new-option-dialog/new-option-dialog.component';
 import {QuestionType} from './QuestionType';
+import {NotificationService} from '../../error/NotificationService';
 
 declare var CKEDITOR: any;
 
@@ -86,6 +87,7 @@ export class CourseEditComponent implements OnInit {
               this.questions(testControl).push(questionControl);
             });
           });
+
         });
     }
 
@@ -115,7 +117,8 @@ export class CourseEditComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService,
-              private route: ActivatedRoute, private httpClient: HttpClient, private dialog: MatDialog) {
+              private route: ActivatedRoute, private httpClient: HttpClient, private dialog: MatDialog,
+              private notificationService: NotificationService) {
   }
 
   onSubmit() {
@@ -194,6 +197,7 @@ export class CourseEditComponent implements OnInit {
         });
 
       });
+      this.notificationService.showSuccess("The course saved successfully!");
     });
   }
 

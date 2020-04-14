@@ -1,8 +1,9 @@
-import {Component, Injector} from '@angular/core';
-import {MenuComponent} from './menu/menu.component';
-import {createCustomElement} from '@angular/elements';
+import {Component, Inject, Injector, PLATFORM_ID} from '@angular/core';
 import {SelectComponent} from './question/select/select.component';
+import {isPlatformBrowser} from '@angular/common';
 
+
+declare var require: any;
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,13 @@ import {SelectComponent} from './question/select/select.component';
 })
 export class AppComponent {
 
-  constructor( injector: Injector) {
-    const selComp = createCustomElement(SelectComponent, {injector});
-    customElements.define('select-element', selComp);
+  constructor(injector: Injector, @Inject(PLATFORM_ID) platformId: Object) {
+    if (isPlatformBrowser(platformId)) {
+      const {createCustomElement} = require('@angular/elements');
+
+      const selComp = createCustomElement(SelectComponent, {injector});
+      customElements.define('select-element', selComp);
+    }
+
   }
 }

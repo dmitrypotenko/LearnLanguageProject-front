@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
 import {appUrl} from '../../environments/environment';
 
@@ -21,7 +21,6 @@ export class MenuComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.setItem('role', undefined);
     window.location.href = appUrl + '/logout';
   }
 

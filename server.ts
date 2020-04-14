@@ -13,6 +13,7 @@ global['Prism'] = null;
 const MockBrowser = require('mock-browser').mocks.MockBrowser;
 const mock = new MockBrowser();
 global['navigator'] = mock.getNavigator();
+Object.assign(global, domino.impl);
 
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';

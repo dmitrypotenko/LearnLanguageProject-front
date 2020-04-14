@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
-import {AuthService} from '../../auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 import {FormBuilder, FormControl} from '@angular/forms';
+import {UserData} from '../../auth/UserData';
 
 @Component({
   selector: 'app-course-list',
@@ -14,13 +15,15 @@ export class CourseListComponent implements OnInit {
   private courseService: CourseService;
   private _courses: CourseData[];
   private authService: AuthService;
+  isSuperAdmin: boolean;
   isAdmin: boolean;
   modeControl: FormControl;
   mode: string = 'all';
-  private _role = 'undefined';
+  private roles = [];
   spinnerVisible = true;
 
   public dialog: MatDialog;
+  public userData: UserData;
 
 
   get courses(): CourseData[] {
@@ -48,14 +51,23 @@ export class CourseListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.role().subscribe(role => this._role = role);
     this.courseService.getAllCoursesMetadata().subscribe(courses => {
       this._courses = courses;
       this.spinnerVisible = false;
     });
-    this.authService.isAdmin().subscribe(isAdmin => {
-        this.isAdmin =
-          isAdmin.valueOf();
+    this.authService.getUserInfo().subscribe(user => {
+        this.userData = user;
+        this.roles = user.roles;
+        if (user.roles.find(role => role == 'ROLE_SUPER_ADMIN')) {
+          this.isSuperAdmin = true;
+        } else {
+          this.isSuperAdmin = false;
+        }
+        if (user.roles.find(role => role == 'ROLE_ADMIN')) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
       }
     );
     this.modeControl = new FormControl(this.mode);
@@ -77,7 +89,11 @@ export class CourseListComponent implements OnInit {
   }
 
 
-  get role(): string {
-    return this._role;
+  get isLoggedId(): boolean {
+    return this.roles.length == 0;
+  }
+
+  isBelongTo(ownerIds: number[]) {
+    return ownerIds.find(owner => owner == this.userData.id) != null;
   }
 }

@@ -42,4 +42,15 @@ export class SelectComponent implements OnInit {
       }
     });
   }
+
+  isDefaultSelected() {
+    if (this.options != null) {
+      this.options.forEach(option => {
+        if (option.isTicked == true) {
+          return false;
+        }
+      });
+    }
+    return true;
+  }
 }

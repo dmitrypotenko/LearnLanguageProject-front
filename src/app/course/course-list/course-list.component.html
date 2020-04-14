@@ -1,5 +1,5 @@
 <div class="courses-list">
-  <div class="center" *ngIf="role!='ROLE_USER' && role!='ROLE_ADMIN'">
+  <div class="center" *ngIf="isLoggedId">
     <p class="warning"><span>
       WARNING!
     </span>
@@ -37,7 +37,7 @@
             </a>
           </div>
         </div>
-        <div class="col" *ngIf="isAdmin">
+        <div class="col" *ngIf="isSuperAdmin || isBelongTo(course.ownerIds)">
           <button class="btn btn-primary m-2" routerLink="/courses/edit/{{course.id}}">Edit</button>
           <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
         </div>
@@ -63,7 +63,7 @@
      </div>-->
 
   </div>
-  <div *ngIf="isAdmin">
+  <div *ngIf="isSuperAdmin || isAdmin">
     <a class="btn btn-primary" routerLink="/courses/create" role="button">Create course</a>
   </div>
 </div>

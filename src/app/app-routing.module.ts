@@ -6,6 +6,7 @@ import {CourseListComponent} from './course/course-list/course-list.component';
 import {CourseComponent} from './course/course.component';
 import {CourseEditComponent} from './course/course-edit/course-edit.component';
 import {DonateComponent} from './donate/donate.component';
+import {ErrorComponent} from './error/error.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'courses/edit/:id', component: CourseEditComponent},
   {path: 'courses/:id', component: CourseComponent},
   {path: 'courses', component: CourseListComponent},
-  {path: 'donate', component: DonateComponent}
+  {path: 'donate', component: DonateComponent},
+  {path: 'error', component: ErrorComponent}
 ];
 
 @NgModule({

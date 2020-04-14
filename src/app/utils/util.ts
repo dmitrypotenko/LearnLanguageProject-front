@@ -1,12 +1,10 @@
-import {Observable, of} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
 
 export class Util {
- static handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
-
-      console.error(error);
-      return of(result as T);
+  static handleError<T>(result?: T) {
+    return (error: HttpErrorResponse): Observable<T> => {
+      return throwError(error);
     };
-
   }
 }
