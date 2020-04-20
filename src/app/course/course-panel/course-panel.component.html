@@ -1,29 +1,33 @@
 <div class="container panel-content">
   <div class="row">
     <ul class="nav nav-pills nav-fill m-3">
-<!--      <li class="nav-item m-2" [class.invisible]="currentLesson==null">
-        <button type="button" class="btn btn-primary btn-sm" (click)="onSelect('Content')">Content</button>
-      </li>-->
+      <!--      <li class="nav-item m-2" [class.invisible]="currentLesson==null">
+              <button type="button" class="btn btn-primary btn-sm" (click)="onSelect('Content')">Content</button>
+            </li>-->
       <li class="nav-item m-2" [class.invisible]="currentLesson==null" (click)="onSelect('Attachment')">
-        <button type="button" class="btn btn-sm nav-btn" [class.btn-primary]="currentWidget === 'Attachment'" [class.btn-light]="currentWidget != 'Attachment'" >Attachments</button>
+        <button type="button" class="btn btn-sm nav-btn" [class.btn-primary]="currentWidget === 'Attachment'"
+                [class.btn-light]="currentWidget != 'Attachment'">Attachments
+        </button>
       </li>
       <li class="nav-item m-2" (click)="onSelect('Lessons')">
-        <button type="button" class="btn btn-sm nav-btn" [class.btn-primary]="currentWidget === 'Lessons'" [class.btn-light]="currentWidget != 'Lessons'"  >Lessons</button>
+        <button type="button" class="btn btn-sm nav-btn" [class.btn-primary]="currentWidget === 'Lessons'"
+                [class.btn-light]="currentWidget != 'Lessons'">Lessons
+        </button>
       </li>
     </ul>
   </div>
 
   <div class="row">
-   <!-- <div *ngIf="currentLesson!=null">
-      <div style="display: none" [class.displayed]="currentWidget === 'Content'">{{currentLesson.lessonText}}</div>
-    </div>-->
+    <!-- <div *ngIf="currentLesson!=null">
+       <div style="display: none" [class.displayed]="currentWidget === 'Content'">{{currentLesson.lessonText}}</div>
+     </div>-->
     <div *ngIf="currentLesson!=null">
       <div class="attachment-list mx-auto" style="display: none" [class.displayed]="currentWidget === 'Attachment'">
         <div *ngIf="currentLesson.attachments.length">
           <div class="d-flex flex-column">
             <div *ngFor='let attachment of currentLesson.attachments'>
               <div class="attachment-tab mx-auto">
-                <app-document  [link]="attachment.attachmentLink"
+                <app-document [link]="attachment.attachmentLink"
                               [title]="attachment.attachmentTitle"></app-document>
               </div>
             </div>
@@ -37,7 +41,18 @@
           <div *ngFor='let step of ordered'>
             <ul class="list-group">
               <li class="list-group-item panel-step-item" [class.active]="currentLesson===step || currentTest === step"
-                  (click)="onStepChanged(step)"><span *ngIf="step.completed() && isFailedTest(step)">&#x274C;</span><span *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>{{step.getName()}}</li>
+                  (click)="onStepChanged(step)"><span
+                *ngIf="step.completed() && isFailedTest(step)">&#x274C;</span><span
+                *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>
+                <ng-template [ngIf]="isTest(step)">
+                  <img class="stepIcon" src="assets/testSign.png"/>
+                  Test: {{step.getName()}}
+                </ng-template>
+                <ng-template [ngIf]="!isTest(step)">
+                  <img class="stepIcon" src="assets/bookSign.png"/>
+                  Lesson: {{step.getName()}}
+                </ng-template>
+              </li>
             </ul>
           </div>
         </div>

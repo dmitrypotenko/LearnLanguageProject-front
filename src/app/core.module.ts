@@ -46,9 +46,9 @@ import {NewOptionDialogComponent} from './course/course-edit/new-option-dialog/n
 import {CKEditorModule} from 'ckeditor4-angular';
 import {EscapeHtmlPipe} from './utils/keepHtmlPipe';
 import {SelectComponent} from './question/select/select.component';
-import {SelectDirective} from './question/select/select.directive';
 import {ErrorComponent} from './error/error.component';
 import {GlobalErrorHandler} from './error/GlobalErrorHandler';
+import { InputComponent } from './question/input/input.component';
 
 @NgModule({
   declarations: [
@@ -70,9 +70,9 @@ import {GlobalErrorHandler} from './error/GlobalErrorHandler';
     DonateComponent,
     NewOptionDialogComponent,
     EscapeHtmlPipe,
-    SelectDirective,
     SelectComponent,
-    ErrorComponent
+    ErrorComponent,
+    InputComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'serverApp'}),

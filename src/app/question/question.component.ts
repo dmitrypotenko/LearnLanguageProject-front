@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {QuestionType} from '../course/course-edit/QuestionType';
 import {NgElement, WithProperties} from '@angular/elements';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -9,6 +9,8 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
   styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent implements OnInit, AfterViewChecked, AfterContentInit, AfterViewInit {
+
+  private domParser = new DOMParser();
 
   @Input() questionIndex: number;
 
@@ -23,7 +25,23 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   @Input()
   set questionData(value: QuestionData) {
-    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml(this.questionIndex + 1 + '. ' + value.question);
+    let parsedQuestion = this.domParser.parseFromString(value.question, 'text/html');
+    let allEmbeddedElements: HTMLCollectionOf<Element> = parsedQuestion.body.getElementsByTagName('span');
+    let i = 0;
+    let fontSize = null;
+    while (i < allEmbeddedElements.length) {
+      let spanHtml = allEmbeddedElements[i] as HTMLElement;
+      let elementFontSize = spanHtml.style.fontSize;
+      if (elementFontSize != null && elementFontSize.length != 0) {
+        fontSize = elementFontSize;
+      }
+      i++;
+    }
+    let style = '';
+    if (fontSize != null) {
+      style = 'style=\'font-size: ' + fontSize + '\'';
+    }
+    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' + value.question);
     this._questionData = value;
 
   }
@@ -41,7 +59,7 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   ngAfterViewChecked(): void {
     console.log('ngAfterViewChecked Start');
-    let allSelects = document.querySelector('#question' + this.questionData.id).querySelectorAll(' select-element') as NodeListOf<NgElement & WithProperties<{
+    let allSelects = document.querySelector('#question' + this.questionData.id).querySelectorAll(' select-element,input-element') as NodeListOf<NgElement & WithProperties<{
       name: string,
       question: QuestionData
     }>>;
@@ -167,9 +185,11 @@ export class VariantData {
   private _isTicked: boolean;
   private _id: number;
   private _inputName: string;
+  private _inputType: string;
 
 
-  constructor(variant: string, isRight: boolean, isWrong: boolean, isTicked: boolean, id: number, explanation: string, inputName: string) {
+  constructor(variant: string, isRight: boolean, isWrong: boolean, isTicked: boolean, id: number, explanation: string, inputName: string,
+              inputType: string) {
     this._variant = variant;
     this._isRight = isRight;
     this._isWrong = isWrong;
@@ -177,6 +197,7 @@ export class VariantData {
     this._id = id;
     this._explanation = explanation;
     this._inputName = inputName;
+    this._inputType = inputType;
   }
 
   get variant(): string {
@@ -206,6 +227,15 @@ export class VariantData {
 
   set inputName(value: string) {
     this._inputName = value;
+  }
+
+
+  get inputType(): string {
+    return this._inputType;
+  }
+
+  set inputType(value: string) {
+    this._inputType = value;
   }
 
   set isWrong(value: boolean) {

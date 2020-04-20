@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
 import {CourseData, CourseService} from './course.service';
 import {LessonData, LessonService} from '../lesson.service';
 import {ActivatedRoute} from '@angular/router';

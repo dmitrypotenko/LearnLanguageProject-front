@@ -95,7 +95,7 @@
               <mat-expansion-panel-header cdkDragHandle>
                 <mat-panel-title class="m-2 d-flex justify-content-between">
                   <button type="button" class="btn btn-secondary btn-sm">
-                    Question : {{question.get('questionText').value.substring(0, 10)}}
+                    Question : {{getQuestionName(question, j)}}
                   </button>
                   <button type="button" class="btn btn-secondary btn-sm" (click)="delete(step, question, 'questions')">Delete &#10060;
                   </button>

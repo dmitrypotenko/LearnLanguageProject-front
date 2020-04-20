@@ -16,9 +16,7 @@ export class AuthService {
   }
 
   getUserInfo(): Observable<UserData> {
-    return this.http.get<UserData>(appUrl + '/userInfo').pipe(
-      tap(userResponse => sessionStorage.setItem('role', userResponse.roles[0]))
-    );
+    return this.http.get<UserData>(appUrl + '/userInfo');
   }
 
   role(): Observable<string> {

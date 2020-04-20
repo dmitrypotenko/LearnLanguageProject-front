@@ -31,22 +31,34 @@ export class ErrorService {
   }
 
   getClientErrorMessage(error: Error): string {
-    if (environment.production) {
-      return "";
-    }
-    return error.message ?
-      error.message :
-      error.toString();
+  /*  if (environment.production) {
+      return '';
+    }*/
+    return error.message ? error.message : error.toString();
   }
 
   getServerErrorMessage(error: HttpErrorResponse): string {
     if (error.status == 403) {
-      return 'You are not allowed to view this page: ' + error.error.message;
+      return 'You are not allowed to view this page: ' + this.getMessage(error);
     }
     if (error.status == 401) {
-      return 'You don\'t have rights to view this page. You should login and have admin privileges. '  + error.error.message;
+      return 'You don\'t have rights to view this page. You should login and have admin privileges. ' + this.getMessage(error);
     }
-    return error.message;
+    return "Internal server error. " + error.message + ' \nMessage: ' + this.getMessage(error);
+  }
+
+  private getMessage(error: HttpErrorResponse) {
+    if (error.error != null) {
+      return error.error.message;
+    }
+    return '';
+  }
+
+  private getError(error: HttpErrorResponse) {
+    if (error.error != null) {
+      return error.error.error;
+    }
+    return '';
   }
 
   log(error) {

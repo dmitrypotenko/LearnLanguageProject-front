@@ -48,6 +48,10 @@ export class CoursePanelComponent implements OnInit {
     return this.stepSwitcher.ordered;
   }
 
+  isTest(listable: Listable) {
+    return (listable instanceof TestData);
+  }
+
   isFailedTest(listable: Listable): boolean {
     if (listable instanceof TestData) {
       return (listable as TestData).isFailed()

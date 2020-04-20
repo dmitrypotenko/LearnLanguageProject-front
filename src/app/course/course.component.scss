@@ -1,10 +1,11 @@
-
+@import "./../../assets/compressed/ckeditor/contents.css";
 .course {
   height: 100%;
 }
 
 .sidebar {
   background-color: #d8faff;
+  overflow: hidden;
 }
 
 .main-content {

@@ -111,6 +111,7 @@ export class CourseEditComponent implements OnInit {
       },
       extraPlugins: 'uploadimage',
       uploadUrl: 'http://localhost:8080/files/upload',
+      autoGrow_maxHeight: 800
     };
 
   }
@@ -138,6 +139,7 @@ export class CourseEditComponent implements OnInit {
               false,
               variant.get('id').value as number,
               variant.get('explanation').value as string,
+              null,
               null
             )),
             question.get('id').value as number,
@@ -197,7 +199,7 @@ export class CourseEditComponent implements OnInit {
         });
 
       });
-      this.notificationService.showSuccess("The course saved successfully!");
+      this.notificationService.showSuccess('The course is saved successfully!');
     });
   }
 
@@ -291,7 +293,7 @@ export class CourseEditComponent implements OnInit {
   }
 
   isVariantsVisible(question: AbstractControl) {
-    return question.value.type == 'OMITTED_WORDS' || question.value.type == 'SELECT_WORDS';
+    return question.value.type == 'CUSTOM_INPUT';
   }
 
   onSelect($event: NgxDropzoneChangeEvent, step: AbstractControl) {
@@ -334,6 +336,12 @@ export class CourseEditComponent implements OnInit {
         variant.get('variantText').setValue(result);
       }
     });
+  }
+
+  getQuestionName(question: AbstractControl, j: number) {
+    let document = new DOMParser().parseFromString(question.get('questionText').value, 'text/html');
+    let textContent = document.body.textContent;
+    return 1 + j + ' - ' + textContent?.substring(0, 10);
   }
 }
 
