@@ -19,6 +19,33 @@ export class InputComponent implements OnInit {
   @Input()
   name: string;
 
+
+  private _size: number;
+  private _maxlength: number;
+
+
+  get size(): number {
+    if (this._size == 0 || this._size == null) {
+      return 20;
+    }
+    return this._size;
+  }
+
+
+  get maxlength(): number {
+    return this._maxlength;
+  }
+
+  @Input()
+  set maxlength(value: number) {
+    this._maxlength = value;
+  }
+
+  @Input()
+  set size(value: number) {
+    this._size = value;
+  }
+
   @Input()
   set question(value: QuestionData) {
     this._question = value;

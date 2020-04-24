@@ -41,7 +41,8 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
     if (fontSize != null) {
       style = 'style=\'font-size: ' + fontSize + '\'';
     }
-    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' + value.question);
+    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' +
+      '<div>' + value.question + '</div>');
     this._questionData = value;
 
   }

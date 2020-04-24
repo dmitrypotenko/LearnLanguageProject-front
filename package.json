@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node serverExpress.js",
+    "startServe": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -33,6 +34,7 @@
     "@angular/router": "~9.0.2",
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@nguniversal/express-engine": "9.0.0",
+    "@ngx-lite/json-ld": "^0.6.2",
     "@types/chart.js": "^2.8.7",
     "angular-bootstrap-md": "^8.4.0",
     "animate.css": "^3.7.2",

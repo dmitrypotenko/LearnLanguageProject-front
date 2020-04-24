@@ -5,6 +5,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {UserData} from '../../auth/UserData';
+import {Meta, Title} from "@angular/platform-browser";
+import {appUrl} from "../../../environments/environment";
 
 @Component({
   selector: 'app-course-list',
@@ -15,12 +17,14 @@ export class CourseListComponent implements OnInit {
   private courseService: CourseService;
   private _courses: CourseData[];
   private authService: AuthService;
-  isSuperAdmin: boolean;
+  isSuperAdmin: boolean = false;
   isAdmin: boolean;
   modeControl: FormControl;
   mode: string = 'all';
   private roles = [];
   spinnerVisible = true;
+
+  schema: any;
 
   public dialog: MatDialog;
   public userData: UserData;
@@ -43,7 +47,8 @@ export class CourseListComponent implements OnInit {
 
   constructor(courseService: CourseService, authService: AuthService,
               dialog: MatDialog,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private meta: Meta, private titleService: Title) {
     this.dialog = dialog;
     this.courseService = courseService;
     this.authService = authService;
@@ -51,10 +56,34 @@ export class CourseListComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.meta.updateTag({
+      name: 'description',
+      content: 'Here you can choose an online English course that consists of lessons and tests and exercises. '
+    });
+    this.titleService.setTitle( "LessonsBox - The list of online English courses." );
     this.courseService.getAllCoursesMetadata().subscribe(courses => {
       this._courses = courses;
+      this.schema = {
+        '@context':'https://schema.org',
+        '@type':'ItemList',
+        itemListElement: courses.map((course , index) => {
+          return {
+            '@type': 'ListItem',
+            position: index,
+            item: {
+              '@type': 'Course',
+              url : appUrl +  '/courses/' + course.id,
+              description: course.description,
+              name: course.name
+            }
+          }
+        })
+      };
+
       this.spinnerVisible = false;
     });
+
     this.authService.getUserInfo().subscribe(user => {
         this.userData = user;
         this.roles = user.roles;
@@ -94,6 +123,6 @@ export class CourseListComponent implements OnInit {
   }
 
   isBelongTo(ownerIds: number[]) {
-    return ownerIds.find(owner => owner == this.userData.id) != null;
+    return ownerIds.find(owner => owner == this.userData?.id) != null;
   }
 }

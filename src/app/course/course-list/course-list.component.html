@@ -1,3 +1,4 @@
+<ngx-json-ld *ngIf="schema" [json]="schema"></ngx-json-ld>
 <div class="courses-list">
   <div class="center" *ngIf="isLoggedId">
     <p class="warning"><span>
@@ -9,7 +10,7 @@
     </span>
     </p>
   </div>
-  <h2>Courses</h2>
+  <h2 class="center">The List of English Courses</h2>
   <mat-form-field class="m-2">
     <mat-label>FILTER</mat-label>
     <mat-select [formControl]="modeControl">

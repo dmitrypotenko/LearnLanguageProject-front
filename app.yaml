@@ -11,9 +11,14 @@ handlers:
     upload: dist/browser/index.html
     secure: always
 
-  - url: /(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
+  - url: /robots.txt
+    static_files: dist/browser/assets/robots.txt
+    upload: dist/browser/assets/robots.txt
+    secure: always
+
+  - url: /(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg|xml))
     static_files: dist/browser/\1
-    upload: dist/browser/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg))
+    upload: dist/browser/(.*\.(gif|png|jpg|ico|bmp|css|otf|eot|svg|ttf|woff|js|txt|woff2|jpeg|xml))
     secure: always
 
   - url: /donate/*

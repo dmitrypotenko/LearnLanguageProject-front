@@ -49,6 +49,7 @@ import {SelectComponent} from './question/select/select.component';
 import {ErrorComponent} from './error/error.component';
 import {GlobalErrorHandler} from './error/GlobalErrorHandler';
 import { InputComponent } from './question/input/input.component';
+import {NgxJsonLdModule} from "@ngx-lite/json-ld";
 
 @NgModule({
   declarations: [
@@ -74,33 +75,34 @@ import { InputComponent } from './question/input/input.component';
     ErrorComponent,
     InputComponent
   ],
-  imports: [
-    BrowserModule.withServerTransition({appId: 'serverApp'}),
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatGridListModule,
-    MatMenuModule,
-    MatIconModule,
-    LayoutModule,
-    MDBBootstrapModule.forRoot(),
-    DragDropModule,
-    MatSnackBarModule,
-    MatDialogModule,
-    MatSidenavModule,
-    CKEditorModule,
-    NgxDropzoneModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    RouterModule,
-    CKEditorModule
-  ],
+    imports: [
+        BrowserModule.withServerTransition({appId: 'serverApp'}),
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatGridListModule,
+        MatMenuModule,
+        MatIconModule,
+        LayoutModule,
+        MDBBootstrapModule.forRoot(),
+        DragDropModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        MatSidenavModule,
+        CKEditorModule,
+        NgxDropzoneModule,
+        MatExpansionModule,
+        MatProgressSpinnerModule,
+        RouterModule,
+        CKEditorModule,
+        NgxJsonLdModule
+    ],
   entryComponents: [
     ConcessionDialogComponent,
     SelectComponent

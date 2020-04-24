@@ -1,10 +1,12 @@
-import {AfterViewInit, ChangeDetectorRef, Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from './course.service';
 import {LessonData, LessonService} from '../lesson.service';
 import {ActivatedRoute} from '@angular/router';
 import {TestData, TestService} from '../test.service';
 import {StepSwitcherService} from '../step-switcher.service';
 import {MediaMatcher} from '@angular/cdk/layout';
+import {Meta, Title} from "@angular/platform-browser";
+import {appUrl} from "../../environments/environment";
 
 declare var jQuery: any;
 
@@ -26,11 +28,13 @@ export class CourseComponent implements OnInit, AfterViewInit {
   spinnerVisible: boolean = true;
   toggleBtn: any;
   menu: any;
+  schema: any;
 
   constructor(courseService: CourseService, lessonService: LessonService, route: ActivatedRoute,
               cd: ChangeDetectorRef,
               testService: TestService,
-              private mediaMatcher: MediaMatcher) {
+              private mediaMatcher: MediaMatcher,
+              private meta: Meta, private titleService: Title) {
     this.cd = cd;
     this.courseService = courseService;
     this.lessonService = lessonService;
@@ -39,11 +43,24 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
     let id: number = Number(this.route.snapshot.paramMap.get('id'));
     this.stepSwitcher = new StepSwitcherService(this.lessonService, this._testService);
 
     this.courseService.getCourseById(id).subscribe(course => {
       this.spinnerVisible = false;
+
+      this.titleService.setTitle('LessonsBox: ' + course.name);
+      this.meta.updateTag({
+        name: 'description',
+        content: course.description
+      });
+      this.schema = {
+        '@type': 'Course',
+        url: appUrl + '/courses/' + course.id,
+        description: course.description,
+        name: course.name
+      };
       this.currentCourse = course;
       this.stepSwitcher.lessonsOfTheCourse = course.lessons;
       this.stepSwitcher.testsOfTheCourse = course.tests;
@@ -60,7 +77,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
     let menu = jQuery('#mainMenu');
     let toggleBtn = jQuery('#toggleBtn');
 
-    window.onscroll = function() {
+    window.onscroll = function () {
       myFunction();
     };
 
@@ -97,11 +114,11 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
 
-/*  @HostListener('window:scroll', []) onWindowScroll() {
-    this.scrollFunction();
-    /!*if
-    }*!/
-  }*/
+  /*  @HostListener('window:scroll', []) onWindowScroll() {
+      this.scrollFunction();
+      /!*if
+      }*!/
+    }*/
 
   // When the user scrolls down 20px from the top of the document, show the button
   scrollFunction() {
