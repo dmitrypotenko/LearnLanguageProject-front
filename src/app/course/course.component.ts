@@ -8,8 +8,6 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {Meta, Title} from "@angular/platform-browser";
 import {appUrl} from "../../environments/environment";
 
-declare var jQuery: any;
-
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
@@ -70,28 +68,30 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    let sidenav = jQuery('#sidenavStep');
+
     if (this.tryToUpdate()) {
       this.cd.detectChanges();
     }
-    let menu = jQuery('#mainMenu');
-    let toggleBtn = jQuery('#toggleBtn');
+
 
     window.onscroll = function () {
       myFunction();
     };
 
     function myFunction() {
-      if (window.pageYOffset >= menu.outerHeight(true)) {
+      let sidenav = document.getElementById('sidenavStep');
+      let menu = document.getElementById('mainMenu');
+      let toggleBtn = document.getElementById('toggleBtn');
+      if (window.pageYOffset >= menu.offsetTop) {
         if (toggleBtn != null) {
-          toggleBtn.addClass('sticky');
+          toggleBtn.classList.add('sticky');
         }
-        sidenav.addClass('sticky');
+        sidenav.classList.add('sticky');
       } else {
         if (toggleBtn != null) {
-          toggleBtn.removeClass('sticky');
+          toggleBtn.classList.remove('sticky');
         }
-        sidenav.removeClass('sticky');
+        sidenav.classList.remove('sticky');
       }
     }
   }

@@ -1,7 +1,17 @@
-import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  Injector,
+  Input,
+  OnInit,
+  PLATFORM_ID
+} from '@angular/core';
 import {QuestionType} from '../course/course-edit/QuestionType';
 import {NgElement, WithProperties} from '@angular/elements';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {isPlatformBrowser} from "@angular/common";
 
 @Component({
   selector: 'app-question',
@@ -10,11 +20,9 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 })
 export class QuestionComponent implements OnInit, AfterViewChecked, AfterContentInit, AfterViewInit {
 
-  private domParser = new DOMParser();
-
   @Input() questionIndex: number;
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private injector: Injector) {
   }
 
   safeQuestionHtml: SafeHtml;
@@ -25,24 +33,27 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   @Input()
   set questionData(value: QuestionData) {
-    let parsedQuestion = this.domParser.parseFromString(value.question, 'text/html');
-    let allEmbeddedElements: HTMLCollectionOf<Element> = parsedQuestion.body.getElementsByTagName('span');
-    let i = 0;
-    let fontSize = null;
-    while (i < allEmbeddedElements.length) {
-      let spanHtml = allEmbeddedElements[i] as HTMLElement;
-      let elementFontSize = spanHtml.style.fontSize;
-      if (elementFontSize != null && elementFontSize.length != 0) {
-        fontSize = elementFontSize;
+    if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
+      let parsedQuestion = new DOMParser().parseFromString(value.question, 'text/html');
+      let allEmbeddedElements: HTMLCollectionOf<Element> = parsedQuestion.body.getElementsByTagName('span');
+      let i = 0;
+      let fontSize = null;
+      while (i < allEmbeddedElements.length) {
+        let spanHtml = allEmbeddedElements[i] as HTMLElement;
+        let elementFontSize = spanHtml.style.fontSize;
+        if (elementFontSize != null && elementFontSize.length != 0) {
+          fontSize = elementFontSize;
+        }
+        i++;
       }
-      i++;
+      let style = '';
+      if (fontSize != null) {
+        style = 'style=\'font-size: ' + fontSize + '\'';
+      }
+      this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' +
+        '<div>' + value.question + '</div>');
     }
-    let style = '';
-    if (fontSize != null) {
-      style = 'style=\'font-size: ' + fontSize + '\'';
-    }
-    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' +
-      '<div>' + value.question + '</div>');
+
     this._questionData = value;
 
   }
@@ -59,17 +70,19 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
   }
 
   ngAfterViewChecked(): void {
-    console.log('ngAfterViewChecked Start');
-    let allSelects = document.querySelector('#question' + this.questionData.id).querySelectorAll(' select-element,input-element') as NodeListOf<NgElement & WithProperties<{
-      name: string,
-      question: QuestionData
-    }>>;
-    allSelects.forEach(select => {
-      console.log('ngAfterViewChecked');
-      if (select.question == null) {
-        select.question = this._questionData;
-      }
-    });
+    if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
+      console.log('ngAfterViewChecked Start');
+      let allSelects = document.querySelector('#question' + this.questionData.id).querySelectorAll(' select-element,input-element') as NodeListOf<NgElement & WithProperties<{
+        name: string,
+        question: QuestionData
+      }>>;
+      allSelects.forEach(select => {
+        console.log('ngAfterViewChecked');
+        if (select.question == null) {
+          select.question = this._questionData;
+        }
+      });
+    }
   }
 
   ngAfterContentInit(): void {

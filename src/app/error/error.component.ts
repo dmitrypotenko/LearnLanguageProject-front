@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Meta} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-error',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErrorComponent implements OnInit {
 
-  constructor() { }
+  constructor(private meta: Meta) { }
 
   ngOnInit(): void {
+    this.meta.updateTag({
+      name: 'robots',
+      content: 'noindex'
+    });
   }
 
 }

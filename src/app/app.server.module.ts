@@ -3,14 +3,14 @@ import {ServerModule} from '@angular/platform-server';
 
 import {CoreModule} from './core.module';
 import {AppComponent} from './app.component';
-import {SsrRoutingModule} from './ssr-routing.module';
 import {RouterModule} from '@angular/router';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   imports: [
     CoreModule,
     ServerModule,
-    SsrRoutingModule,
+    AppRoutingModule,
     RouterModule
 ],
   bootstrap: [AppComponent],
