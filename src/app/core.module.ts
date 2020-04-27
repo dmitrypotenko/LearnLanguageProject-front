@@ -50,6 +50,8 @@ import {ErrorComponent} from './error/error.component';
 import {GlobalErrorHandler} from './error/GlobalErrorHandler';
 import { InputComponent } from './question/input/input.component';
 import {NgxJsonLdModule} from "@ngx-lite/json-ld";
+import { FacebookComponent } from './landing/facebook/facebook.component';
+import { PolicyComponent } from './landing/policy/policy.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import {NgxJsonLdModule} from "@ngx-lite/json-ld";
     EscapeHtmlPipe,
     SelectComponent,
     ErrorComponent,
-    InputComponent
+    InputComponent,
+    FacebookComponent,
+    PolicyComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),
