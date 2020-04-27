@@ -124,6 +124,12 @@ export class LessonData implements Listable {
     return this.order;
   }
 
+  getId(): number {
+    return this.id;
+  }
+
+
+
   toJSON() {
     const jsonObj = {};
     const proto = Object.getPrototypeOf(this);

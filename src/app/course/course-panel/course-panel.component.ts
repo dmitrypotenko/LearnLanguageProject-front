@@ -3,6 +3,8 @@ import {LessonData} from '../../lesson.service';
 import {TestData} from '../../test.service';
 import {StepSwitcherService} from '../../step-switcher.service';
 import {Listable} from '../../listable';
+import {ActivatedRoute, Router} from "@angular/router";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-course-panel',
@@ -21,11 +23,15 @@ export class CoursePanelComponent implements OnInit {
 
   currentWidget: string = 'Lessons';
   private _stepSwitcher: StepSwitcherService;
+  currentUrl: string;
 
-  constructor() {
+  constructor(public router: Router, private activatedRoute: ActivatedRoute/*, private location: Location*/) {
+
   }
 
   ngOnInit() {
+    this.activatedRoute.url.pipe(map(segments => segments.map(segment => segment.path).reduce(((previousValue, currentValue) => previousValue + '/' + currentValue))))
+      .subscribe(url => this.currentUrl = '/' + url)
   }
 
   get currentLesson(): LessonData {
@@ -57,5 +63,9 @@ export class CoursePanelComponent implements OnInit {
       return (listable as TestData).isFailed()
     }
     return false
+  }
+
+  getQueryParamsForStep(step: Listable) {
+    return {stepId: step.getId()};
   }
 }

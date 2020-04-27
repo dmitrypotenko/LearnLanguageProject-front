@@ -33,6 +33,7 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   @Input()
   set questionData(value: QuestionData) {
+    let style = '';
     if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
       let parsedQuestion = new DOMParser().parseFromString(value.question, 'text/html');
       let allEmbeddedElements: HTMLCollectionOf<Element> = parsedQuestion.body.getElementsByTagName('span');
@@ -46,13 +47,13 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
         }
         i++;
       }
-      let style = '';
       if (fontSize != null) {
         style = 'style=\'font-size: ' + fontSize + '\'';
       }
-      this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' +
-        '<div>' + value.question + '</div>');
     }
+    this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' +
+      '<div>' + value.question + '</div>');
+
 
     this._questionData = value;
 

@@ -40,18 +40,21 @@
         <div class="d-flex flex-column">
           <div *ngFor='let step of ordered'>
             <ul class="list-group">
-              <li class="list-group-item panel-step-item" [class.active]="currentLesson===step || currentTest === step"
-                  (click)="onStepChanged(step)"><span
-                *ngIf="step.completed() && isFailedTest(step)">&#x274C;</span><span
-                *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>
-                <ng-template [ngIf]="isTest(step)">
-                  <img class="stepIcon" src="assets/testSign.png"/>
-                  Test: {{step.getName()}}
-                </ng-template>
-                <ng-template [ngIf]="!isTest(step)">
-                  <img class="stepIcon" src="assets/bookSign.png"/>
-                  Lesson: {{step.getName()}}
-                </ng-template>
+              <li class="list-group-item panel-step-item" [class.active]="currentLesson===step || currentTest === step" style="padding: 0">
+                <a [routerLink]="currentUrl" [queryParams]="getQueryParamsForStep(step)" class="disabledLink d-flex">
+                  <div class="stepPanel">
+                    <span *ngIf="step.completed() && isFailedTest(step)">&#x274C;</span>
+                    <span *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>
+                    <ng-template [ngIf]="isTest(step)">
+                      <img class="stepIcon" src="assets/testSign.png"/>
+                      Test: {{step.getName()}}
+                    </ng-template>
+                    <ng-template [ngIf]="!isTest(step)">
+                      <img class="stepIcon" src="assets/bookSign.png"/>
+                      Lesson: {{step.getName()}}
+                    </ng-template>
+                  </div>
+                </a>
               </li>
             </ul>
           </div>

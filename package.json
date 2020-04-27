@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node serverExpress.js",
+    "start": "node dist/server/main.js",
     "startServe": "ng serve",
     "build": "ng build",
     "test": "ng test",

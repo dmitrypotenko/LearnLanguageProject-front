@@ -41,3 +41,18 @@
 .stepIcon {
   width: 30px;
 }
+
+.disabledLink {
+  text-decoration: none;
+  color: black;
+  display: block;
+  min-height: 50px;
+  width: 100%;
+  align-items: center;
+}
+
+.stepPanel {
+  position: relative;
+  left: 20px;
+  height: max-content;
+}

@@ -3,7 +3,7 @@
 
   <mat-sidenav-container class="full-height" autosize>
     <mat-sidenav id="sidenavStep" #sidenav position="start"
-                 [mode]="sidenavmode()? 'side': 'push'" class="sidebar" style="overflow: hidden">
+                 [mode]="sidenavmode()? 'side': 'push'" class="sidebar" style="overflow: hidden" opened="true">
       <app-course-panel
         [stepSwitcher]="stepSwitcher"></app-course-panel>
       <button type="button" class="close" aria-label="Close" (click)="sidenav.toggle()">

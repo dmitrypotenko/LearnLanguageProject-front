@@ -31,6 +31,7 @@ global['XMLHttpRequest'] = require('xmlhttprequest').XMLHttpRequest;
 global['Prism'] = null;
 
 import {AppServerModule} from './src/main.server';
+import {RESPONSE} from "@nguniversal/express-engine/tokens";
 
 /*const { enableProdMode } = require('@angular/core');
 
@@ -95,7 +96,10 @@ export function app() {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    res.render(indexHtml, {req, providers: [{provide: APP_BASE_HREF, useValue: req.baseUrl}]});
+    res.render(indexHtml, {req, providers: [{provide: APP_BASE_HREF, useValue: req.baseUrl}, {
+        provide: RESPONSE,
+        useValue: res,
+      }]});
   });
 
   return server;

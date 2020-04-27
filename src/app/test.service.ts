@@ -115,6 +115,9 @@ export class TestData implements Listable {
     return this.order;
   }
 
+  getId(): number {
+    return this.id;
+  }
 
   toJSON() {
     const jsonObj = {};
