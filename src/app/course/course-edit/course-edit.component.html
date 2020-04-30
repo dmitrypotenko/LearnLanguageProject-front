@@ -5,7 +5,7 @@
     </label>
     <input id="courseName" class="form-control" placeholder="Enter the course name" type="text" formControlName="name"
            required>
-
+    <app-field-error [control]="courseForm.get('name')"></app-field-error>
   </div>
 
   <div class="form-group">
@@ -31,137 +31,166 @@
     <button type="button" class="btn btn-primary m-2" (click)="addLesson()">Add Lesson</button>
     <button type="button" class="btn btn-primary m-2" (click)="addTest()">Add Test</button>
     <div *ngFor="let step of steps.controls; let i=index" class="d-flex">
-      <mat-expansion-panel (opened)="setExpandedTrue(step)" style="width: 100%" [expanded]="step.get('expanded').value" cdkDrag>
+      <mat-expansion-panel style="width: 100%" (opened)="setExpandedTrue(step)" (closed)="setExpandedFalse(step)" [expanded]="isExpanded(step)" cdkDrag>
         <mat-expansion-panel-header *ngIf="isLesson(step)" cdkDragHandle>
           <mat-panel-title class="m-2 d-flex">
             <button type="button" class="btn btn-secondary btn-sm mr-auto">
               Lesson: {{ step.get("name").value }}
             </button>
-            <button type="button" class="btn btn-secondary btn-sm" (click)="delete(courseForm, step,'steps')">Delete &#10060;</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="delete(courseForm, step,'steps')">Delete
+              &#10060;
+            </button>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div *ngIf="isLesson(step) && shouldBeRendered(step)" class="p-2" formGroupName="{{i}}">
-          <div class="form-group">
-            <label for="lessonName{{i}}">
-              Name:
-            </label>
-            <input id="lessonName{{i}}" class="form-control" placeholder="Enter the lesson name" type="text"
-                   formControlName="name">
-          </div>
-
-          <div class="form-group">
-            <label for="lessonText{{i}}">
-              Lesson text:
-            </label>
-            <!-- <angular-editor id="lessonText" formControlName="lessonText" [config]="lessonEditorConfig">
-             </angular-editor>-->
-            <ckeditor id="lessonText{{i}}" formControlName="lessonText" [config]="ckConfig"
-                      editorUrl="assets/compressed/ckeditor/ckeditor.js"></ckeditor>
-          </div>
-
-          <h5>Attachments</h5>
-          <!--<dropzone style="height: 20vh" [message]="'Click or drag images here to upload'"  (success)="onUploadSuccess($event)"></dropzone>-->
-          <ngx-dropzone id="dropzone{{i}}" (change)="onSelect($event, step)">
-            <ngx-dropzone-label>Add files here</ngx-dropzone-label>
-            <ngx-dropzone-preview *ngFor="let f of step.get('attachments').value" [removable]="true"
-                                  (removed)="onRemove(f, step)">
-              <ngx-dropzone-label>{{ f.attachmentTitle }}</ngx-dropzone-label>
-            </ngx-dropzone-preview>
-          </ngx-dropzone>
-        </div>
         <mat-expansion-panel-header *ngIf="isTest(step)" cdkDragHandle>
           <mat-panel-title class="m-2 d-flex justify-content-between">
             <button type="button" class="btn btn-secondary btn-sm">
               Test: {{ step.get("name").value }}
             </button>
-            <button type="button" class="btn btn-secondary btn-sm" (click)="delete(courseForm, step,'steps')">Delete &#10060;</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="delete(courseForm, step,'steps')">Delete
+              &#10060;
+            </button>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div *ngIf="isTest(step) && shouldBeRendered(step)" class="p-2" formGroupName="{{i}}">
-          <div class="form-group">
-            <label for="testName{{i}}">
-              Name:
-            </label>
-            <input id="testName{{i}}" class="form-control"
-                   placeholder="Enter the test name" type="text" formControlName="name">
+        <ng-template  matExpansionPanelContent>
+          <div *ngIf="isLesson(step)" class="p-2" formGroupName="{{i}}">
+            <div class="form-group">
+              <label for="lessonName{{i}}">
+                Name:
+              </label>
+              <input id="lessonName{{i}}" class="form-control" placeholder="Enter the lesson name" type="text"
+                     formControlName="name" required>
+              <app-field-error [control]="step.get('name')"></app-field-error>
+            </div>
+
+            <div class="form-group">
+              <label for="lessonText{{i}}">
+                Lesson text:
+              </label>
+              <!-- <angular-editor id="lessonText" formControlName="lessonText" [config]="lessonEditorConfig">
+               </angular-editor>-->
+              <ckeditor id="lessonText{{i}}" formControlName="lessonText" [config]="ckConfig"
+                        editorUrl="assets/compressed/ckeditor/ckeditor.js"></ckeditor>
+            </div>
+
+            <h5>Attachments</h5>
+            <!--<dropzone style="height: 20vh" [message]="'Click or drag images here to upload'"  (success)="onUploadSuccess($event)"></dropzone>-->
+            <ngx-dropzone id="dropzone{{i}}" (change)="onSelect($event, step)">
+              <ngx-dropzone-label>Add files here</ngx-dropzone-label>
+              <ngx-dropzone-preview *ngFor="let f of step.get('attachments').value" [removable]="true"
+                                    (removed)="onRemove(f, step)">
+                <ngx-dropzone-label>{{ f.attachmentTitle }}</ngx-dropzone-label>
+              </ngx-dropzone-preview>
+            </ngx-dropzone>
           </div>
+          <div *ngIf="isTest(step)"  class="p-2" formGroupName="{{i}}">
+            <div class="form-group">
+              <label for="testName{{i}}">
+                Name:
+              </label>
+              <input id="testName{{i}}" class="form-control"
+                     placeholder="Enter the test name" type="text" formControlName="name" required>
+              <app-field-error [control]="step.get('name')"></app-field-error>
+            </div>
 
-          <div cdkDropList class="step questions" formArrayName="questions"
-               (cdkDropListDropped)="drop(step, $event, 'questions')">
-            <h5>Questions</h5>
-            <button type="button" class="btn btn-primary btn-sm addition" (click)="addQuestion(step)">Add Question</button>
-            <mat-expansion-panel (opened)="setExpandedTrue(question)"
-                                 *ngFor="let question of questions(step).controls; let j=index" cdkDrag>
-              <mat-expansion-panel-header cdkDragHandle>
-                <mat-panel-title class="m-2 d-flex justify-content-between">
-                  <button type="button" class="btn btn-secondary btn-sm">
-                    Question : {{getQuestionName(question, j)}}
-                  </button>
-                  <button type="button" class="btn btn-secondary btn-sm" (click)="delete(step, question, 'questions')">Delete &#10060;
-                  </button>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div *ngIf="shouldBeRendered(question)" class="p-2" formGroupName="{{j}}">
-                <div class="form-group">
-                  <label for="questionText-{{i}}-{{j}}">
-                    Question text:
-                  </label>
-                  <ckeditor id="questionText-{{i}}-{{j}}" formControlName="questionText"
-                            [config]="ckConfig" editorUrl="assets/compressed/ckeditor/ckeditor.js">
-                    Type text here
-                  </ckeditor>
+            <div class="form-group">
+              <label for="successThreshold{{i}}">
+                Success threshold:
+              </label>
+              <input id="successThreshold{{i}}" class="form-control" [defaultValue]="1"
+                     placeholder="Enter the test name" type="number" formControlName="successThreshold" required [min]="1" [max]="questions(step).length">
+              <app-field-error [control]="step.get('successThreshold')"></app-field-error>
+            </div>
 
-                </div>
+            <div cdkDropList class="step questions" formArrayName="questions"
+                 (cdkDropListDropped)="drop(step, $event, 'questions')">
+              <h5>Questions</h5>
+              <button type="button" class="btn btn-primary btn-sm addition" (click)="addQuestion(step)">Add Question
+              </button>
+              <app-field-error [control]="step.get('questions')"></app-field-error>
+              <mat-expansion-panel (opened)="setExpandedTrue(question)"
+                                   *ngFor="let question of questions(step).controls; let j=index" cdkDrag>
+                <mat-expansion-panel-header cdkDragHandle>
+                  <mat-panel-title class="m-2 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary btn-sm">
+                      Question : {{getQuestionName(question, j)}}
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm"
+                            (click)="delete(step, question, 'questions')">Delete &#10060;
+                    </button>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-template matExpansionPanelContent>
+                  <div class="p-2" formGroupName="{{j}}">
+                    <div class="form-group">
+                      <label for="questionText-{{i}}-{{j}}">
+                        Question text:
+                      </label>
+                      <ckeditor id="questionText-{{i}}-{{j}}" formControlName="questionText"
+                                [config]="ckConfig" editorUrl="assets/compressed/ckeditor/ckeditor.js">
+                        Type text here
+                      </ckeditor>
 
-                <div class="form-group w-25">
-                  <label for="questionType-{{i}}-{{j}}">
-                    Which type of questions is it?
-                  </label>
-                  <select id="questionType-{{i}}-{{j}}" class="form-control" formControlName="type"
-                          [value]="question.get('type').value.toString()">
-                    <option *ngFor="let questionType of questionTypes" [selected]="questionType == question.get('type').value">
-                      {{ questionType}}
-                    </option>
-                  </select>
-                </div>
-                <div [class.invisible]="isVariantsVisible(question)" cdkDropList class="variants"
-                     formArrayName="variants"
-                     (cdkDropListDropped)="drop(question, $event, 'variants')">
-                  <h5>Variants</h5>
-                  <button type="button" class="btn btn-primary btn-sm addition" (click)="addVariant(question)">Add Variant</button>
-                  <mat-expansion-panel *ngFor="let variant of variants(question).controls; let z=index" cdkDrag>
-                    <mat-expansion-panel-header cdkDragHandle>
-                      <mat-panel-title class="m-2 d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary btn-sm">Variant : {{variant.get('variantText').value}}
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-sm" (click)="delete(question, variant, 'variants')">Delete
-                          &#10060;
-                        </button>
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="p-2 d-flex" formGroupName="{{z}}">
-                      <div class="form-group flex-fill m-1">
-                        <input placeholder="Enter the variant" type="text" class="form-control"
-                               formControlName="variantText">
-                      </div>
-                      <div class="form-group flex-fill m-1">
-                        <input placeholder="Enter the explanation" type="text" class="form-control"
-                               formControlName="explanation">
-                      </div>
-                      <div class="form-check flex-fill m-1">
-                        <input id="isCorrect-{{i}}-{{j}}-{{z}}" class="form-check-input"
-                               [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
-                        <label class="form-check-label" for="isCorrect-{{i}}-{{j}}-{{z}}">
-                          Is it correct?
-                        </label>
-                      </div>
                     </div>
-                  </mat-expansion-panel>
-                </div>
-              </div>
-            </mat-expansion-panel>
+
+                    <div class="form-group w-25">
+                      <label for="questionType-{{i}}-{{j}}">
+                        Which type of questions is it?
+                      </label>
+                      <select id="questionType-{{i}}-{{j}}" class="form-control" formControlName="type"
+                              [value]="question.get('type').value.toString()">
+                        <option *ngFor="let questionType of questionTypes"
+                                [selected]="questionType == question.get('type').value">
+                          {{ questionType}}
+                        </option>
+                      </select>
+                    </div>
+                    <div [class.invisible]="isVariantsVisible(question)" cdkDropList class="variants"
+                         formArrayName="variants"
+                         (cdkDropListDropped)="drop(question, $event, 'variants')">
+                      <h5>Variants</h5>
+                      <button type="button" class="btn btn-primary btn-sm addition" (click)="addVariant(question)">Add
+                        Variant
+                      </button>
+                      <mat-expansion-panel *ngFor="let variant of variants(question).controls; let z=index" cdkDrag>
+                        <mat-expansion-panel-header cdkDragHandle>
+                          <mat-panel-title class="m-2 d-flex justify-content-between">
+                            <button type="button" class="btn btn-secondary btn-sm">Variant
+                              : {{variant.get('variantText').value}}
+                            </button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                    (click)="delete(question, variant, 'variants')">Delete
+                              &#10060;
+                            </button>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ng-template matExpansionPanelContent>
+                          <div class="p-2 d-flex" formGroupName="{{z}}">
+                            <div class="form-group flex-fill m-1">
+                              <input placeholder="Enter the variant" type="text" class="form-control"
+                                     formControlName="variantText">
+                            </div>
+                            <div class="form-group flex-fill m-1">
+                              <input placeholder="Enter the explanation" type="text" class="form-control"
+                                     formControlName="explanation">
+                            </div>
+                            <div class="form-check flex-fill m-1">
+                              <input id="isCorrect-{{i}}-{{j}}-{{z}}" class="form-check-input"
+                                     [value]="variant.get('isRight').value" type="checkbox" formControlName="isRight">
+                              <label class="form-check-label" for="isCorrect-{{i}}-{{j}}-{{z}}">
+                                Is it correct?
+                              </label>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </mat-expansion-panel>
+                    </div>
+                  </div>
+                </ng-template>
+              </mat-expansion-panel>
+            </div>
           </div>
-        </div>
+        </ng-template>
       </mat-expansion-panel>
     </div>
   </div>

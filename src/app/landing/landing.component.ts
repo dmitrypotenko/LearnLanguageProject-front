@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Injector, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {jarallax} from 'jarallax';
-import {Meta, Title} from "@angular/platform-browser";
+import {DomSanitizer, Meta, Title} from "@angular/platform-browser";
 import {isPlatformBrowser} from "@angular/common";
 
 
@@ -11,6 +11,17 @@ import {isPlatformBrowser} from "@angular/common";
 })
 export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'Learn hard';
+  schema = {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": "LessonsBox",
+    "url": "https://lessonsbox.com/",
+    "address": "",
+    "sameAs": [
+      "https://www.facebook.com/LessonsBox",
+      "https://twitter.com/LessonsBox"
+    ]
+  };
 
   constructor(private meta: Meta, private titleService: Title, private injector: Injector) {
   }
@@ -29,6 +40,7 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
         'we offer a flexible platform for English lessons and tests creation.'
     });
     this.titleService.setTitle("LessonsBox - online platform for English learners and teachers.");
+
   }
 
   ngAfterViewInit(): void {

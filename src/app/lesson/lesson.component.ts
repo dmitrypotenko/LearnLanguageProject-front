@@ -1,7 +1,7 @@
 import {AfterViewChecked, Component, HostListener, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {LessonData, LessonService} from '../lesson.service';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {DomSanitizer, Meta, SafeHtml, Title} from '@angular/platform-browser';
 import * as Embedo from 'embedo/embedo.js';
 
 @Component({
@@ -24,7 +24,8 @@ export class LessonComponent implements OnInit, AfterViewChecked {
   constructor(
     lessonService: LessonService,
     location: Location,
-    sanitizer: DomSanitizer
+    sanitizer: DomSanitizer,
+    private meta: Meta, private titleService: Title
   ) {
     this.location = location;
     this.lessonService = lessonService;
@@ -68,6 +69,10 @@ export class LessonComponent implements OnInit, AfterViewChecked {
     this.lessonService.getCurrentLessonData()
       .subscribe(lessonData => {
         this.lessonData = lessonData;
+        if (lessonData!=null) {
+          this.titleService.setTitle('LessonsBox: ' + lessonData.getName());
+          this.meta.removeTag('name="description"');
+        }
         if (this.lessonData != null && lessonData.videoLink != null) {
           this.lessonText = this.sanitizer.bypassSecurityTrustHtml(this.lessonData.lessonText);
 

@@ -32,7 +32,7 @@ export class TestService {
   checkTest(testData: TestData): Observable<TestData> {
     return this.http.post(appUrl + '/tests/check', JSON.stringify(testData), {headers: new HttpHeaders('Content-Type: application/json')})
       .pipe(catchError(Util.handleError(null)))
-      .pipe<TestData>(map<TestData, TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted)));
+      .pipe<TestData>(map<TestData, TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold)));
   }
 
   invalidateTest(testData: TestData): Observable<Response> {
@@ -72,19 +72,30 @@ export class TestData implements Listable {
   private _order: number;
   private _name: string;
   private _isCompleted: boolean;
+  private _successThreshold: number;
 
 
-  constructor(questions: QuestionData[], id: number, order: number, name: string, isCompleted = false) {
+  constructor(questions: QuestionData[], id: number, order: number, name: string, isCompleted = false, successThreshold: number) {
     this._questions = questions;
     this._id = id;
     this._order = order;
     this._name = name;
     this._isCompleted = isCompleted;
+    this._successThreshold = successThreshold;
   }
 
 
   get questions(): QuestionData[] {
     return this._questions;
+  }
+
+
+  get successThreshold(): number {
+    return this._successThreshold;
+  }
+
+  set successThreshold(value: number) {
+    this._successThreshold = value;
   }
 
   set questions(value: QuestionData[]) {
@@ -133,7 +144,7 @@ export class TestData implements Listable {
   }
 
   isFailed(): boolean {
-    return this.questions.find(question => question.status == QuestionStatus.FAILED) != null;
+    return this.questions.filter(question => question.status == QuestionStatus.SUCCESS).length < this.successThreshold;
   }
 
 }

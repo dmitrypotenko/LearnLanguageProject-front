@@ -17,6 +17,7 @@ const routes: Routes = [
   {path: 'courses/create', component: CourseEditComponent},
   {path: 'courses/edit/:id', component: CourseEditComponent},
   {path: 'courses/:id', component: CourseComponent},
+  {path: 'courses/:id/steps/:stepId', component: CourseComponent},
   {path: 'courses', component: CourseListComponent},
   {path: 'donate', component: DonateComponent},
   {path: 'policy', component: PolicyComponent},

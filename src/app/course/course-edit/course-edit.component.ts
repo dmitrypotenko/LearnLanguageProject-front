@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CourseData, CourseService} from '../course.service';
@@ -11,18 +11,10 @@ import {HttpClient} from '@angular/common/http';
 import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {FileSender} from './FileSender';
 import {MatDialog} from '@angular/material/dialog';
-import {NewOptionDialogComponent} from './new-option-dialog/new-option-dialog.component';
 import {QuestionType} from './QuestionType';
 import {NotificationService} from '../../error/NotificationService';
+import {QuestionsValidator} from "./field-error/Validators";
 
-declare var CKEDITOR: any;
-
-interface SelectionRectangle {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
 
 @Component({
   selector: 'app-course-edit',
@@ -59,7 +51,7 @@ export class CourseEditComponent implements OnInit {
           this.courseForm.get('category').setValue(course.category);
           course.lessons.forEach(lesson => {
             let lessonControl = this.createLesson();
-            this.steps.controls[lesson.order] = lessonControl;
+            this.steps.insert(lesson.order, lessonControl);
             lessonControl.get('id').setValue(lesson.id);
             lessonControl.get('videoLink').setValue(lesson.videoLink);
             lessonControl.get('lessonText').setValue(lesson.lessonText);
@@ -68,9 +60,10 @@ export class CourseEditComponent implements OnInit {
           });
           course.tests.forEach(test => {
             let testControl = this.createTest();
-            this.steps.controls[test.order] = testControl;
+            this.steps.insert(test.order, testControl);
             testControl.get('id').setValue(test.id);
             testControl.get('name').setValue(test.name);
+            testControl.get('successThreshold').setValue(test.successThreshold);
             test.questions.forEach(question => {
               let questionControl = this.createQuestion();
               questionControl.get('questionText').setValue(question.question);
@@ -98,7 +91,7 @@ export class CourseEditComponent implements OnInit {
     this.ckConfig = {
       allowedContent: true,
       on: {
-        fileUploadRequest: function(evt) {
+        fileUploadRequest: function (evt) {
           CourseEditComponent.fileSender.sendFile(evt.data.requestData.upload.file).subscribe(response => {
               evt.data.fileLoader.status = 'uploaded';
               evt.data.fileLoader.responseData = response;
@@ -119,11 +112,15 @@ export class CourseEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService,
               private route: ActivatedRoute, private httpClient: HttpClient, private dialog: MatDialog,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService, private cd: ChangeDetectorRef) {
   }
 
   onSubmit() {
     let allSteps = this.steps;
+    if (!this.validate(allSteps)) {
+      return;
+    }
+
     let lessons: LessonData[] = [];
     let tests: TestData[] = [];
 
@@ -150,7 +147,9 @@ export class CourseEditComponent implements OnInit {
           questions,
           step.get('id').value as number,
           index,
-          step.get('name').value as string
+          step.get('name').value as string,
+          false,
+          step.get('successThreshold').value as number
         ));
       } else {
         lessons.push(new LessonData(
@@ -203,6 +202,22 @@ export class CourseEditComponent implements OnInit {
     });
   }
 
+  private validate(allSteps: FormArray) {
+    this.courseForm.markAllAsTouched();
+    if (this.courseForm.status == 'INVALID') {
+      allSteps.controls.forEach(step => {
+        if (step.status == 'INVALID') {
+          this.setExpandedTrue(step);
+        }
+      });
+      this.notificationService.showError("Form is invalid");
+      this.cd.detectChanges();
+      return false;
+    }
+    return true;
+  }
+
+
   addLesson() {
     let lessons = this.courseForm.get('steps') as FormArray;
     lessons.push(this.createLesson());
@@ -240,7 +255,7 @@ export class CourseEditComponent implements OnInit {
 
   createTest(): FormGroup {
     let testForm = new TestForm();
-    testForm.questions = this.fb.array([]);
+    testForm.questions = this.fb.array([], QuestionsValidator.questionsRequired);
     return this.fb.group(testForm);
   }
 
@@ -316,32 +331,22 @@ export class CourseEditComponent implements OnInit {
     attachments.splice(attachments.indexOf(f), 1);
   }
 
-  shouldBeRendered(control: AbstractControl): boolean {
-    return (control.get('expanded').value as boolean) == true;
+  getQuestionName(question: AbstractControl, j: number) {
+    let document = new DOMParser().parseFromString(question.get('questionText').value, 'text/html');
+    let textContent = document.body.textContent;
+    return 1 + j + ' - ' + textContent?.substring(0, 10);
   }
 
   setExpandedTrue(control: AbstractControl) {
     control.get('expanded').setValue(true);
   }
 
-  addNewOmittedOption(question: AbstractControl) {
-    let questionGroup = question as FormGroup;
-    let variants = questionGroup.get('variants') as FormArray;
-
-    this.dialog.open(NewOptionDialogComponent, {height: '20vh', width: '30vw', hasBackdrop: true})
-      .afterClosed().subscribe(result => {
-      if (result) {
-        let variant = this.createVariant();
-        variants.push(variant);
-        variant.get('variantText').setValue(result);
-      }
-    });
+  isExpanded(step: AbstractControl) {
+    return (step.get('expanded').value as boolean)
   }
 
-  getQuestionName(question: AbstractControl, j: number) {
-    let document = new DOMParser().parseFromString(question.get('questionText').value, 'text/html');
-    let textContent = document.body.textContent;
-    return 1 + j + ' - ' + textContent?.substring(0, 10);
+  setExpandedFalse(step: AbstractControl) {
+    step.get('expanded').setValue('false')
   }
 }
 
@@ -357,6 +362,7 @@ class LessonForm {
 class TestForm {
   name = '';
   questions: FormArray;
+  successThreshold = 1;
   id = null;
   expanded = false;
 }

@@ -52,6 +52,7 @@ import { InputComponent } from './question/input/input.component';
 import {NgxJsonLdModule} from "@ngx-lite/json-ld";
 import { FacebookComponent } from './landing/facebook/facebook.component';
 import { PolicyComponent } from './landing/policy/policy.component';
+import { FieldErrorComponent } from './course/course-edit/field-error/field-error.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { PolicyComponent } from './landing/policy/policy.component';
     ErrorComponent,
     InputComponent,
     FacebookComponent,
-    PolicyComponent
+    PolicyComponent,
+    FieldErrorComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),

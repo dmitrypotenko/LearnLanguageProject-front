@@ -61,22 +61,17 @@ export class CourseListComponent implements OnInit {
       name: 'description',
       content: 'Here you can choose an online English course that consists of lessons and tests and exercises. '
     });
-    this.titleService.setTitle( "LessonsBox - The list of online English courses." );
+    this.titleService.setTitle("LessonsBox - The list of online English courses.");
     this.courseService.getAllCoursesMetadata().subscribe(courses => {
       this._courses = courses;
       this.schema = {
-        '@context':'https://schema.org',
-        '@type':'ItemList',
-        itemListElement: courses.map((course , index) => {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: courses.map((course, index) => {
           return {
             '@type': 'ListItem',
             position: index,
-            item: {
-              '@type': 'Course',
-              url : appUrl +  '/courses/' + course.id,
-              description: course.description,
-              name: course.name
-            }
+            url: appUrl + '/courses/' + course.id
           }
         })
       };

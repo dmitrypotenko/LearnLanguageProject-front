@@ -9,22 +9,143 @@
 
   <url>
     <loc>https://lessonsbox.com/</loc>
-    <lastmod>2020-04-23T20:25:08+00:00</lastmod>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>1.00</priority>
   </url>
-
   <url>
     <loc>https://lessonsbox.com/courses</loc>
-    <lastmod>2020-04-23T20:25:08+00:00</lastmod>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.80</priority>
   </url>
-
+  <url>
+    <loc>https://lessonsbox.com/welcome</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/donate</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/policy</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
   <url>
     <loc>https://lessonsbox.com/courses/8</loc>
-    <lastmod>2020-04-23T20:25:08+00:00</lastmod>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.64</priority>
   </url>
-
   <url>
     <loc>https://lessonsbox.com/courses/10</loc>
-    <lastmod>2020-04-23T20:25:08+00:00</lastmod>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/8?stepId=0</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/8?stepId=1</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/8?stepId=2</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/8?stepId=3</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=0</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=1</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=2</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=3</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=4</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=5</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=6</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=7</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=8</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=9</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=10</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=11</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=12</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=13</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=14</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=15</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://lessonsbox.com/courses/10?stepId=16</loc>
+    <lastmod>2020-04-27T13:47:18+00:00</lastmod>
+    <priority>0.51</priority>
   </url>
 
 

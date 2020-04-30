@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {TestData, TestService} from '../test.service';
 import {QuestionStatus, VariantData} from '../question/question.component';
+import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-test',
@@ -17,7 +18,8 @@ export class TestComponent implements OnInit {
 
 
   constructor(testService: TestService,
-              private cd: ChangeDetectorRef) {
+              private cd: ChangeDetectorRef,
+              private meta: Meta, private titleService: Title) {
     this.testService = testService;
   }
 
@@ -27,7 +29,13 @@ export class TestComponent implements OnInit {
 
   getCurrentTest(): void {
     this.testService.getCurrentTestData()
-      .subscribe(testData => this._testData = testData);
+      .subscribe(testData => {
+        if (testData!=null) {
+          this.titleService.setTitle('LessonsBox: ' + testData.getName());
+          this.meta.removeTag('name="description"');
+        }
+        this._testData = testData;
+      });
   }
 
   checkTest(testData: TestData) {

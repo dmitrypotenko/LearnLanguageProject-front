@@ -41,7 +41,7 @@
           <div *ngFor='let step of ordered'>
             <ul class="list-group">
               <li class="list-group-item panel-step-item" [class.active]="currentLesson===step || currentTest === step" style="padding: 0">
-                <a [routerLink]="currentUrl" [queryParams]="getQueryParamsForStep(step)" class="disabledLink d-flex">
+                <a [routerLink]="getUrlForStep(step)"  class="disabledLink d-flex">
                   <div class="stepPanel">
                     <span *ngIf="step.completed() && isFailedTest(step)">&#x274C;</span>
                     <span *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>

@@ -43,7 +43,7 @@ export class CourseService {
       course.name,
       course.category,
       course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order, lesson.isCompleted)),
-      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted)),
+      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold)),
       course.completion
     );
   }

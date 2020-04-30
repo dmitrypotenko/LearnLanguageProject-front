@@ -1,20 +1,20 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseData, CourseService} from './course.service';
 import {LessonData, LessonService} from '../lesson.service';
-import {ActivatedRoute, NavigationStart, Router, RouterEvent} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TestData, TestService} from '../test.service';
 import {StepSwitcherService} from '../step-switcher.service';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {Meta, Title} from "@angular/platform-browser";
 import {appUrl} from "../../environments/environment";
-import {filter, map, takeUntil} from "rxjs/operators";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.scss']
 })
-export class CourseComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
   private courseService: CourseService;
   private lessonService: LessonService;
   private route: ActivatedRoute;
@@ -36,8 +36,7 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
               cd: ChangeDetectorRef,
               testService: TestService,
               private mediaMatcher: MediaMatcher,
-              private meta: Meta, private titleService: Title,
-              private router: Router) {
+              private meta: Meta, private titleService: Title) {
     this.cd = cd;
     this.courseService = courseService;
     this.lessonService = lessonService;
@@ -46,25 +45,10 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
   }
 
   ngOnInit() {
-
-    this.route.queryParamMap.pipe(map(map => map.get('stepId'))).subscribe(stepId =>
-      this.stepId = Number(stepId)
-    );
-    this.router.events
-      .pipe(
-        filter((event: RouterEvent) => event instanceof NavigationStart)
-      )
-      .subscribe((event: NavigationStart) => {
-        this.stepId = Number(this.router.parseUrl(event.url).queryParamMap.get('stepId'));
-        if (this.stepId != null) {
-          let ordered = this.stepSwitcher.ordered;
-          let step = ordered.find(step => step.getId() == this.stepId);
-          if (step != null) {
-            this.stepSwitcher.switchTo(step);
-            return true;
-          }
-        }
-      });
+    this.route.paramMap.pipe(map(map => map.get('stepId'))).subscribe(stepId => {
+      this.stepId = Number(stepId);
+      this.tryToUpdate();
+    });
     let id: number = Number(this.route.snapshot.paramMap.get('id'));
     this.stepSwitcher = new StepSwitcherService(this.lessonService, this._testService);
 
@@ -119,11 +103,10 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
 
   private tryToUpdate(): boolean {
 
-    console.log("I ma trying to update stepID = " + this.stepId);
-    let ordered = this.stepSwitcher.ordered;
-    if (ordered.length != 0) {
+    if (this.stepSwitcher!=null && this.stepSwitcher.ordered != null && this.stepSwitcher.ordered.length != 0) {
+      let ordered = this.stepSwitcher.ordered;
       if (this.stepId != null) {
-        let step = ordered.find(step => step.getId() == this.stepId);
+        let step = ordered.find(step => step.getOrder() == this.stepId);
         if (step != null) {
           this.stepSwitcher.switchTo(step);
           return true;
@@ -171,10 +154,6 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
       return false;
     }
     return true;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.tryToUpdate();
   }
 
 

@@ -1,10 +1,13 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
-import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {NavigationError, Router} from '@angular/router';
-import {Observable, of} from 'rxjs';
-import * as ErrorStackParser from 'error-stack-parser';
-import {environment} from '../../environments/environment';
+import * as Sentry from "@sentry/browser";
+import {environment} from "../../environments/environment";
+
+Sentry.init({
+  dsn: "https://cb2aa8f65a754dddaf3df90e8fd26615@o385477.ingest.sentry.io/5218265"
+});
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,18 +25,16 @@ export class ErrorService {
       .subscribe(event => {
         if (event instanceof NavigationError) {
           // Redirect to the ErrorComponent
-          this.log(event.error)
-            .subscribe((errorWithContext) => {
-              this.router.navigate(['/error'], {queryParams: errorWithContext});
-            });
+          var errorWithContext = this.log(event.error);
+          this.router.navigate(['/error'], {queryParams: errorWithContext})
         }
       });
   }
 
   getClientErrorMessage(error: Error): string {
-  /*  if (environment.production) {
-      return '';
-    }*/
+    /*  if (environment.production) {
+        return '';
+      }*/
     return error.message ? error.message : error.toString();
   }
 
@@ -61,36 +62,21 @@ export class ErrorService {
     return '';
   }
 
-  log(error) {
+  log(error): any {
     // Log the error to the console
     console.error(error);
     // Send error to server
-    const errorToSend = this.addContextInfo(error);
-    return FakeHttpService.post(errorToSend);
-  }
-
-  addContextInfo(error) {
-    // You can include context details here (usually coming from other services: UserService...)
-    const name = error.name || null;
-    const appId = 'shthppnsApp';
-    const user = 'ShthppnsUser';
-    const time = new Date().getTime();
-    const id = `${appId}-${user}-${time}`;
-    const location = this.injector.get(LocationStrategy);
-    const url = location instanceof PathLocationStrategy ? location.path() : '';
-    const status = error.status || null;
-    const message = error.message || error.toString();
-    const stack = error instanceof HttpErrorResponse ? null : ErrorStackParser.parse(error);
-
-    const errorWithContext = {name, appId, user, time, id, url, status, message, stack};
-    return errorWithContext;
+    if (environment.production == true) {
+      SentryService.post(error);
+    }
+    return error;
   }
 }
 
 
-class FakeHttpService {
-  static post(error): Observable<any> {
-    console.log('Error sent to the server: ', error);
-    return of(error);
+class SentryService {
+  static post(error) {
+    const eventId = Sentry.captureException(error.originalError || error);
+    Sentry.showReportDialog({eventId});
   }
 }

@@ -36,6 +36,6 @@ export class GlobalErrorHandler implements ErrorHandler {
       notifier.showError(message);
     }
     // Always log errors
-    errorService.log(error).subscribe();
+    errorService.log(error);
   }
 }
