@@ -42,6 +42,7 @@
             <ul class="list-group">
               <li class="list-group-item panel-step-item" [class.active]="currentLesson===step || currentTest === step" style="padding: 0">
                 <a [routerLink]="getUrlForStep(step)"  class="disabledLink d-flex">
+                  <div class="flex-shrink-0" style="width: 20px"></div>
                   <div class="stepPanel">
                     <span *ngIf="step.completed() && isFailedTest(step)">&#x274C;</span>
                     <span *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>

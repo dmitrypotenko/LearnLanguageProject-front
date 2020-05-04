@@ -53,6 +53,8 @@ import {NgxJsonLdModule} from "@ngx-lite/json-ld";
 import { FacebookComponent } from './landing/facebook/facebook.component';
 import { PolicyComponent } from './landing/policy/policy.component';
 import { FieldErrorComponent } from './course/course-edit/field-error/field-error.component';
+import { SearchComponent } from './search/search.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -79,7 +81,8 @@ import { FieldErrorComponent } from './course/course-edit/field-error/field-erro
     InputComponent,
     FacebookComponent,
     PolicyComponent,
-    FieldErrorComponent
+    FieldErrorComponent,
+    SearchComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -107,7 +110,8 @@ import { FieldErrorComponent } from './course/course-edit/field-error/field-erro
         MatProgressSpinnerModule,
         RouterModule,
         CKEditorModule,
-        NgxJsonLdModule
+        NgxJsonLdModule,
+        MatAutocompleteModule
     ],
   entryComponents: [
     ConcessionDialogComponent,

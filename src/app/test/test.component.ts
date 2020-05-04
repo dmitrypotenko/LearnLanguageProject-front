@@ -30,7 +30,7 @@ export class TestComponent implements OnInit {
   getCurrentTest(): void {
     this.testService.getCurrentTestData()
       .subscribe(testData => {
-        if (testData!=null) {
+        if (testData != null) {
           this.titleService.setTitle('LessonsBox: ' + testData.getName());
           this.meta.removeTag('name="description"');
         }
@@ -44,7 +44,11 @@ export class TestComponent implements OnInit {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
         testData.isCompleted = checkedTest.isCompleted;
-        testData.questions = checkedTest.questions;
+        testData.questions.forEach((question, index) => {
+          let checkedQuestion = checkedTest.questions[index];
+          question.variants = checkedQuestion.variants;
+          question.status = checkedQuestion.status;
+        })
       });
   }
 

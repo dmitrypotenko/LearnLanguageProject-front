@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CourseData, CourseService} from '../course.service';
@@ -15,6 +15,7 @@ import {QuestionType} from './QuestionType';
 import {NotificationService} from '../../error/NotificationService';
 import {QuestionsValidator} from "./field-error/Validators";
 
+declare var CKEDITOR: any;
 
 @Component({
   selector: 'app-course-edit',
@@ -44,6 +45,10 @@ export class CourseEditComponent implements OnInit {
       let id: number = Number(routeId);
       this.courseService.getCourseByIdForEdit(id)
         .subscribe(course => {
+          var stepsCount = course.tests.length + course.lessons.length;
+          for (let i = 0; i < stepsCount; i++) {
+            this.steps.push(new FormControl())
+          }
           console.log('Course is retrieved from server');
           this.courseForm.get('id').setValue(course.id);
           this.courseForm.get('name').setValue(course.name);
@@ -51,7 +56,7 @@ export class CourseEditComponent implements OnInit {
           this.courseForm.get('category').setValue(course.category);
           course.lessons.forEach(lesson => {
             let lessonControl = this.createLesson();
-            this.steps.insert(lesson.order, lessonControl);
+            this.steps.setControl(lesson.order, lessonControl);
             lessonControl.get('id').setValue(lesson.id);
             lessonControl.get('videoLink').setValue(lesson.videoLink);
             lessonControl.get('lessonText').setValue(lesson.lessonText);
@@ -60,7 +65,7 @@ export class CourseEditComponent implements OnInit {
           });
           course.tests.forEach(test => {
             let testControl = this.createTest();
-            this.steps.insert(test.order, testControl);
+            this.steps.setControl(test.order, testControl);
             testControl.get('id').setValue(test.id);
             testControl.get('name').setValue(test.name);
             testControl.get('successThreshold').setValue(test.successThreshold);
@@ -301,6 +306,7 @@ export class CourseEditComponent implements OnInit {
     let collection = control.get(collectionName) as FormArray;
     collection.controls.forEach(step => step.get('expanded').setValue('false'));
     moveItemInArray(collection.controls, cdkDragDrop.previousIndex, cdkDragDrop.currentIndex);
+    this.cd.detectChanges();
   }
 
   get questionTypes() {
@@ -342,7 +348,7 @@ export class CourseEditComponent implements OnInit {
   }
 
   isExpanded(step: AbstractControl) {
-    return (step.get('expanded').value as boolean)
+    return (step.get('expanded').value as boolean) == true
   }
 
   setExpandedFalse(step: AbstractControl) {

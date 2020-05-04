@@ -31,7 +31,8 @@
     <button type="button" class="btn btn-primary m-2" (click)="addLesson()">Add Lesson</button>
     <button type="button" class="btn btn-primary m-2" (click)="addTest()">Add Test</button>
     <div *ngFor="let step of steps.controls; let i=index" class="d-flex">
-      <mat-expansion-panel style="width: 100%" (opened)="setExpandedTrue(step)" (closed)="setExpandedFalse(step)" [expanded]="isExpanded(step)" cdkDrag>
+      <mat-expansion-panel style="width: 100%" (opened)="setExpandedTrue(step)" (closed)="setExpandedFalse(step)"
+                           [expanded]="isExpanded(step)" cdkDrag>
         <mat-expansion-panel-header *ngIf="isLesson(step)" cdkDragHandle>
           <mat-panel-title class="m-2 d-flex">
             <button type="button" class="btn btn-secondary btn-sm mr-auto">
@@ -52,7 +53,7 @@
             </button>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <ng-template  matExpansionPanelContent>
+        <ng-template matExpansionPanelContent>
           <div *ngIf="isLesson(step)" class="p-2" formGroupName="{{i}}">
             <div class="form-group">
               <label for="lessonName{{i}}">
@@ -67,10 +68,11 @@
               <label for="lessonText{{i}}">
                 Lesson text:
               </label>
-              <!-- <angular-editor id="lessonText" formControlName="lessonText" [config]="lessonEditorConfig">
-               </angular-editor>-->
-              <ckeditor id="lessonText{{i}}" formControlName="lessonText" [config]="ckConfig"
-                        editorUrl="assets/compressed/ckeditor/ckeditor.js"></ckeditor>
+
+              <ng-container *ngIf="isExpanded(step)">
+                <ckeditor id="lessonText{{i}}" formControlName="lessonText" [config]="ckConfig"
+                          editorUrl="assets/compressed/ckeditor/ckeditor.js"></ckeditor>
+              </ng-container>
             </div>
 
             <h5>Attachments</h5>
@@ -83,7 +85,7 @@
               </ngx-dropzone-preview>
             </ngx-dropzone>
           </div>
-          <div *ngIf="isTest(step)"  class="p-2" formGroupName="{{i}}">
+          <div *ngIf="isTest(step)" class="p-2" formGroupName="{{i}}">
             <div class="form-group">
               <label for="testName{{i}}">
                 Name:
@@ -98,7 +100,8 @@
                 Success threshold:
               </label>
               <input id="successThreshold{{i}}" class="form-control" [defaultValue]="1"
-                     placeholder="Enter the test name" type="number" formControlName="successThreshold" required [min]="1" [max]="questions(step).length">
+                     placeholder="Enter the test name" type="number" formControlName="successThreshold" required
+                     [min]="1" [max]="questions(step).length">
               <app-field-error [control]="step.get('successThreshold')"></app-field-error>
             </div>
 
@@ -108,7 +111,8 @@
               <button type="button" class="btn btn-primary btn-sm addition" (click)="addQuestion(step)">Add Question
               </button>
               <app-field-error [control]="step.get('questions')"></app-field-error>
-              <mat-expansion-panel (opened)="setExpandedTrue(question)"
+              <mat-expansion-panel (opened)="setExpandedTrue(question)" (closed)="setExpandedFalse(question)"
+                                   [expanded]="isExpanded(question)"
                                    *ngFor="let question of questions(step).controls; let j=index" cdkDrag>
                 <mat-expansion-panel-header cdkDragHandle>
                   <mat-panel-title class="m-2 d-flex justify-content-between">
@@ -126,10 +130,12 @@
                       <label for="questionText-{{i}}-{{j}}">
                         Question text:
                       </label>
-                      <ckeditor id="questionText-{{i}}-{{j}}" formControlName="questionText"
-                                [config]="ckConfig" editorUrl="assets/compressed/ckeditor/ckeditor.js">
-                        Type text here
-                      </ckeditor>
+                      <ng-container *ngIf="isExpanded(question)">
+                        <ckeditor id="questionText-{{i}}-{{j}}" formControlName="questionText"
+                                  [config]="ckConfig" editorUrl="assets/compressed/ckeditor/ckeditor.js">
+                          Type text here
+                        </ckeditor>
+                      </ng-container>
 
                     </div>
 

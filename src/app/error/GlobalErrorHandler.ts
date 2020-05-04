@@ -1,13 +1,15 @@
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import {ErrorHandler, Injectable, Injector, PLATFORM_ID} from '@angular/core';
+import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorService} from './ErrorService';
 import {NotificationService} from './NotificationService';
 import {Router} from '@angular/router';
+import {isPlatformBrowser} from "@angular/common";
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
 
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector) {
+  }
 
   handleError(error: Error | HttpErrorResponse) {
     const errorService = this.injector.get(ErrorService);
@@ -22,18 +24,22 @@ export class GlobalErrorHandler implements ErrorHandler {
         errorService
           .log({message: "You are offline"})
           .subscribe(errorWithContextInfo => {
-            router.navigate(['/error'], { queryParams: errorWithContextInfo });
+            router.navigate(['/error'], {queryParams: errorWithContextInfo});
           });
         return;
       }
 
       message = errorService.getServerErrorMessage(error);
       //stackTrace = errorService.getServerErrorStackTrace(error);
-      notifier.showError(message);
+      if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
+        notifier.showError(message);
+      }
     } else {
       // Client Error
       message = "Something went wrong on the page: " + errorService.getClientErrorMessage(error);
-      notifier.showError(message);
+      if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
+        notifier.showError(message);
+      }
     }
     // Always log errors
     errorService.log(error);

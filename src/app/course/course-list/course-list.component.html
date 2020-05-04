@@ -31,7 +31,7 @@
           <div class="card-body">
             <h5 class="card-title">{{course.name}}</h5>
             <p class="card-text">{{course.description}}</p>
-            <a routerLink="/courses/{{course.id}}">
+            <a routerLink="/courses/{{course.id}}/steps/0">
               <span *ngIf="!course.completion.isStarted">Start course</span>
               <span *ngIf="course.completion.isStarted && !course.completion.isCompleted">Continue</span>
               <span *ngIf="course.completion.isCompleted">View</span>

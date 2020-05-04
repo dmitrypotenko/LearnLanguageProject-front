@@ -67,10 +67,6 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
   }
 
   ngAfterViewInit(): void {
-
-  }
-
-  ngAfterViewChecked(): void {
     if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
       console.log('ngAfterViewChecked Start');
       let allSelects = document.querySelector('#question' + this.questionData.id).querySelectorAll(' select-element,input-element') as NodeListOf<NgElement & WithProperties<{
@@ -84,6 +80,11 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
         }
       });
     }
+
+  }
+
+  ngAfterViewChecked(): void {
+
   }
 
   ngAfterContentInit(): void {
