@@ -28,6 +28,7 @@ export class AppComponent {
           if (environment.production == true) {
             gtag('config', 'UA-164785297-1', { 'page_path': this.getRootUrl(event.url) });
           }
+          window.scrollTo(0, 0);
       });
       const {createCustomElement} = require('@angular/elements');
 

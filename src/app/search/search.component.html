@@ -1,5 +1,6 @@
-<div style="width: 100vw; text-align: center">
-  <form class="search-form" style="width: 60vw; margin: auto">
+<div style="width: 100vw;" class="d-flex justify-content-center">
+  <mat-icon style="position: relative; top: 15px">search</mat-icon>
+  <form class="search-form" style="width: 60vw;" >
     <mat-form-field style="width: 100%">
       <input type="text"
              placeholder="Search for lessons"
@@ -8,9 +9,10 @@
              [formControl]="searchControl"
              [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="mapView">
-        <mat-option *ngFor="let option of options | async" [value]="option">
+        <mat-option *ngFor="let option of options | async" [value]="option" style="height: auto; border-bottom: 2px solid gray; border-top: 2px solid gray;">
           <a class="disabledLink" [routerLink]="'/courses/' + option.courseId+ '/steps/' + option.orderNumber">
-            <div [innerHTML]="option.matchedExtract"></div>
+            <div style="color: #1d75b3">{{option.lessonName}}</div>
+            <div class="text-wrap" [innerHTML]="option.matchedExtract"></div>
           </a>
         </mat-option>
       </mat-autocomplete>

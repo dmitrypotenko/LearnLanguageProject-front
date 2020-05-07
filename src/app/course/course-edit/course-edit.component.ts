@@ -27,7 +27,7 @@ export class CourseEditComponent implements OnInit {
   public ckConfig: {};
 
   courseForm = this.fb.group({
-    id: 0,
+    id: null,
     name: [''],
     description: [''],
     category: [''],
