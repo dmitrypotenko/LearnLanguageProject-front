@@ -1,0 +1,35 @@
+<div class="d-flex flex-column">
+  <div class="text-center comments-title">
+    <h4 style="display: inline">Comments</h4>
+    <mat-icon>comments</mat-icon>
+  </div>
+  <div class="d-flex flex-column comment-editor" *ngIf="(authService.isAuthorized() | async) ">
+    <div *ngIf="editingComment!=null" class="d-flex">
+      <mat-icon>edit</mat-icon>
+      You are modifying comment:
+      <div [innerHTML]="editingComment.commentText" class="editing-comment"></div>
+      <button (click)="cancelEditing()" class="btn btn-secondary m-1 cancel-edit">Cancel
+        <mat-icon svgIcon="ban"></mat-icon>
+      </button>
+    </div>
+    <form (ngSubmit)="onSubmit()" class="p-4">
+      <ckeditor [config]="ckConfig" editorUrl="assets/compressed/ckeditor/ckeditor.js"
+                [formControl]="currentComment"></ckeditor>
+      <button class="btn btn-primary m-1">Submit</button>
+    </form>
+  </div>
+  <div *ngIf="!(authService.isAuthorized() | async)" class="text-center m-2">
+    <b>You should
+      <app-login style="display: inline"></app-login>
+      to leave comments</b>
+  </div>
+  <div *ngIf="comments == null || comments.length == 0">
+    There are no comments yet. Be the first!
+  </div>
+  <div class="comment-wrap">
+    <app-comment *ngFor="let comment of comments" [comment]="comment" (update)="update($event)"
+                 (delete)="askToDelete(comment)">
+
+    </app-comment>
+  </div>
+</div>

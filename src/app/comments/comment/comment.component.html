@@ -1,0 +1,25 @@
+<div class="d-flex comment m-2">
+  <div class="d-flex align-items-center m-2">
+    <img [src]="comment.userPic" style="width: 40px" alt="assets/anon.jpg" class="userPic rounded-circle">
+  </div>
+  <div class="m-2">
+   <b> <span>{{comment.userName}}</span></b>
+    <span class="m-2">{{comment.createDate | fromNow}}</span>
+    <div [innerHTML]="comment.commentText"></div>
+  </div>
+  <ng-template [ngIf]="comment.editable">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button (click)="updateComment()" mat-menu-item>
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button (click)="deleteComment()" mat-menu-item>
+        <mat-icon svgIcon="trash"></mat-icon>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
+  </ng-template>
+</div>

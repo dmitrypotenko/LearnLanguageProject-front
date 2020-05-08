@@ -5,6 +5,8 @@ import {InputComponent} from './question/input/input.component';
 import {NavigationEnd, NavigationStart, PRIMARY_OUTLET, Router, RouterEvent, UrlSegmentGroup} from "@angular/router";
 import {filter} from "rxjs/operators";
 import {environment} from "../environments/environment";
+import {DomSanitizer} from "@angular/platform-browser";
+import {MatIconRegistry} from "@angular/material/icon";
 
 
 declare var require: any;
@@ -17,7 +19,13 @@ declare var gtag: Function;
 })
 export class AppComponent {
 
-  constructor(injector: Injector, @Inject(PLATFORM_ID) platformId: Object, private router:Router) {
+  constructor(injector: Injector, @Inject(PLATFORM_ID) platformId: Object, private router:Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'trash',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/trash.svg'));
+    iconRegistry.addSvgIcon(
+      'ban',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/ban.svg'));
     if (isPlatformBrowser(platformId)) {
 
       router.events

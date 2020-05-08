@@ -18,7 +18,8 @@ export class FieldErrorComponent implements OnInit {
     'uniqueName': (params) => params.message,
     'telephoneNumbers': (params) => params.message,
     'telephoneNumber': (params) => params.message,
-    'questionsRequired': (params) => params.message
+    'questionsRequired': (params) => params.message,
+    'commentRequired': (params) => params.message
   };
 
   ngOnInit(): void {

@@ -3,9 +3,9 @@
   <div [innerHTML]="lessonText" class="lesson-content-text ck-content">
   </div>
   <div class="d-flex flex-column">
-    <div class="d-flex big-attachments" >
+    <div class="d-flex big-attachments">
       <div *ngFor='let attachment of lessonData.attachments'>
-       <!-- [ngStyle]="{ 'width': 100/lessonData.attachments.length+ '%' }"-->
+        <!-- [ngStyle]="{ 'width': 100/lessonData.attachments.length+ '%' }"-->
         <div>
           <app-document [link]="attachment.attachmentLink"
                         [title]="attachment.attachmentTitle"></app-document>
@@ -19,7 +19,7 @@
             Show attachments ({{getAttachmentsCount()}})
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div  *ngFor='let attachment of lessonData.attachments'>
+        <div *ngFor='let attachment of lessonData.attachments'>
           <div>
             <app-document [link]="attachment.attachmentLink"
                           [title]="attachment.attachmentTitle"></app-document>
@@ -43,8 +43,9 @@
 
     </div>
   </div>
-
+  <div class="comments-section">
+    <app-comments [threadId]="'lesson'+ lessonData.id"></app-comments>
+  </div>
 </div>
-
 
 

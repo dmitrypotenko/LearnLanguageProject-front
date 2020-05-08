@@ -54,6 +54,7 @@
     "jquery": "^3.4.1",
     "jsdom": "^16.2.2",
     "mock-browser": "^0.92.14",
+    "moment": "^2.25.3",
     "ngx-cookie-service": "^2.2.0",
     "ngx-dropzone": "^2.2.2",
     "npm-registry-client": "^8.6.0",

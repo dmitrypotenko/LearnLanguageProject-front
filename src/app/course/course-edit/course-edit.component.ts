@@ -13,9 +13,7 @@ import {FileSender} from './FileSender';
 import {MatDialog} from '@angular/material/dialog';
 import {QuestionType} from './QuestionType';
 import {NotificationService} from '../../error/NotificationService';
-import {QuestionsValidator} from "./field-error/Validators";
-
-declare var CKEDITOR: any;
+import {CustomValidator} from "./field-error/Validators";
 
 @Component({
   selector: 'app-course-edit',
@@ -35,9 +33,6 @@ export class CourseEditComponent implements OnInit {
   });
 
   public static fileSender: FileSender;
-  private ckConfigQuestion = {
-    allowedContent: true
-  };
 
   ngOnInit(): void {
     let routeId = this.route.snapshot.paramMap.get('id');
@@ -260,7 +255,7 @@ export class CourseEditComponent implements OnInit {
 
   createTest(): FormGroup {
     let testForm = new TestForm();
-    testForm.questions = this.fb.array([], QuestionsValidator.questionsRequired);
+    testForm.questions = this.fb.array([], CustomValidator.questionsRequired);
     return this.fb.group(testForm);
   }
 

@@ -1,29 +1,34 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
-import {appUrl} from '../../environments/environment';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {UserData} from './UserData';
+import {appUrl} from "../../environments/environment";
+import {map, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private http: HttpClient;
+  user: BehaviorSubject<UserData> = new BehaviorSubject<UserData>(new UserData(null, [], '', ''));
 
   constructor(http: HttpClient) {
     this.http = http;
+    this.getUserInfo().subscribe();
+    setInterval(() => {
+      this.getUserInfo().subscribe();
+    }, 1000000)
   }
 
   getUserInfo(): Observable<UserData> {
-    return this.http.get<UserData>(appUrl + '/userInfo');
+    return this.http.get<UserData>(appUrl + '/userInfo')
+      .pipe(tap(userResponse => {
+        this.user.next(userResponse);
+      }));
   }
 
-  role(): Observable<string> {
-    return this.getUserInfo()
-      .pipe(
-        map(userResponse => userResponse.roles[0])
-      );
+  isAuthorized(): Observable<boolean> {
+    return this.user.asObservable().pipe(map(user => user.id != null));
   }
 
 }

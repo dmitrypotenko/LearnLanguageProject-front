@@ -79,7 +79,7 @@ export class CourseListComponent implements OnInit {
       this.spinnerVisible = false;
     });
 
-    this.authService.getUserInfo().subscribe(user => {
+    this.authService.user.subscribe(user => {
         this.userData = user;
         this.roles = user.roles;
         if (user.roles.find(role => role == 'ROLE_SUPER_ADMIN')) {

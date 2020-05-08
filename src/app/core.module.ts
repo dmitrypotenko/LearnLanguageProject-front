@@ -48,13 +48,19 @@ import {EscapeHtmlPipe} from './utils/keepHtmlPipe';
 import {SelectComponent} from './question/select/select.component';
 import {ErrorComponent} from './error/error.component';
 import {GlobalErrorHandler} from './error/GlobalErrorHandler';
-import { InputComponent } from './question/input/input.component';
+import {InputComponent} from './question/input/input.component';
 import {NgxJsonLdModule} from "@ngx-lite/json-ld";
-import { FacebookComponent } from './landing/facebook/facebook.component';
-import { PolicyComponent } from './landing/policy/policy.component';
-import { FieldErrorComponent } from './course/course-edit/field-error/field-error.component';
-import { SearchComponent } from './search/search.component';
+import {FacebookComponent} from './landing/facebook/facebook.component';
+import {PolicyComponent} from './landing/policy/policy.component';
+import {FieldErrorComponent} from './course/course-edit/field-error/field-error.component';
+import {SearchComponent} from './search/search.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {CommentsComponent} from './comments/comments.component';
+import {CommentComponent} from './comments/comment/comment.component';
+import {FromNowPipe} from './comments/from-now.pipe';
+import {UserNamePipe} from './comments/user-name.pipe';
+import {UserPicPipe} from './comments/user-pic.pipe';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +88,13 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     FacebookComponent,
     PolicyComponent,
     FieldErrorComponent,
-    SearchComponent
+    SearchComponent,
+    CommentsComponent,
+    CommentComponent,
+    FromNowPipe,
+    UserNamePipe,
+    UserPicPipe,
+    LoginComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),
