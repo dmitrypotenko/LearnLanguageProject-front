@@ -1,4 +1,5 @@
 CKEDITOR.editorConfig = function( config ) {
+  config.skin = 'moono-lisa';
   config.toolbarGroups = [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
     { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
