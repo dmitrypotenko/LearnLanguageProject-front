@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {CommentData} from "./CommentData";
 import {Observable} from "rxjs";
 import {appUrl} from "../../environments/environment";
-import {catchError} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {Util} from "../utils/util";
 
 @Injectable({
@@ -14,7 +14,8 @@ export class CommentService {
   }
 
   createComment(comment: CommentData): Observable<CommentData> {
-    return this.http.post<CommentData>(appUrl + '/comments', JSON.stringify(comment), {headers: new HttpHeaders('Content-Type: application/json')}).pipe(catchError(Util.handleError(null)));
+    return this.http.post<CommentData>(appUrl + '/comments', JSON.stringify(comment), {headers: new HttpHeaders('Content-Type: application/json')}).pipe(catchError(Util.handleError(null)),
+      tap(comment => comment.createDate = this.adjustForTimezone(new Date(comment.createDate))));
   }
 
   deleteComment(commentId: number): Observable<HttpResponse<any>> {
@@ -32,7 +33,14 @@ export class CommentService {
   }
 
   getComments(threadId: string): Observable<CommentData[]> {
-    return this.http.get<CommentData[]>(appUrl + '/comments/' + threadId).pipe(catchError(Util.handleError(null)));
+    return this.http.get<CommentData[]>(appUrl + '/comments/' + threadId).pipe(catchError(Util.handleError(null)),
+      tap(comments => comments.forEach(comment => comment.createDate = this.adjustForTimezone(new Date(comment.createDate)))));
+  }
+
+  adjustForTimezone(date: Date): Date {
+    var timeOffsetInMS: number = date.getTimezoneOffset() * 60000;
+    date.setTime(date.getTime() - timeOffsetInMS);
+    return date
   }
 
 }

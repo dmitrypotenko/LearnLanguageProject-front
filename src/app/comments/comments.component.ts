@@ -35,9 +35,11 @@ export class CommentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.commentService.getComments(this.threadId).subscribe(comments => {
-      this.comments = comments;
-    })
+    if (this.authService.isPlatformBrowser()) {
+      this.commentService.getComments(this.threadId).subscribe(comments => {
+        this.comments = comments;
+      })
+    }
   }
 
   onSubmit() {
