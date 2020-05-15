@@ -3,9 +3,9 @@ steps:
     entrypoint: npm
     args: ['install']
   - name: 'gcr.io/$PROJECT_ID/ng'
-    args: ['kirill:build:production']
+    args: ['run', 'kirill:build:production']
   - name: 'gcr.io/$PROJECT_ID/ng'
-    args: ['kirill:server:production']
+    args: ['run', 'kirill:server:production']
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
 
