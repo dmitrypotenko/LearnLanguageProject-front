@@ -30,7 +30,7 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
       jarallax(document.querySelectorAll('.jarallax'), {
         speed: 0.2,
-        imgSrc: 'assets/parallax_new_york.jpg'
+        imgSrc: 'assets/parallax_new_york-compressed.jpg'
       });
     }
     this.meta.updateTag({

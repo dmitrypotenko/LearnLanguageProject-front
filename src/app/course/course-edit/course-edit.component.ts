@@ -102,7 +102,7 @@ export class CourseEditComponent implements OnInit {
           evt.stop();
         }
       },
-      extraPlugins: 'uploadimage',
+      extraPlugins: 'uploadimage,autogrow',
       uploadUrl: 'http://localhost:8080/files/upload',
       autoGrow_maxHeight: 800
     };

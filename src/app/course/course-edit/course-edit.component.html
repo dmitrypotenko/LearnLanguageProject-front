@@ -12,8 +12,8 @@
     <label for="courseDesc">
       Description:
     </label>
-    <input id="courseDesc" class="form-control" placeholder="Enter the course description" type="text"
-           formControlName="description">
+      <ckeditor id="courseDesc" formControlName="description" [config]="ckConfig"
+                editorUrl="assets/compressed/ckeditor/ckeditor.js"></ckeditor>
   </div>
 
 
