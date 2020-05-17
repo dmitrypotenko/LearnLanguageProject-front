@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {TestData, TestService} from '../test.service';
+import {TestData, TestService} from '../service/test.service';
 import {QuestionStatus, VariantData} from '../question/question.component';
 import {Meta, Title} from "@angular/platform-browser";
 

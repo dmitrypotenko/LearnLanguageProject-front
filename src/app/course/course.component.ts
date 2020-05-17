@@ -1,8 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseData, CourseService} from './course.service';
-import {LessonData, LessonService} from '../lesson.service';
+import {LessonData, LessonService} from '../service/lesson.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TestData, TestService} from '../test.service';
+import {TestData, TestService} from '../service/test.service';
 import {StepSwitcherService} from '../step-switcher.service';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {Meta, Title} from "@angular/platform-browser";

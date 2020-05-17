@@ -1,0 +1,20 @@
+<mat-dialog-content style="height: 90%">
+  <mat-list *ngIf="accesses!=null">
+    <h3 matSubheader>Students</h3>
+    <mat-list-item *ngFor="let access of students">
+      <app-user [user]="access.userDto"></app-user>
+      <button class="btn btn-warning list-btn" (click)="removeFromStudents(access)">Exclude</button>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <h3 matSubheader>All users</h3>
+    <mat-list-item *ngFor="let access of all">
+      <app-user [user]="access.userDto"></app-user>
+      <button class="btn btn-success list-btn" (click)="addToStudents(access)">Add to students</button>
+    </mat-list-item>
+  </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button  mat-button  (click)="updateAccesses()">Update policy</button>
+
+    <button  mat-button  [mat-dialog-close]="true">Cancel</button>
+</mat-dialog-actions>

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {LessonData} from '../../lesson.service';
-import {TestData} from '../../test.service';
+import {LessonData} from '../../service/lesson.service';
+import {TestData} from '../../service/test.service';
 import {StepSwitcherService} from '../../step-switcher.service';
 import {Listable} from '../../listable';
 import {ActivatedRoute} from "@angular/router";
@@ -11,6 +11,30 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./course-panel.component.scss']
 })
 export class CoursePanelComponent implements OnInit {
+  private _lessonCounter: number = 1;
+  private _testCounter: number = 1;
+
+  private counters = new Map<number, number>();
+
+  lessonCounter(order: number) {
+    if (this.counters.get(order) == null) {
+      this._testCounter = 1;
+      this.counters.set(order, this._lessonCounter);
+      return this._lessonCounter++;
+    } else {
+      return this.counters.get(order);
+    }
+  }
+
+  testCounter(order: number) {
+    if (this.counters.get(order) == null) {
+      this.counters.set(order, this._testCounter);
+      return this._testCounter++;
+    } else {
+      return this.counters.get(order);
+    }
+  }
+
   get stepSwitcher(): StepSwitcherService {
     return this._stepSwitcher;
   }

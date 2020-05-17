@@ -27,10 +27,13 @@
 
   <div class="d-flex flex-column" *ngIf="courses?.length">
     <div *ngFor='let course of courses' class="card shadow m-2">
+      <span *ngIf="course.type == 'PRIVATE'"> Private course <mat-icon>lock</mat-icon> </span>
+      <span *ngIf="course.type == 'DRAFT'"> Draft <mat-icon>edit</mat-icon> </span>
       <div class="row">
         <div class="col">
           <div class="card-body">
-            <h5 class="card-title">{{course.name}}</h5>
+            <h5 class="card-title">{{course.name}} </h5>
+
             <div class="card-text" [innerHTML]="course.description | keepHtml"></div>
             <a routerLink="/courses/{{course.id}}/steps/0">
               <span *ngIf="!course.completion.isStarted">Start course</span>

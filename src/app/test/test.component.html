@@ -1,6 +1,6 @@
 <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
   <div class="d-flex flex-column">
-    <h4 class="text-center">{{testData.name}}</h4>
+    <h4 class="text-center">{{testData.instruction}}</h4>
     <div class="text-center mt-1">
       <svg *ngIf="testData.isCompleted && isFailed()" version="1.1" xmlns="http://www.w3.org/2000/svg"
            viewBox="0 0 130.2 130.2">
@@ -30,7 +30,7 @@
     <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button" (click)="checkTest(testData)">
       Submit test
     </button>
-    <button *ngIf="testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button" (click)="invalidateTest(testData)">
+    <button *ngIf="testData.isCompleted && testData.isRetryable" class="btn btn-primary btn-sm mt-1" type="button" (click)="invalidateTest(testData)">
       Retake test
     </button>
   </div>

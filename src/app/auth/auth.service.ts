@@ -1,7 +1,7 @@
 import {Injectable, Injector, PLATFORM_ID} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {UserData} from './UserData';
+import {UserData} from './user.data';
 import {appUrl} from "../../environments/environment";
 import {map, tap} from "rxjs/operators";
 import {isPlatformBrowser} from "@angular/common";

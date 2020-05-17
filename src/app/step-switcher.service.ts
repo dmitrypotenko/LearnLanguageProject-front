@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {LessonData, LessonService} from './lesson.service';
-import {TestData, TestService} from './test.service';
+import {LessonData, LessonService} from './service/lesson.service';
+import {TestData, TestService} from './service/test.service';
 import {Listable} from './listable';
 
 @Injectable({

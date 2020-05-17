@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {LessonData} from '../lesson.service';
+import {LessonData} from '../service/lesson.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestData} from '../test.service';
+import {TestData} from '../service/test.service';
 import {catchError, map} from 'rxjs/operators';
 import {Util} from '../utils/util';
 import {Completion} from '../completion';
 import {appUrl} from '../../environments/environment';
+import {CourseType} from "./course-type";
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,8 @@ export class CourseService {
       course.name,
       course.category,
       course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order, lesson.isCompleted)),
-      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold)),
+      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold, test.isRetryable, test.instruction)),
+      course.type,
       course.completion
     );
   }
@@ -72,6 +74,7 @@ export class CourseData {
   private _lessons: LessonData[];
   private _tests: TestData[];
   private _completion: Completion;
+  private _type: CourseType;
   private _ownerIds: number[];
 
 
@@ -84,12 +87,18 @@ export class CourseData {
   }
 
 
+  get description(): string {
+    return this._description;
+  }
+
+
   constructor(id: number,
               description: string,
               name: string,
               category: string,
               lessons: LessonData[],
               tests: TestData[],
+              courseType: CourseType,
               completion: Completion = new Completion(false, false, 0, 0),
               ownerIds: number[] = []) {
     this._id = id;
@@ -99,11 +108,7 @@ export class CourseData {
     this._category = category;
     this._tests = tests;
     this._completion = completion;
-  }
-
-
-  get description(): string {
-    return this._description;
+    this._type = courseType;
   }
 
   set description(value: string) {
@@ -120,6 +125,15 @@ export class CourseData {
 
   get lessons(): LessonData[] {
     return this._lessons;
+  }
+
+
+  get type(): CourseType {
+    return this._type;
+  }
+
+  set type(value: CourseType) {
+    this._type = value;
   }
 
   set lessons(value: LessonData[]) {

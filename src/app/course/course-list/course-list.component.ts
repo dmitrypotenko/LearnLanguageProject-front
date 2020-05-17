@@ -4,7 +4,7 @@ import {AuthService} from '../../auth/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 import {FormBuilder, FormControl} from '@angular/forms';
-import {UserData} from '../../auth/UserData';
+import {UserData} from '../../auth/user.data';
 import {Meta, Title} from "@angular/platform-browser";
 import {appUrl} from "../../../environments/environment";
 

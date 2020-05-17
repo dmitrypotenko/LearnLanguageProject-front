@@ -48,11 +48,11 @@
                     <span *ngIf="step.completed() && !isFailedTest(step)" style="color: green">&#10004; </span>
                     <ng-template [ngIf]="isTest(step)">
                       <img class="stepIcon" src="assets/testSign.png"/>
-                      Test: {{step.getName()}}
+                      Test {{testCounter(step.getOrder())}}: {{step.getName()}}
                     </ng-template>
                     <ng-template [ngIf]="!isTest(step)">
                       <img class="stepIcon" src="assets/bookSign.png"/>
-                      Lesson: {{step.getName()}}
+                      Lesson {{lessonCounter(step.getOrder())}}: {{step.getName()}}
                     </ng-template>
                   </div>
                 </a>

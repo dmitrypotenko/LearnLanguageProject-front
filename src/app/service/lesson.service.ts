@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
-import {Listable} from './listable';
+import {Listable} from '../listable';
 import {catchError} from 'rxjs/operators';
-import {Util} from './utils/util';
-import {appUrl} from '../environments/environment';
+import {Util} from '../utils/util';
+import {appUrl} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

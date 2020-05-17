@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {UserData} from "../auth/UserData";
+import {UserData} from "../auth/user.data";
 
 @Pipe({
   name: 'userPic'

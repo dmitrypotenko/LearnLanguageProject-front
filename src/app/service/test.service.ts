@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
-import {QuestionData, QuestionStatus} from './question/question.component';
-import {Listable} from './listable';
+import {QuestionData, QuestionStatus} from '../question/question.component';
+import {Listable} from '../listable';
 import {catchError, map} from 'rxjs/operators';
-import {Util} from './utils/util';
-import {appUrl} from '../environments/environment';
+import {Util} from '../utils/util';
+import {appUrl} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class TestService {
   checkTest(testData: TestData): Observable<TestData> {
     return this.http.post(appUrl + '/tests/check', JSON.stringify(testData), {headers: new HttpHeaders('Content-Type: application/json')})
       .pipe(catchError(Util.handleError(null)))
-      .pipe<TestData>(map<TestData, TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold)));
+      .pipe<TestData>(map<TestData, TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold, test.isRetryable, test.instruction)));
   }
 
   invalidateTest(testData: TestData): Observable<Response> {
@@ -73,15 +73,19 @@ export class TestData implements Listable {
   private _name: string;
   private _isCompleted: boolean;
   private _successThreshold: number;
+  private _isRetryable: boolean;
+  private _instruction: string;
 
 
-  constructor(questions: QuestionData[], id: number, order: number, name: string, isCompleted = false, successThreshold: number) {
+  constructor(questions: QuestionData[], id: number, order: number, name: string, isCompleted = false, successThreshold: number, isRetryable: boolean, testInstruction: string) {
     this._questions = questions;
     this._id = id;
     this._order = order;
     this._name = name;
     this._isCompleted = isCompleted;
     this._successThreshold = successThreshold;
+    this._isRetryable = isRetryable;
+    this._instruction = testInstruction;
   }
 
 
@@ -89,6 +93,23 @@ export class TestData implements Listable {
     return this._questions;
   }
 
+
+  get isRetryable(): boolean {
+    return this._isRetryable;
+  }
+
+  set isRetryable(value: boolean) {
+    this._isRetryable = value;
+  }
+
+
+  get instruction(): string {
+    return this._instruction;
+  }
+
+  set instruction(value: string) {
+    this._instruction = value;
+  }
 
   get successThreshold(): number {
     return this._successThreshold;

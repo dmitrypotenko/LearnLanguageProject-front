@@ -203,5 +203,12 @@
   "defaultProject": "kirill",
   "cli": {
     "analytics": "ab23583b-b7a3-44a7-89d8-d8fd7157d074"
+  },
+  "schematics": {
+    "@schematics/angular": {
+      "component": {
+        "spec": false
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommentService} from "./CommentService";
+import {CommentService} from "./comment.service";
 import {CommentData} from "./CommentData";
 import {FormControl} from "@angular/forms";
 import {NotificationService} from "../error/NotificationService";

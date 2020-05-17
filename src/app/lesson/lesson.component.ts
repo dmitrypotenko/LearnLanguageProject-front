@@ -1,6 +1,6 @@
 import {AfterViewChecked, Component, HostListener, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
-import {LessonData, LessonService} from '../lesson.service';
+import {LessonData, LessonService} from '../service/lesson.service';
 import {DomSanitizer, Meta, SafeHtml, Title} from '@angular/platform-browser';
 import * as Embedo from 'embedo/embedo.js';
 

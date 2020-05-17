@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from "rxjs";
-import {UserData} from "../../auth/UserData";
+import {UserData} from "../../auth/user.data";
 import {CommentData} from "../CommentData";
 import {AuthService} from "../../auth/auth.service";
 

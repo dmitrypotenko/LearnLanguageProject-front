@@ -12,18 +12,32 @@
     <label for="courseDesc">
       Description:
     </label>
-      <ckeditor id="courseDesc" formControlName="description" [config]="ckConfig"
-                editorUrl="assets/compressed/ckeditor/ckeditor.js"></ckeditor>
+    <ckeditor id="courseDesc" formControlName="description" [config]="ckConfig"
+              editorUrl="assets/compressed/ckeditor/ckeditor.js"></ckeditor>
   </div>
 
-
-  <div class="form-group">
+  <div class="form-group w-30">
+    <label for="courseType">
+      Choose the course type
+    </label>
+    <div class="d-flex">
+    <select id="courseType" class="form-control m-2" formControlName="type" style="width: fit-content"
+            [value]="courseForm.get('type').value.toString()">
+      <option *ngFor="let courseType of courseTypes"
+              [selected]="courseType == courseForm.get('type').value">
+        {{ courseType}}
+      </option>
+    </select>
+    <button class="btn btn-info m-2" type="button" *ngIf="courseForm.get('id').value!=null && courseForm.get('type').value.toString() == 'PRIVATE'" (click)='openAccessDialog()'>Access management <mat-icon svgIcon="key"></mat-icon></button>
+    </div>
+  </div>
+  <!--<div class="form-group">
     <label for="courseCategory">
       Category:
     </label>
     <input id="courseCategory" class="form-control" placeholder="Enter the course Category" type="text"
            formControlName="category">
-  </div>
+  </div>-->
 
 
   <div id="accordion" formArrayName="steps" cdkDropList (cdkDropListDropped)="drop(courseForm, $event, 'steps')">
@@ -96,6 +110,15 @@
             </div>
 
             <div class="form-group">
+              <label for="instruction{{i}}">
+                Test instruction:
+              </label>
+              <textarea id="instruction{{i}}" class="form-control instruction"
+                        placeholder="Enter the test instruction" type="text" formControlName="instruction"
+                        required></textarea>
+            </div>
+
+            <div class="form-group">
               <label for="successThreshold{{i}}">
                 Success threshold:
               </label>
@@ -103,6 +126,14 @@
                      placeholder="Enter the test name" type="number" formControlName="successThreshold" required
                      [min]="1" [max]="questions(step).length">
               <app-field-error [control]="step.get('successThreshold')"></app-field-error>
+            </div>
+
+            <div class="form-check m-1">
+              <input id="isRetryable{{i}}" class="form-check-input"
+                     [value]="step.get('isRetryable').value" type="checkbox" formControlName="isRetryable">
+              <label class="form-check-label" for="isRetryable{{i}}">
+                Is it a retryable test?
+              </label>
             </div>
 
             <div cdkDropList class="step questions" formArrayName="questions"

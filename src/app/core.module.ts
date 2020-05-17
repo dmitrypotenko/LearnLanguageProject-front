@@ -42,7 +42,6 @@ import {AboutmeComponent} from './aboutme/aboutme.component';
 import {DonateComponent} from './donate/donate.component';
 import {RouterModule} from '@angular/router';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {NewOptionDialogComponent} from './course/course-edit/new-option-dialog/new-option-dialog.component';
 import {CKEditorModule} from 'ckeditor4-angular';
 import {EscapeHtmlPipe} from './utils/keepHtmlPipe';
 import {SelectComponent} from './question/select/select.component';
@@ -61,6 +60,9 @@ import {FromNowPipe} from './comments/from-now.pipe';
 import {UserNamePipe} from './comments/user-name.pipe';
 import {UserPicPipe} from './comments/user-pic.pipe';
 import { LoginComponent } from './auth/login/login.component';
+import {SecurityModalComponent} from "./course/course-edit/security-modal/security-modal.component";
+import { UserComponent } from './user/user.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -80,7 +82,6 @@ import { LoginComponent } from './auth/login/login.component';
     ConcessionDialogComponent,
     AboutmeComponent,
     DonateComponent,
-    NewOptionDialogComponent,
     EscapeHtmlPipe,
     SelectComponent,
     ErrorComponent,
@@ -94,7 +95,9 @@ import { LoginComponent } from './auth/login/login.component';
     FromNowPipe,
     UserNamePipe,
     UserPicPipe,
-    LoginComponent
+    LoginComponent,
+    SecurityModalComponent,
+    UserComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -123,11 +126,12 @@ import { LoginComponent } from './auth/login/login.component';
         RouterModule,
         CKEditorModule,
         NgxJsonLdModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatListModule
     ],
   entryComponents: [
     ConcessionDialogComponent,
-    SelectComponent
+    SecurityModalComponent
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
