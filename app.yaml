@@ -6,10 +6,3 @@ handlers:
     script: auto
     secure: always
     redirect_http_response_code: 301
-
-skip_files:
-  - e2e/
-  - node_modules/
-  - src/
-  - .idea/
-  - .git/
