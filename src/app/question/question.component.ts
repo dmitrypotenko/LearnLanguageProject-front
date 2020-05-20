@@ -56,7 +56,10 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
 
     this._questionData = value;
-
+    let _this= this;
+    setTimeout(function () {
+      _this.runCustomQuestionDetection(value)
+    }, 100);
   }
 
   private _questionData: QuestionData;
@@ -67,27 +70,31 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
   }
 
   ngAfterViewInit(): void {
+    this.runCustomQuestionDetection(this._questionData);
+  }
+
+   runCustomQuestionDetection(question: QuestionData) {
     if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
       console.log('ngAfterViewChecked Start');
       let questionsSelector = document.querySelector('#question' + this.questionData.id);
       if (questionsSelector == null) {
         return;
       }
-      let allSelects = questionsSelector.querySelectorAll(' select-element,input-element') as NodeListOf<NgElement & WithProperties<{
+      let allSelects = questionsSelector.querySelectorAll('select-element,input-element') as NodeListOf<NgElement & WithProperties<{
         name: string,
         question: QuestionData
       }>>;
       allSelects.forEach(select => {
         console.log('ngAfterViewChecked');
         if (select.question == null) {
-          select.question = this._questionData;
+          select.question = question;
         }
       });
     }
-
   }
 
   ngAfterViewChecked(): void {
+
 
   }
 

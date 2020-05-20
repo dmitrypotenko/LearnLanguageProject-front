@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {TestData, TestService} from '../service/test.service';
-import {QuestionStatus, VariantData} from '../question/question.component';
+import {QuestionData, QuestionStatus, VariantData} from '../question/question.component';
 import {Meta, Title} from "@angular/platform-browser";
 
 @Component({
@@ -61,12 +61,14 @@ export class TestComponent implements OnInit {
       });
   }
 
-  invalidateTest(testData: TestData) {
+  invalidateTest() {
+    let testData = this._testData;
     this.testService.invalidateTest(testData)
       .subscribe(response => {
+
         if (response.status == 200) {
           testData.isCompleted = false;
-          testData.questions.forEach(question => {
+          testData.questions = testData.questions.map(question => {
             question.status = QuestionStatus.UNDEFINED;
             let newVariants: VariantData[] = [];
             question.variants.forEach(variant => {
@@ -87,8 +89,12 @@ export class TestComponent implements OnInit {
               }
             });
             question.variants = newVariants;
+            return new QuestionData(question.question,
+              question.variants,
+              question.id,
+              question.type,
+              question.status);
           });
-          this.cd.detectChanges();
         }
       });
   }
