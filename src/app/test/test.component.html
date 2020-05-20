@@ -12,33 +12,35 @@
       </button>
     </div>
     <div class="comments-section">
-      <app-comments [threadId]="'lesson'+ testData.id"></app-comments>
+        <app-comments [threadId]="'test'+ testData.id"></app-comments>
     </div>
   </div>
 </ng-template>
 
 <mat-tab-group *ngIf="isOwner; else simpleCurrentUserTest" mat-align-tabs="end">
   <mat-tab label="Your test">
-    <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
-      <app-test-internal [testData]="testData"></app-test-internal>
-      <div class="submit-btn">
-        <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button"
-                (click)="checkTest(testData)">
-          Submit test
-        </button>
-        <button *ngIf="testData.isCompleted && testData.isRetryable" class="btn btn-primary btn-sm mt-1" type="button"
-                (click)="invalidateTest(testData)">
-          Retake test
-        </button>
-      </div>
-      <div class="comments-section">
-        <app-comments [threadId]="'lesson'+ testData.id"></app-comments>
-      </div>
-    </div>
-  </mat-tab>
-  <mat-tab label="Users' results">
     <ng-template matTabContent>
-      <app-test-results [testId]="testData.id"></app-test-results>
+      <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
+        <app-test-internal [testData]="testData"></app-test-internal>
+        <div class="submit-btn">
+          <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button"
+                  (click)="checkTest(testData)">
+            Submit test
+          </button>
+          <button *ngIf="testData.isCompleted && testData.isRetryable" class="btn btn-primary btn-sm mt-1" type="button"
+                  (click)="invalidateTest(testData)">
+            Retake test
+          </button>
+        </div>
+        <div class="comments-section">
+          <app-comments [threadId]="'test'+ testData.id"></app-comments>
+        </div>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Students' results">
+    <ng-template matTabContent>
+      <app-test-results *ngIf="testData != null" [testId]="testData.id"></app-test-results>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

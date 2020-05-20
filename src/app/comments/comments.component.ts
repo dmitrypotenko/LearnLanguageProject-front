@@ -20,8 +20,23 @@ export class CommentsComponent implements OnInit {
     placeholder: "Leave a comment here..."
   };
 
+
+  _threadId: string = null;
+
+  get threadId() {
+    return this._threadId;
+  }
+
   @Input()
-  private threadId: string;
+  set threadId(threadId: string) {
+    this._threadId = threadId;
+    if (this.authService.isPlatformBrowser()) {
+      this.commentService.getComments(this.threadId).subscribe(comments => {
+        this.comments = comments;
+      })
+    }
+    this.invalidate();
+  }
 
   comments: CommentData[];
   currentComment = new FormControl('', CustomValidator.commentRequired);
@@ -35,11 +50,7 @@ export class CommentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.isPlatformBrowser()) {
-      this.commentService.getComments(this.threadId).subscribe(comments => {
-        this.comments = comments;
-      })
-    }
+
   }
 
   onSubmit() {
@@ -59,16 +70,18 @@ export class CommentsComponent implements OnInit {
       this.commentService.updateComment(this.editingComment).subscribe(response => {
         if (response.status == 200) {
           this.notificationService.showSuccess("Saved successfully!");
-          this.editingComment.editable = true;
           this.invalidate();
-          this.mode = 'create';
-          this.editingComment = null;
         }
       })
     }
   }
 
   private invalidate() {
+    if (this.editingComment != null) {
+      this.editingComment.editable = true;
+    }
+    this.mode = 'create';
+    this.editingComment = null;
     this.currentComment.setValue('');
   }
 
@@ -99,11 +112,6 @@ export class CommentsComponent implements OnInit {
   }
 
   cancelEditing() {
-    if (this.editingComment != null) {
-      this.editingComment.editable = true;
-    }
     this.invalidate();
-    this.mode = 'create';
-    this.editingComment = null;
   }
 }

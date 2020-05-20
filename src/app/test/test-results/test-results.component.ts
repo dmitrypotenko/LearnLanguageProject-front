@@ -14,20 +14,26 @@ export class TestResultsComponent implements OnInit {
 
   studentTestData: TestData;
 
+  _testId: number;
+
   @Input()
-  testId: number;
+  set testId(testId: number) {
+    this._testId = testId;
+    if (testId != null) {
+      this.userService.getSubmittedTestUsers(testId).subscribe(result =>
+        this.students = result)
+    }
+    this.studentTestData = null;
+  }
 
   constructor(private userService: UserService, private testService: TestService) {
   }
 
   ngOnInit(): void {
-    this.userService.getSubmittedTestUsers(this.testId).subscribe(result =>
-      this.students = result)
-
   }
 
   switchToStudentTest(student: UserData) {
-    this.testService.getCheckedTest(this.testId, student.id).subscribe(test =>
+    this.testService.getCheckedTest(this._testId, student.id).subscribe(test =>
       this.studentTestData = test)
   }
 }

@@ -69,7 +69,11 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
       console.log('ngAfterViewChecked Start');
-      let allSelects = document.querySelector('#question' + this.questionData.id).querySelectorAll(' select-element,input-element') as NodeListOf<NgElement & WithProperties<{
+      let questionsSelector = document.querySelector('#question' + this.questionData.id);
+      if (questionsSelector == null) {
+        return;
+      }
+      let allSelects = questionsSelector.querySelectorAll(' select-element,input-element') as NodeListOf<NgElement & WithProperties<{
         name: string,
         question: QuestionData
       }>>;
