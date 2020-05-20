@@ -46,7 +46,8 @@ export class CourseService {
       course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order, lesson.isCompleted)),
       course.tests.map<TestData>(test => TestService.mapTest(test)),
       course.type,
-      course.completion
+      course.completion,
+      course.ownerIds
     );
   }
 
@@ -109,6 +110,7 @@ export class CourseData {
     this._tests = tests;
     this._completion = completion;
     this._type = courseType;
+    this._ownerIds = ownerIds;
   }
 
   set description(value: string) {
