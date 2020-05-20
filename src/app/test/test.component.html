@@ -1,40 +1,44 @@
-<div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
-  <div class="d-flex flex-column">
-    <h4 class="text-center">{{testData.instruction}}</h4>
-    <div class="text-center mt-1">
-      <svg *ngIf="testData.isCompleted && isFailed()" version="1.1" xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 0 130.2 130.2">
-        <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1"
-                cy="65.1" r="62.1"/>
-        <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round"
-              stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
-        <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round"
-              stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
-      </svg>
-      <svg *ngIf="testData.isCompleted && !isFailed()" version="1.1" xmlns="http://www.w3.org/2000/svg"
-           viewBox="0 0 130.2 130.2">
-        <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1"
-                cy="65.1" r="62.1"/>
-        <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round"
-                  stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
-      </svg>
-      <p *ngIf="testData.isCompleted">You answered {{getCorrectCount()}} out of {{testData.questions.length}} questions correctly</p>
+<ng-template #simpleCurrentUserTest>
+  <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
+    <app-test-internal [testData]="testData"></app-test-internal>
+    <div class="submit-btn">
+      <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button"
+              (click)="checkTest(testData)">
+        Submit test
+      </button>
+      <button *ngIf="testData.isCompleted && testData.isRetryable" class="btn btn-primary btn-sm mt-1" type="button"
+              (click)="invalidateTest(testData)">
+        Retake test
+      </button>
     </div>
-    <div *ngFor='let questionData of testData.questions; let i=index'>
-      <div class="container rounded">
-        <app-question [questionIndex]="i" [questionData]="questionData"></app-question>
+    <div class="comments-section">
+      <app-comments [threadId]="'lesson'+ testData.id"></app-comments>
+    </div>
+  </div>
+</ng-template>
+
+<mat-tab-group *ngIf="isOwner; else simpleCurrentUserTest" mat-align-tabs="end">
+  <mat-tab label="Your test">
+    <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
+      <app-test-internal [testData]="testData"></app-test-internal>
+      <div class="submit-btn">
+        <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button"
+                (click)="checkTest(testData)">
+          Submit test
+        </button>
+        <button *ngIf="testData.isCompleted && testData.isRetryable" class="btn btn-primary btn-sm mt-1" type="button"
+                (click)="invalidateTest(testData)">
+          Retake test
+        </button>
+      </div>
+      <div class="comments-section">
+        <app-comments [threadId]="'lesson'+ testData.id"></app-comments>
       </div>
     </div>
-  </div>
-  <div class="submit-btn">
-    <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button" (click)="checkTest(testData)">
-      Submit test
-    </button>
-    <button *ngIf="testData.isCompleted && testData.isRetryable" class="btn btn-primary btn-sm mt-1" type="button" (click)="invalidateTest(testData)">
-      Retake test
-    </button>
-  </div>
-  <div class="comments-section">
-    <app-comments [threadId]="'lesson'+ testData.id"></app-comments>
-  </div>
-</div>
+  </mat-tab>
+  <mat-tab label="Users' results">
+    <ng-template matTabContent>
+      <app-test-results [testId]="testData.id"></app-test-results>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

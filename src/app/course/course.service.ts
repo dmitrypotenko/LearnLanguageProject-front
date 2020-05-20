@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {LessonData} from '../service/lesson.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {TestData} from '../service/test.service';
+import {TestData, TestService} from '../service/test.service';
 import {catchError, map} from 'rxjs/operators';
 import {Util} from '../utils/util';
 import {Completion} from '../completion';
@@ -44,7 +44,7 @@ export class CourseService {
       course.name,
       course.category,
       course.lessons.map<LessonData>(lesson => new LessonData(lesson.videoLink, lesson.lessonText, lesson.attachments, lesson.name, lesson.id, lesson.order, lesson.isCompleted)),
-      course.tests.map<TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold, test.isRetryable, test.instruction)),
+      course.tests.map<TestData>(test => TestService.mapTest(test)),
       course.type,
       course.completion
     );

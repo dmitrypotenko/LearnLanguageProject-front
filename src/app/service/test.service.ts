@@ -32,7 +32,17 @@ export class TestService {
   checkTest(testData: TestData): Observable<TestData> {
     return this.http.post(appUrl + '/tests/check', JSON.stringify(testData), {headers: new HttpHeaders('Content-Type: application/json')})
       .pipe(catchError(Util.handleError(null)))
-      .pipe<TestData>(map<TestData, TestData>(test => new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold, test.isRetryable, test.instruction)));
+      .pipe<TestData>(map<TestData, TestData>(test => TestService.mapTest(test)));
+  }
+
+  getCheckedTest(testId:number, userId:number): Observable<TestData> {
+    return this.http.get(appUrl + '/tests/check/'+testId+'/users/'+userId)
+      .pipe(catchError(Util.handleError(null)))
+      .pipe<TestData>(map<TestData, TestData>(test => TestService.mapTest(test)));
+  }
+
+  static mapTest(test: TestData) {
+    return new TestData(test.questions, test.id, test.order, test.name, test.isCompleted, test.successThreshold, test.isRetryable, test.instruction);
   }
 
   invalidateTest(testData: TestData): Observable<Response> {
@@ -166,6 +176,15 @@ export class TestData implements Listable {
 
   isFailed(): boolean {
     return this.questions.filter(question => question.status == QuestionStatus.SUCCESS).length < this.successThreshold;
+  }
+
+  getCorrectCount(): number {
+    return this.questions.map(question => {
+      if (question.status == QuestionStatus.SUCCESS) {
+        return 1 as number;
+      }
+      return 0 as number;
+    }).reduce((prev, curr) => prev + curr);
   }
 
 }

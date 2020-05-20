@@ -1,0 +1,8 @@
+<mat-selection-list [multiple]="false" *ngIf="students!=null">
+  <h3 matSubheader>Students' results</h3>
+  <mat-list-option *ngFor="let student of students">
+    <app-user (click)="switchToStudentTest(student)" [user]="student"></app-user>
+  </mat-list-option>
+</mat-selection-list>
+<app-test-internal *ngIf="studentTestData!=null" [testData]="studentTestData"></app-test-internal>
+<!--#listOption [class.active]="listOption.selected"-->

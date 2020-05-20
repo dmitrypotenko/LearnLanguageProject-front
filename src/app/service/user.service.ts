@@ -27,7 +27,7 @@ export class UserService {
   }
 
   getSubmittedTestUsers(testId: number): Observable<UserData[]> {
-    return this.http.get(appUrl + '/' + testId + '/users')
+    return this.http.get(appUrl + '/users/tests/' + testId)
       .pipe(catchError(Util.handleError(null)))
   }
 

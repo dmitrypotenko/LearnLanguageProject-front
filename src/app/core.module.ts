@@ -63,6 +63,9 @@ import { LoginComponent } from './auth/login/login.component';
 import {SecurityModalComponent} from "./course/course-edit/security-modal/security-modal.component";
 import { UserComponent } from './user/user.component';
 import {MatListModule} from "@angular/material/list";
+import { TestResultsComponent } from './test/test-results/test-results.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { TestInternalComponent } from './test/test-internal/test-internal.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +100,9 @@ import {MatListModule} from "@angular/material/list";
     UserPicPipe,
     LoginComponent,
     SecurityModalComponent,
-    UserComponent
+    UserComponent,
+    TestResultsComponent,
+    TestInternalComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -127,7 +132,8 @@ import {MatListModule} from "@angular/material/list";
         CKEditorModule,
         NgxJsonLdModule,
         MatAutocompleteModule,
-        MatListModule
+        MatListModule,
+        MatTabsModule
     ],
   entryComponents: [
     ConcessionDialogComponent,

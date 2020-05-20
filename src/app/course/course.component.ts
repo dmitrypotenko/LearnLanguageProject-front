@@ -1,13 +1,15 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CourseData, CourseService} from './course.service';
 import {LessonData, LessonService} from '../service/lesson.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {TestData, TestService} from '../service/test.service';
 import {StepSwitcherService} from '../step-switcher.service';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {Meta, Title} from "@angular/platform-browser";
 import {appUrl} from "../../environments/environment";
 import {map} from "rxjs/operators";
+import {AuthService} from "../auth/auth.service";
+import {UserData} from "../auth/user.data";
 
 @Component({
   selector: 'app-course',
@@ -23,20 +25,19 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private cd: ChangeDetectorRef;
   private _testService: TestService;
-  private sidenav: any;
   spinnerVisible: boolean = true;
-  toggleBtn: any;
-  menu: any;
   schema: any;
 
   sticky;
   private stepId: number;
+  isOwner = false;
 
   constructor(courseService: CourseService, lessonService: LessonService, route: ActivatedRoute,
               cd: ChangeDetectorRef,
               testService: TestService,
               private mediaMatcher: MediaMatcher,
-              private meta: Meta, private titleService: Title) {
+              private meta: Meta, private titleService: Title,
+              private authService: AuthService) {
     this.cd = cd;
     this.courseService = courseService;
     this.lessonService = lessonService;
@@ -45,6 +46,7 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.route.paramMap.pipe(map(map => map.get('stepId'))).subscribe(stepId => {
       this.stepId = Number(stepId);
       this.tryToUpdate();
@@ -54,6 +56,9 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.courseService.getCourseById(id).subscribe(course => {
       this.spinnerVisible = false;
+      this.authService.getUserInfo().subscribe(user => {
+        this.checkIsOwner(user);
+      });
 
       this.titleService.setTitle('LessonsBox: ' + course.name);
       this.meta.updateTag({
@@ -103,7 +108,7 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private tryToUpdate(): boolean {
 
-    if (this.stepSwitcher!=null && this.stepSwitcher.ordered != null && this.stepSwitcher.ordered.length != 0) {
+    if (this.stepSwitcher != null && this.stepSwitcher.ordered != null && this.stepSwitcher.ordered.length != 0) {
       let ordered = this.stepSwitcher.ordered;
       if (this.stepId != null) {
         let step = ordered.find(step => step.getOrder() == this.stepId);
@@ -161,5 +166,11 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
     window.removeEventListener("scroll", this.sticky);
   }
 
-
+  checkIsOwner(user: UserData) {
+    if (user != null && this.currentCourse != null) {
+      this.isOwner = this.currentCourse.ownerIds != null && this.currentCourse.ownerIds.includes(user.id) || user.roles.includes('ROLE_SUPER_ADMIN')
+    } else {
+      this.isOwner = false;
+    }
+  }
 }

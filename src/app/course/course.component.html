@@ -12,15 +12,15 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <button (click)="sidenav.toggle()" class="btn btn-primary btn toggleBtn" type="button" id="toggleBtn">
-             <span class="icon-btn-text">Menu</span> <mat-icon>menu</mat-icon>
+        <mat-icon>menu</mat-icon>
       </button>
       <div class="main-content">
         <div style="width: 100%; height: 70vh;" class="d-flex justify-content-center" *ngIf="spinnerVisible">
-          <mat-progress-spinner  [mode]="'indeterminate'"  style="margin: auto">
+          <mat-progress-spinner [mode]="'indeterminate'" style="margin: auto">
           </mat-progress-spinner>
         </div>
         <app-lesson class="content-page"></app-lesson>
-        <app-test class="content-page"></app-test>
+        <app-test class="content-page" [isOwner]="isOwner"></app-test>
         <img src="assets/up.png" class="up-arrow" id="upBtn" (click)="topFunction()">
       </div>
     </mat-sidenav-content>
