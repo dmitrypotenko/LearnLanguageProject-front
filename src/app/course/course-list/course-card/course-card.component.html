@@ -19,11 +19,9 @@
     </div>
   </div>
 
-  <div class="col" *ngIf="this.authService.user | async as userData">
-    <ng-template [ngIf]="userData.isSuperAdmin || isBelongTo(course.ownerIds, userData)">
+  <div class="col" *ngIf="userData!=null && (userData.isSuperAdmin || isBelongTo(course.ownerIds, userData)) ">
       <button class="btn btn-primary m-2" routerLink="/courses/edit/{{course.id}}">Edit</button>
       <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
-    </ng-template>
   </div>
 
   <div class="col" *ngIf="course.completion.isStarted && !course.completion.isCompleted">

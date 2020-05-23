@@ -25,12 +25,19 @@ export class CourseCardComponent implements OnInit, AfterViewInit {
   descriptionShadow: ElementRef;
   @ViewChild('descriptionCollapse', {read: ElementRef})
   descriptionCollapse: ElementRef;
+  userData: UserData;
 
 
   constructor(private  courseService: CourseService, public authService: AuthService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.authService.user.subscribe(user => {
+        if (user.id != null) {
+          this.userData = user;
+        }
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -46,7 +53,7 @@ export class CourseCardComponent implements OnInit, AfterViewInit {
 
 
   isBelongTo(ownerIds: number[], userData: UserData) {
-    return ownerIds.find(owner => owner == userData?.id) != null;
+    return ownerIds.find(owner => owner == this.userData?.id) != null;
   }
 
   checkShadow(showShadow: HTMLDivElement) {
