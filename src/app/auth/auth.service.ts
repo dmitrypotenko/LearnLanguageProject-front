@@ -25,7 +25,8 @@ export class AuthService {
 
   getUserInfo(): Observable<UserData> {
     return this.http.get<UserData>(appUrl + '/userInfo')
-      .pipe(tap(userResponse => {
+      .pipe(map(userResponse=> new UserData(userResponse.id, userResponse.roles, userResponse.name, userResponse.pictureUrl)),
+        tap(userResponse => {
         this.user.next(userResponse);
       }));
   }

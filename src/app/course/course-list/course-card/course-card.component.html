@@ -1,0 +1,35 @@
+<span *ngIf="course.type == 'PRIVATE'"> Private course <mat-icon>lock</mat-icon> </span>
+<span *ngIf="course.type == 'DRAFT'"> Draft <mat-icon>edit</mat-icon> </span>
+<div class="row">
+  <div class="col">
+    <div class="card-body">
+      <h5 class="card-title">{{course.name}} </h5>
+
+      <div id="course-description{{course.id}}" #courseDescription class="card-text course-description"
+           [innerHTML]="course.description | keepHtml"></div>
+      <div #descriptionShadow></div>
+      <a #descriptionCollapse class="collapsed collapse-description-btn" href="#course-description{{course.id}}"
+         data-toggle="collapse"
+         aria-expanded="false" (click)="checkShadow(descriptionShadow)" style="text-align: center"></a>
+      <a style="margin-top: 20px" mat-raised-button color="primary" routerLink="/courses/{{course.id}}/steps/0">
+        <span *ngIf="!course.completion.isStarted">Start course</span>
+        <span *ngIf="course.completion.isStarted && !course.completion.isCompleted">Continue</span>
+        <span *ngIf="course.completion.isCompleted">View</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="col" *ngIf="this.authService.user | async as userData">
+    <ng-template [ngIf]="userData.isSuperAdmin || isBelongTo(course.ownerIds, userData)">
+      <button class="btn btn-primary m-2" routerLink="/courses/edit/{{course.id}}">Edit</button>
+      <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
+    </ng-template>
+  </div>
+
+  <div class="col" *ngIf="course.completion.isStarted && !course.completion.isCompleted">
+    <h2><span style="color: green">IN PROGRESS</span></h2>
+  </div>
+  <div class="col" *ngIf="course.completion.isCompleted">
+    <h2><span style="color: gray">COMPLETED</span></h2>
+  </div>
+</div>

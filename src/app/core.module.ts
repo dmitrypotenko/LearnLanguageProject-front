@@ -66,6 +66,7 @@ import {MatListModule} from "@angular/material/list";
 import { TestResultsComponent } from './test/test-results/test-results.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { TestInternalComponent } from './test/test-internal/test-internal.component';
+import { CourseCardComponent } from './course/course-list/course-card/course-card.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { TestInternalComponent } from './test/test-internal/test-internal.compon
     SecurityModalComponent,
     UserComponent,
     TestResultsComponent,
-    TestInternalComponent
+    TestInternalComponent,
+    CourseCardComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),

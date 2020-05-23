@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseData, CourseService} from '../course.service';
 import {AuthService} from '../../auth/auth.service';
-import {MatDialog} from '@angular/material/dialog';
-import {ConcessionDialogComponent} from './concession-dialog/concession-dialog.component';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {UserData} from '../../auth/user.data';
 import {Meta, Title} from "@angular/platform-browser";
@@ -17,8 +15,6 @@ export class CourseListComponent implements OnInit {
   private courseService: CourseService;
   private _courses: CourseData[];
   private authService: AuthService;
-  isSuperAdmin: boolean = false;
-  isAdmin: boolean;
   modeControl: FormControl;
   mode: string = 'all';
   private roles = [];
@@ -26,7 +22,6 @@ export class CourseListComponent implements OnInit {
 
   schema: any;
 
-  public dialog: MatDialog;
   public userData: UserData;
 
 
@@ -46,10 +41,8 @@ export class CourseListComponent implements OnInit {
   }
 
   constructor(courseService: CourseService, authService: AuthService,
-              dialog: MatDialog,
               private formBuilder: FormBuilder,
               private meta: Meta, private titleService: Title) {
-    this.dialog = dialog;
     this.courseService = courseService;
     this.authService = authService;
 
@@ -80,44 +73,21 @@ export class CourseListComponent implements OnInit {
     });
 
     this.authService.user.subscribe(user => {
-        this.userData = user;
-        this.roles = user.roles;
-        if (user.roles.find(role => role == 'ROLE_SUPER_ADMIN')) {
-          this.isSuperAdmin = true;
-        } else {
-          this.isSuperAdmin = false;
-        }
-        if (user.roles.find(role => role == 'ROLE_ADMIN')) {
-          this.isAdmin = true;
-        } else {
-          this.isAdmin = false;
+        if (user.id != null) {
+          this.userData = user;
+          this.roles = user.roles;
         }
       }
     );
     this.modeControl = new FormControl(this.mode);
   }
 
-  delete(id: number) {
-    this.dialog.open(ConcessionDialogComponent, {height: '20vh', width: '30vw', hasBackdrop: true})
-      .afterClosed().subscribe(result => {
-      if (result) {
-        this.courseService.deleteCourse(id)
-          .subscribe(response => {
-            if (response.status == 200) {
-              let courseData = this._courses.find(data => data.id == id);
-              this._courses.splice(this._courses.indexOf(courseData), 1);
-            }
-          });
-      }
-    });
-  }
-
-
   get isLoggedId(): boolean {
     return this.roles.length == 0;
   }
 
-  isBelongTo(ownerIds: number[]) {
-    return ownerIds.find(owner => owner == this.userData?.id) != null;
+  deleteCourse(id: number) {
+    let courseData = this._courses.find(data => data.id == id);
+    this._courses.splice(this._courses.indexOf(courseData), 1);
   }
 }

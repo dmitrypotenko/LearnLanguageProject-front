@@ -1,0 +1,29 @@
+.collapse-description-btn {
+  display: none;
+}
+
+.collapse-description-btn.collapsed:after {
+  content: 'Read more...';
+
+}
+
+.description-shadow {
+  position: relative;
+  background-image: linear-gradient(to bottom, transparent, white);
+  bottom: 20px;
+  height: 20px;
+}
+
+.collapse-description-btn:not(.collapsed):after {
+  content: 'Hide full description';
+}
+
+.course-description.collapse:not(.show) {
+  display: block;
+  height: 50px;
+  overflow: hidden;
+}
+
+.course-description.collapsing {
+  height: 50px;
+}
