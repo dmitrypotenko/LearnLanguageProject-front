@@ -1,6 +1,6 @@
 <ng-template #simpleCurrentUserTest>
   <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
-    <app-test-internal [testData]="testData"></app-test-internal>
+    <app-test-internal [testData]="testData" [userName]="'You'"></app-test-internal>
     <div class="submit-btn">
       <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button"
               (click)="checkTest(testData)">
@@ -21,7 +21,7 @@
   <mat-tab label="Your test">
     <ng-template matTabContent>
       <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
-        <app-test-internal [testData]="testData"></app-test-internal>
+        <app-test-internal [testData]="testData" [userName]="'You'"></app-test-internal>
         <div class="submit-btn">
           <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button"
                   (click)="checkTest(testData)">

@@ -11,6 +11,9 @@ export class TestInternalComponent implements OnInit {
   @Input()
   testData: TestData;
 
+  @Input()
+  userName: string;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -4,5 +4,5 @@
     <app-user (click)="switchToStudentTest(student)" [user]="student"></app-user>
   </mat-list-option>
 </mat-selection-list>
-<app-test-internal *ngIf="studentTestData!=null" [testData]="studentTestData"></app-test-internal>
+<app-test-internal *ngIf="studentTestData!=null" [testData]="studentTestData" [userName]="currentStudent.name"></app-test-internal>
 <!--#listOption [class.active]="listOption.selected"-->

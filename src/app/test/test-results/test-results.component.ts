@@ -14,6 +14,8 @@ export class TestResultsComponent implements OnInit {
 
   studentTestData: TestData;
 
+  currentStudent: UserData;
+
   _testId: number;
 
   @Input()
@@ -33,7 +35,9 @@ export class TestResultsComponent implements OnInit {
   }
 
   switchToStudentTest(student: UserData) {
-    this.testService.getCheckedTest(this._testId, student.id).subscribe(test =>
-      this.studentTestData = test)
+    this.testService.getCheckedTest(this._testId, student.id).subscribe(test => {
+      this.studentTestData = test;
+      this.currentStudent = student;
+    })
   }
 }
