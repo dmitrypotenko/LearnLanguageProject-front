@@ -35,8 +35,8 @@ export class TestService {
       .pipe<TestData>(map<TestData, TestData>(test => TestService.mapTest(test)));
   }
 
-  getCheckedTest(testId:number, userId:number): Observable<TestData> {
-    return this.http.get(appUrl + '/tests/check/'+testId+'/users/'+userId)
+  getCheckedTest(testId: number, userId: number): Observable<TestData> {
+    return this.http.get(appUrl + '/tests/check/' + testId + '/users/' + userId)
       .pipe(catchError(Util.handleError(null)))
       .pipe<TestData>(map<TestData, TestData>(test => TestService.mapTest(test)));
   }
@@ -46,7 +46,16 @@ export class TestService {
   }
 
   invalidateTest(testData: TestData): Observable<Response> {
-    return this.http.post(appUrl + '/tests/invalidate/' + testData.id, JSON.stringify(testData),
+    return this.http.post(appUrl + '/tests/invalidate/' + testData.id, "",
+      {
+        headers: new HttpHeaders('Content-Type: application/json'),
+        observe: 'response'
+      })
+      .pipe(catchError(Util.handleError(null)))
+  }
+
+  invalidateTestForUser(testId: number, userId: number): Observable<Response>  {
+    return this.http.post(appUrl + '/tests/invalidate/' + testId + '/users/' + userId, "",
       {
         headers: new HttpHeaders('Content-Type: application/json'),
         observe: 'response'

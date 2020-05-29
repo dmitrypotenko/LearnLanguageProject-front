@@ -20,12 +20,21 @@ export class TestResultsComponent implements OnInit {
 
   @Input()
   set testId(testId: number) {
-    this._testId = testId;
     if (testId != null) {
-      this.userService.getSubmittedTestUsers(testId).subscribe(result =>
-        this.students = result)
+      this.userService.getSubmittedTestUsers(testId).subscribe(result => {
+        this.students = result;
+        this._testId = testId;
+        let foundCurrentStudent = this.students.find(student => this.currentStudent?.id == student.id);
+        if (foundCurrentStudent != null) {
+          this.testService.getCheckedTest(this._testId, foundCurrentStudent.id).subscribe(test => {
+            this.studentTestData = test;
+          })
+        } else {
+          this.studentTestData = null;
+          this.currentStudent = null;
+        }
+      })
     }
-    this.studentTestData = null;
   }
 
   constructor(private userService: UserService, private testService: TestService) {
@@ -35,9 +44,25 @@ export class TestResultsComponent implements OnInit {
   }
 
   switchToStudentTest(student: UserData) {
+    this.currentStudent = student;
     this.testService.getCheckedTest(this._testId, student.id).subscribe(test => {
       this.studentTestData = test;
-      this.currentStudent = student;
     })
+  }
+
+  isSelected(student: UserData) {
+    return this.currentStudent?.id == student.id
+  }
+
+  invalidate(student: UserData) {
+    this.testService.invalidateTestForUser(this._testId, student.id)
+      .subscribe(response=> {
+        if (response.status == 200) {
+          const index: number = this.students.indexOf(student);
+          if (index !== -1) {
+            this.students.splice(index, 1);
+          }
+        }
+      });
   }
 }

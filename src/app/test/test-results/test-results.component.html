@@ -1,8 +1,20 @@
-<mat-selection-list [multiple]="false" *ngIf="students!=null">
-  <h3 matSubheader>Students' results</h3>
-  <mat-list-option *ngFor="let student of students">
-    <app-user (click)="switchToStudentTest(student)" [user]="student"></app-user>
-  </mat-list-option>
-</mat-selection-list>
-<app-test-internal *ngIf="studentTestData!=null" [testData]="studentTestData" [userName]="currentStudent.name"></app-test-internal>
+<div class="d-flex">
+  <div class="shadow" >
+  <mat-selection-list [multiple]="false" *ngIf="students!=null">
+    <h3 matSubheader>Students' results</h3>
+    <mat-list-option #option [selected]="isSelected(student)" [attr.aria-selected]="isSelected(student)"
+                     *ngFor="let student of students">
+      <div class="d-flex">
+        <app-user style="width: 100%" (click)="switchToStudentTest(student)" [user]="student"></app-user>
+        <!-- <button style="width: fit-content" class="ml-auto" mat-icon-button (click)="invalidate(student)">
+           Invalidate
+           <mat-icon svgIcon="trash"></mat-icon>
+         </button>-->
+      </div>
+    </mat-list-option>
+  </mat-selection-list>
+  </div>
+  <app-test-internal style="width: 60%" *ngIf="studentTestData!=null" [testData]="studentTestData"
+                     [userName]="currentStudent.name"></app-test-internal>
+</div>
 <!--#listOption [class.active]="listOption.selected"-->
