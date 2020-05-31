@@ -42,7 +42,7 @@ export class CourseCardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     let nativeElement = this.description.nativeElement as HTMLDivElement;
-    if (nativeElement.clientHeight > 50) {
+    if (nativeElement.clientHeight > 80) {
       nativeElement.classList.add('collapse');
       let descriptionShadowBox = this.descriptionShadow.nativeElement as HTMLElement;
       let descriptionShadowLink = this.descriptionCollapse.nativeElement as HTMLElement;

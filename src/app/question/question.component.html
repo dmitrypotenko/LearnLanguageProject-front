@@ -25,7 +25,7 @@
         </div>
         <label *ngIf="notEmpty(variant.explanation)"><span><b>Explanation: {{variant.explanation}}</b></span></label>
       </div>
-      <b><span *ngIf="questionData.status=='FAILED' && questionData.type == 'CUSTOM_INPUT' && variant.isRight"> {{variant.variant}};</span></b>
     </div>
+    <b><span *ngIf="questionData.status=='FAILED' && questionData.type == 'CUSTOM_INPUT'"> {{getFormattedAnswers()}}</span></b>
   </div>
 </div>

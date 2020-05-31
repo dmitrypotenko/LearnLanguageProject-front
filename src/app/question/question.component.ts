@@ -1,13 +1,4 @@
-import {
-  AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  Injector,
-  Input,
-  OnInit,
-  PLATFORM_ID
-} from '@angular/core';
+import {AfterViewInit, Component, Injector, Input, OnInit, PLATFORM_ID} from '@angular/core';
 import {QuestionType} from '../course/course-edit/QuestionType';
 import {NgElement, WithProperties} from '@angular/elements';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
@@ -18,7 +9,7 @@ import {isPlatformBrowser} from "@angular/common";
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnInit, AfterViewChecked, AfterContentInit, AfterViewInit {
+export class QuestionComponent implements OnInit, AfterViewInit {
 
   @Input() questionIndex: number;
 
@@ -56,7 +47,7 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
 
     this._questionData = value;
-    let _this= this;
+    let _this = this;
     setTimeout(function () {
       _this.runCustomQuestionDetection(value)
     }, 100);
@@ -69,11 +60,29 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
 
   }
 
+  getFormattedAnswers() {
+    let map = new Map<string, string[]>();
+    this.questionData.variants.filter(option => !option.isTicked && option.isRight).forEach(option => {
+      var rightOptions = map.get(option.inputName);
+      if (rightOptions == null) {
+        rightOptions = [];
+        rightOptions.push('\"' + option.variant + '\"');
+      } else {
+        rightOptions.push('\"' + option.variant + '\"');
+      }
+      map.set(option.inputName, rightOptions);
+    });
+
+    let answers = Array.from(map.values()).map(value => value.join(" or ")).join(" | ");
+
+    return answers;
+  }
+
   ngAfterViewInit(): void {
     this.runCustomQuestionDetection(this._questionData);
   }
 
-   runCustomQuestionDetection(question: QuestionData) {
+  runCustomQuestionDetection(question: QuestionData) {
     if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
       console.log('ngAfterViewChecked Start');
       let questionsSelector = document.querySelector('#question' + this.questionData.id);
@@ -93,14 +102,6 @@ export class QuestionComponent implements OnInit, AfterViewChecked, AfterContent
     }
   }
 
-  ngAfterViewChecked(): void {
-
-
-  }
-
-  ngAfterContentInit(): void {
-
-  }
 
   changeVariant(variant: VariantData) {
     this._questionData.variants.forEach(variant => {
