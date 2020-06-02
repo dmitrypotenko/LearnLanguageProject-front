@@ -1,11 +1,11 @@
 import {Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NavigationError, Router} from '@angular/router';
-import * as Sentry from "@sentry/browser";
-import {environment} from "../../environments/environment";
+import * as Sentry from '@sentry/browser';
+import {environment} from '../../environments/environment';
 
 Sentry.init({
-  dsn: "https://cb2aa8f65a754dddaf3df90e8fd26615@o385477.ingest.sentry.io/5218265"
+  dsn: 'https://cb2aa8f65a754dddaf3df90e8fd26615@o385477.ingest.sentry.io/5218265'
 });
 
 
@@ -26,7 +26,7 @@ export class ErrorService {
         if (event instanceof NavigationError) {
           // Redirect to the ErrorComponent
           var errorWithContext = this.log(event.error);
-          this.router.navigate(['/error'], {queryParams: errorWithContext})
+          this.router.navigate(['/error'], {queryParams: errorWithContext});
         }
       });
   }
@@ -47,7 +47,7 @@ export class ErrorService {
       this.router.navigateByUrl('/login').then(result => console.log(message));
       return message;
     }
-    return "Internal server error. " + error.message + ' \nMessage: ' + this.getMessage(error);
+    return 'Internal server error. ' + error.message + ' \nMessage: ' + this.getMessage(error);
   }
 
   private getMessage(error: HttpErrorResponse) {
@@ -78,7 +78,9 @@ export class ErrorService {
 
 class SentryService {
   static post(error) {
-    const eventId = Sentry.captureException(error.originalError || error);
-    Sentry.showReportDialog({eventId});
+    if (error.status < 400 || error.status > 499) {
+      const eventId = Sentry.captureException(error.originalError || error);
+      Sentry.showReportDialog({eventId});
+    }
   }
 }
