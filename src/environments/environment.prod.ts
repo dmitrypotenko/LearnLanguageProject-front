@@ -3,3 +3,4 @@ export const environment = {
 };
 
 export const appUrl = 'https://lessonsbox.com/back';
+export const appUiUrl = 'https://lessonsbox.com';

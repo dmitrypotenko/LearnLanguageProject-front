@@ -15,3 +15,4 @@ export const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 export const appUrl = 'http://localhost:8080';
+export const appUiUrl = 'http://localhost:4200';

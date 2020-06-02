@@ -43,7 +43,9 @@ export class ErrorService {
       return 'You are not allowed to view this page: ' + this.getMessage(error);
     }
     if (error.status == 401) {
-      return 'You don\'t have rights to view this page. You should login and have admin privileges. ' + this.getMessage(error);
+      let message = 'You don\'t have rights to view this page. You should login. ' + this.getMessage(error);
+      this.router.navigateByUrl('/login').then(result => console.log(message));
+      return message;
     }
     return "Internal server error. " + error.message + ' \nMessage: ' + this.getMessage(error);
   }

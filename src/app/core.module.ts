@@ -8,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LandingComponent} from './landing/landing.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import 'hammerjs';
+import {MatRippleModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
@@ -67,6 +68,7 @@ import { TestResultsComponent } from './test/test-results/test-results.component
 import {MatTabsModule} from "@angular/material/tabs";
 import { TestInternalComponent } from './test/test-internal/test-internal.component';
 import { CourseCardComponent } from './course/course-list/course-card/course-card.component';
+import { LoginPageComponent } from './auth/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +106,8 @@ import { CourseCardComponent } from './course/course-list/course-card/course-car
     UserComponent,
     TestResultsComponent,
     TestInternalComponent,
-    CourseCardComponent
+    CourseCardComponent,
+    LoginPageComponent
   ],
     imports: [
         BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -135,7 +138,8 @@ import { CourseCardComponent } from './course/course-list/course-card/course-car
         NgxJsonLdModule,
         MatAutocompleteModule,
         MatListModule,
-        MatTabsModule
+        MatTabsModule,
+      MatRippleModule
     ],
   entryComponents: [
     ConcessionDialogComponent,

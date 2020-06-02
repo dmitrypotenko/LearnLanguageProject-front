@@ -13,9 +13,11 @@ import {FileSender} from './FileSender';
 import {MatDialog} from '@angular/material/dialog';
 import {QuestionType} from './QuestionType';
 import {NotificationService} from '../../error/NotificationService';
-import {CustomValidator} from "./field-error/Validators";
-import {CourseType} from "../course-type";
-import {SecurityModalComponent} from "./security-modal/security-modal.component";
+import {CustomValidator} from './field-error/Validators';
+import {CourseType} from '../course-type';
+import {SecurityModalComponent} from './security-modal/security-modal.component';
+import {appUiUrl} from '../../../environments/environment';
+import {ConcessionDialogComponent} from '../course-list/concession-dialog/concession-dialog.component';
 
 @Component({
     selector: 'app-course-edit',
@@ -26,12 +28,15 @@ export class CourseEditComponent implements OnInit {
 
     public ckConfig: {};
 
+    shareableLink = '';
+
     courseForm = this.fb.group({
         id: null,
         name: [''],
         type: [CourseType.DRAFT.toString()],
         description: [''],
         category: [''],
+        key: [''],
         steps: this.fb.array([]),
     });
 
@@ -45,7 +50,7 @@ export class CourseEditComponent implements OnInit {
                 .subscribe(course => {
                     var stepsCount = course.tests.length + course.lessons.length;
                     for (let i = 0; i < stepsCount; i++) {
-                        this.steps.push(new FormControl())
+                        this.steps.push(new FormControl());
                     }
                     console.log('Course is retrieved from server');
                     this.courseForm.get('id').setValue(course.id);
@@ -53,6 +58,8 @@ export class CourseEditComponent implements OnInit {
                     this.courseForm.get('description').setValue(course.description);
                     this.courseForm.get('category').setValue(course.category);
                     this.courseForm.get('type').setValue(course.type);
+                    this.courseForm.get('key').setValue(course.key);
+                    this.shareableLink = this.getShareableLink();
                     course.lessons.forEach(lesson => {
                         let lessonControl = this.createLesson();
                         this.steps.setControl(lesson.order, lessonControl);
@@ -180,7 +187,8 @@ export class CourseEditComponent implements OnInit {
             mainForm.get('category').value as string,
             lessons,
             tests,
-            mainForm.get('type').value
+            mainForm.get('type').value,
+            mainForm.get('key').value
         )).subscribe(next => {
             if (next == null) {
                 return;
@@ -219,7 +227,7 @@ export class CourseEditComponent implements OnInit {
                     this.setExpandedTrue(step);
                 }
             });
-            this.notificationService.showError("Form is invalid");
+            this.notificationService.showError('Form is invalid');
             this.cd.detectChanges();
             return false;
         }
@@ -356,15 +364,51 @@ export class CourseEditComponent implements OnInit {
     }
 
     isExpanded(step: AbstractControl) {
-        return (step.get('expanded').value as boolean) == true
+        return (step.get('expanded').value as boolean) == true;
     }
 
     setExpandedFalse(step: AbstractControl) {
-        step.get('expanded').setValue('false')
+        step.get('expanded').setValue('false');
     }
 
     openAccessDialog() {
-        this.dialog.open(SecurityModalComponent, {height: '70vh', width: '60vw', hasBackdrop: true, data: {courseId: this.courseForm.get("id").value}})
+        this.dialog.open(SecurityModalComponent, {
+            height: '70vh',
+            width: '60vw',
+            hasBackdrop: true,
+            data: {courseId: this.courseForm.get('id').value}
+        });
+    }
+
+    generateLink() {
+        let _this = this;
+
+        function generate() {
+            _this.courseService.generateKey(_this.courseForm.get('id').value).subscribe(key => {
+                _this.courseForm.get('key').setValue(key);
+                _this.shareableLink = _this.getShareableLink();
+            });
+        }
+
+        let key = this.courseForm.get('key').value;
+        if (key != null && (key as string).length > 0) {
+            this.dialog.open(ConcessionDialogComponent, {height: '20vh', width: '30vw', hasBackdrop: true})
+                .afterClosed().subscribe(result => {
+                if (result) {
+                    generate();
+                }
+            });
+        } else {
+            generate();
+        }
+    }
+
+    getShareableLink() {
+        let key = this.courseForm.get('key').value;
+        if (key != null && (key as string).length > 0) {
+            return appUiUrl + '/courses/' + this.courseForm.get('id').value + '/steps/0?key=' + key;
+        }
+        return '';
     }
 }
 

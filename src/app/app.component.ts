@@ -29,6 +29,9 @@ export class AppComponent {
     iconRegistry.addSvgIcon(
       'key',
       sanitizer.bypassSecurityTrustResourceUrl('assets/key.svg'));
+    iconRegistry.addSvgIcon(
+        'link',
+        sanitizer.bypassSecurityTrustResourceUrl('assets/link.svg'));
     if (isPlatformBrowser(platformId)) {
 
       router.events
