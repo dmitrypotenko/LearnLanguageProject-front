@@ -2,8 +2,7 @@
   <div class="shadow" >
   <mat-selection-list [multiple]="false" *ngIf="students!=null">
     <h3 matSubheader>Students' results</h3>
-    <mat-list-option #option [selected]="isSelected(student)" [attr.aria-selected]="isSelected(student)"
-                     *ngFor="let student of students">
+    <mat-list-option [selected]="isSelected(student)" *ngFor="let student of students">
       <div class="d-flex">
         <app-user style="width: 100%" (click)="switchToStudentTest(student)" [user]="student"></app-user>
         <!-- <button style="width: fit-content" class="ml-auto" mat-icon-button (click)="invalidate(student)">

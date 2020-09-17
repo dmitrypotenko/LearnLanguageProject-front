@@ -206,5 +206,17 @@ export class Attachment implements File {
     return undefined;
   }
 
+  arrayBuffer(): Promise<ArrayBuffer> {
+    return undefined;
+  }
+
+  stream(): ReadableStream<any> {
+    return undefined;
+  }
+
+  text(): Promise<string> {
+    return undefined;
+  }
+
 
 }
