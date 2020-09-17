@@ -16,7 +16,8 @@
     "dev:ssr": "ng run kirill:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
     "build:ssr": "npm run build:client-and-server-bundles_bak && npm run compile:server_bak && node dist/prerender.js",
-    "prerender": "ng run kirill:prerender"
+    "prerender": "ng run kirill:prerender",
+    "build:prod": "ng build --prod"
   },
   "private": true,
   "dependencies": {

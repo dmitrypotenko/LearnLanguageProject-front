@@ -3,7 +3,7 @@ steps:
     entrypoint: npm
     args: ['install']
   - name: 'gcr.io/$PROJECT_ID/ng'
-    args: ['run', 'kirill:prerender']
+    args: ['run', 'build:prod']
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
     timeout: '1600s'
