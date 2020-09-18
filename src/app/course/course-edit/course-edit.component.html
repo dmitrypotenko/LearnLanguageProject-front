@@ -1,4 +1,6 @@
-<form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="p-4">
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit(false)" class="p-4">
+  <button type="submit" (click)="onSubmit(true)" class="btn btn-success saveAndViewBtn"><mat-icon svgIcon="eye"></mat-icon>  Save & View
+  </button>
     <div class="form-group">
         <label for="courseName">
             Course name:

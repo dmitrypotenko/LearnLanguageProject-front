@@ -14,6 +14,7 @@
       <button (click)="sidenav.toggle()" class="btn btn-primary btn toggleBtn" type="button" id="toggleBtn">
         <mat-icon>menu</mat-icon>
       </button>
+      <button class="btn btn-warning editBtn" *ngIf="isOwner" [routerLink]="'/courses/edit/' + currentCourse.id"><mat-icon>edit</mat-icon>Edit course</button>
       <div class="main-content">
         <div style="width: 100%; height: 70vh;" class="d-flex justify-content-center" *ngIf="spinnerVisible">
           <mat-progress-spinner [mode]="'indeterminate'" style="margin: auto">

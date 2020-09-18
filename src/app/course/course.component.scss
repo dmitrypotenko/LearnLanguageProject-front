@@ -53,6 +53,7 @@
   z-index: 99999;
   -moz-transition: all 0.8s ease 0s;
   vertical-align: middle;
+  margin: 3px 0 0 3px;
 }
 
 .sticky {
@@ -65,3 +66,7 @@
 }
 
 
+.editBtn {
+  display: block;
+  margin: 5px 10px 0 auto;
+}

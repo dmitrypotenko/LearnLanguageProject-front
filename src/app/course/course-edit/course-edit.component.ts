@@ -6,7 +6,7 @@ import {CourseData, CourseService} from '../course.service';
 import {Attachment, LessonData} from '../../service/lesson.service';
 import {TestData} from '../../service/test.service';
 import {QuestionData, VariantData} from '../../question/question.component';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {NgxDropzoneChangeEvent} from 'ngx-dropzone';
 import {FileSender} from './FileSender';
@@ -125,13 +125,14 @@ export class CourseEditComponent implements OnInit {
 
     constructor(private fb: FormBuilder, private _snackBar: MatSnackBar, private courseService: CourseService,
                 private route: ActivatedRoute, private httpClient: HttpClient, private dialog: MatDialog,
-                private notificationService: NotificationService, private cd: ChangeDetectorRef) {
+                private notificationService: NotificationService, private cd: ChangeDetectorRef,
+                private router: Router) {
     }
 
-    onSubmit() {
+    onSubmit(redirect) {
         let allSteps = this.steps;
         if (!this.validate(allSteps)) {
-            return;
+            return false;
         }
 
         let lessons: LessonData[] = [];
@@ -215,8 +216,13 @@ export class CourseEditComponent implements OnInit {
                 });
 
             });
-            this.notificationService.showSuccess('The course is saved successfully!');
+            if (redirect) {
+              this.router.navigateByUrl('/courses/'+ this.courseForm.get('id').value+ '/steps/0').then();
+            } else {
+              this.notificationService.showSuccess('The course is saved successfully!');
+            }
         });
+        return true;
     }
 
     private validate(allSteps: FormArray) {

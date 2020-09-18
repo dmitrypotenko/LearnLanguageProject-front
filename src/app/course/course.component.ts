@@ -27,6 +27,7 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
     private _testService: TestService;
     spinnerVisible: boolean = true;
     schema: any;
+    appUrl = appUrl;
 
     sticky;
     private stepId: number;
