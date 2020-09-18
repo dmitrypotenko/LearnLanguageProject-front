@@ -7,7 +7,6 @@ import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LandingComponent} from './landing/landing.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import 'hammerjs';
 import {MatRippleModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
@@ -19,7 +18,6 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {LayoutModule} from '@angular/cdk/layout';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {MenuComponent} from './menu/menu.component';
 import {MiddleComponent} from './middle/middle.component';
 import {FooterComponent} from './footer/footer.component';
@@ -124,7 +122,6 @@ import { LoginPageComponent } from './auth/login-page/login-page.component';
         MatMenuModule,
         MatIconModule,
         LayoutModule,
-        MDBBootstrapModule.forRoot(),
         DragDropModule,
         MatSnackBarModule,
         MatDialogModule,

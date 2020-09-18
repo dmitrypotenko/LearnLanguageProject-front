@@ -17,10 +17,10 @@
   </div>
 </ng-template>
 
-<mat-tab-group *ngIf="isOwner; else simpleCurrentUserTest" mat-align-tabs="end">
+<mat-tab-group *ngIf="isOwner && testData != null && testData.questions.length; else simpleCurrentUserTest" mat-align-tabs="end">
   <mat-tab label="Your test">
     <ng-template matTabContent>
-      <div *ngIf="testData != null && testData.questions.length" class="d-flex flex-column test-content shadow">
+      <div class="d-flex flex-column test-content shadow">
         <app-test-internal [testData]="testData" [userName]="'You'"></app-test-internal>
         <div class="submit-btn">
           <button *ngIf="!testData.isCompleted" class="btn btn-primary btn-sm mt-1" type="button"

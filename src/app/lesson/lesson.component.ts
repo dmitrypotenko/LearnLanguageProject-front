@@ -1,15 +1,14 @@
-import {AfterViewChecked, Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {LessonData, LessonService} from '../service/lesson.service';
 import {DomSanitizer, Meta, SafeHtml, Title} from '@angular/platform-browser';
-import * as Embedo from 'embedo/embedo.js';
 
 @Component({
   selector: 'app-lesson',
   templateUrl: './lesson.component.html',
   styleUrls: ['./lesson.component.scss']
 })
-export class LessonComponent implements OnInit, AfterViewChecked {
+export class LessonComponent implements OnInit {
 
   lessonData: LessonData;
   lessonText: SafeHtml;
@@ -18,7 +17,6 @@ export class LessonComponent implements OnInit, AfterViewChecked {
 
   private location: Location;
   private sanitizer: DomSanitizer;
-  private embedo: Embedo;
 
 
   constructor(
@@ -34,35 +32,6 @@ export class LessonComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.getCurrentLesson();
-    this.embedo = new Embedo({
-      twitter: true,  // Enable twitter SDK
-      instagram: true,  // Enable instagram SDK
-      pinterest: true  // Enable pinterest SDK,
-    });
-  }
-
-  ngAfterViewChecked() {
-    let oembeds = document.getElementsByTagName('oembed');
-    for (let i = 0; i < oembeds.length; i++) {
-      if (oembeds[i].firstChild == null) {
-        oembeds[i].className = 'embed-responsive embed-responsive-16by9 video container';
-        this.embedo.load(
-          oembeds[i],
-          oembeds[i].getAttribute('url'),
-          {
-            height: null,
-            width: null,
-            centerize: true
-          }
-        )
-          .done((data) => {
-          })
-          .fail((err) => {
-            console.error(err);
-          });
-      }
-
-    }
   }
 
   getCurrentLesson(): void {
