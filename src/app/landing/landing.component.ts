@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Injector, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {jarallax} from 'jarallax';
-import {DomSanitizer, Meta, Title} from "@angular/platform-browser";
-import {isPlatformBrowser} from "@angular/common";
+import {Meta, Title} from '@angular/platform-browser';
+import {isPlatformBrowser} from '@angular/common';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
       jarallax(document.querySelectorAll('.jarallax'), {
         speed: 0.2,
-        imgSrc: 'assets/parallax_new_york-compressed.jpg'
+        imgSrc: 'assets/rsz_parallax_new_york-compressed.jpg'
       });
     }
     this.meta.updateTag({

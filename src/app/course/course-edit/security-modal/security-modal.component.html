@@ -1,13 +1,20 @@
 <mat-dialog-content style="height: 90%">
+  <form class="search-student-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Search a student</mat-label>
+      <input type="text" matInput [formControl]="searchControl">
+    </mat-form-field>
+  </form>
   <mat-list *ngIf="accesses!=null">
     <h3 matSubheader>Students</h3>
-    <mat-list-item *ngFor="let access of students">
+
+    <mat-list-item *ngFor="let access of students | async">
       <app-user [user]="access.userDto"></app-user>
       <button class="btn btn-warning list-btn" (click)="removeFromStudents(access)">Exclude</button>
     </mat-list-item>
     <mat-divider></mat-divider>
     <h3 matSubheader>All users</h3>
-    <mat-list-item *ngFor="let access of all">
+    <mat-list-item *ngFor="let access of all | async">
       <app-user [user]="access.userDto"></app-user>
       <button class="btn btn-success list-btn" (click)="addToStudents(access)">Add to students</button>
     </mat-list-item>
