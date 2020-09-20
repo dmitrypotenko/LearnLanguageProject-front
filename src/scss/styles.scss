@@ -1,7 +1,8 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
-
+@import "constants";
 
 $enable-responsive-font-sizes: true;
+
 
 .table {
   width: auto;
@@ -30,7 +31,7 @@ h1, h2, h3, p, h5, h4 {
 
 
 a {
-  color: rgb(14, 139, 155);
+  color: $linkColor;
 }
 
 html {

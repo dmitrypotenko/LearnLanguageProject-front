@@ -1,10 +1,13 @@
-.dropdown.show .dropdown-menu {
-  opacity: 1;
-  display: inherit;
+@import "src/scss/constants";
+
+#loginBtn {
+  color: $linkColor;
+
+  &:hover {
+    color: white;
+  }
 }
 
-#loginDrop {
-  img {
-    width: 191px;
-  }
+img {
+  width: 191px;
 }
