@@ -67,6 +67,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import { TestInternalComponent } from './test/test-internal/test-internal.component';
 import { CourseCardComponent } from './course/course-list/course-card/course-card.component';
 import { LoginPageComponent } from './auth/login-page/login-page.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -107,37 +108,38 @@ import { LoginPageComponent } from './auth/login-page/login-page.component';
     CourseCardComponent,
     LoginPageComponent
   ],
-    imports: [
-        BrowserModule.withServerTransition({appId: 'serverApp'}),
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatInputModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatRadioModule,
-        MatCardModule,
-        ReactiveFormsModule,
-        MatGridListModule,
-        MatMenuModule,
-        MatIconModule,
-        LayoutModule,
-        DragDropModule,
-        MatSnackBarModule,
-        MatDialogModule,
-        MatSidenavModule,
-        CKEditorModule,
-        NgxDropzoneModule,
-        MatExpansionModule,
-        MatProgressSpinnerModule,
-        RouterModule,
-        CKEditorModule,
-        NgxJsonLdModule,
-        MatAutocompleteModule,
-        MatListModule,
-        MatTabsModule,
-      MatRippleModule
-    ],
+  imports: [
+    BrowserModule.withServerTransition({appId: 'serverApp'}),
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatGridListModule,
+    MatMenuModule,
+    MatIconModule,
+    LayoutModule,
+    DragDropModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    MatSidenavModule,
+    CKEditorModule,
+    NgxDropzoneModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    RouterModule,
+    CKEditorModule,
+    NgxJsonLdModule,
+    MatAutocompleteModule,
+    MatListModule,
+    MatTabsModule,
+    MatRippleModule,
+    MatProgressBarModule
+  ],
   entryComponents: [
     ConcessionDialogComponent,
     SecurityModalComponent
