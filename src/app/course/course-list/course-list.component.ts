@@ -3,8 +3,8 @@ import {CourseData, CourseService} from '../course.service';
 import {AuthService} from '../../auth/auth.service';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {UserData} from '../../auth/user.data';
-import {Meta, Title} from "@angular/platform-browser";
-import {appUrl} from "../../../environments/environment";
+import {Meta, Title} from '@angular/platform-browser';
+import {appUrl} from '../../../environments/environment';
 
 @Component({
   selector: 'app-course-list',
@@ -54,7 +54,7 @@ export class CourseListComponent implements OnInit {
       name: 'description',
       content: 'Here you can choose an online English course that consists of lessons and tests and exercises. '
     });
-    this.titleService.setTitle("LessonsBox - The list of online English courses.");
+    this.titleService.setTitle('LessonsBox - The list of online English courses.');
     this.courseService.getAllCoursesMetadata().subscribe(courses => {
       this._courses = courses;
       this.schema = {
@@ -65,11 +65,17 @@ export class CourseListComponent implements OnInit {
             '@type': 'ListItem',
             position: index,
             url: appUrl + '/courses/' + course.id
-          }
+          };
         })
       };
 
       this.spinnerVisible = false;
+      this.courses.forEach(course => {
+        this.courseService.getCompletionStatus(course.id)
+          .subscribe(completion => {
+            course.completion = completion;
+          });
+      });
     });
 
     this.authService.user.subscribe(user => {

@@ -12,9 +12,9 @@
          data-toggle="collapse"
          aria-expanded="false" (click)="checkShadow(descriptionShadow)" style="text-align: center"></a>
       <a style="margin-top: 20px" mat-raised-button color="primary" routerLink="/courses/{{course.id}}/steps/0">
-        <span *ngIf="!course.completion.isStarted">Start course</span>
-        <span *ngIf="course.completion.isStarted && !course.completion.isCompleted">Continue</span>
-        <span *ngIf="course.completion.isCompleted">View</span>
+        <span *ngIf="!course.completion?.isStarted">Start course</span>
+        <span *ngIf="course.completion?.isStarted && !course.completion?.isCompleted">Continue</span>
+        <span *ngIf="course.completion?.isCompleted">View</span>
       </a>
     </div>
   </div>
@@ -24,10 +24,10 @@
       <button class="btn btn-danger m-2" (click)="delete(course.id)">Delete</button>
   </div>
 
-  <div class="col" *ngIf="course.completion.isStarted && !course.completion.isCompleted">
+  <div class="col" *ngIf="course.completion?.isStarted && !course.completion?.isCompleted">
     <h2><span style="color: green">IN PROGRESS</span></h2>
   </div>
-  <div class="col" *ngIf="course.completion.isCompleted">
+  <div class="col" *ngIf="course.completion?.isCompleted">
     <h2><span style="color: gray">COMPLETED</span></h2>
   </div>
 </div>
