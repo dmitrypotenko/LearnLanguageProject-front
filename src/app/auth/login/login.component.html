@@ -10,10 +10,12 @@
     </a>
   </mat-menu>
 </div>
-<div *ngIf="(authService.isAuthorized() | async)">
-
-  <button class="btn btn-secondary" (click)="logout()">
-    <mat-icon>exit_to_app</mat-icon>
-    <span class="icon-btn-text ">Logout</span>
-  </button>
+<div class="logged-user" *ngIf="(authService.isAuthorized() | async)">
+  <app-user matRipple  [user]="authService.user | async" [matMenuTriggerFor]="menu"></app-user>
+  <mat-menu #menu="matMenu">
+    <button class="btn btn-secondary" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span class="icon-btn-text ">Logout</span>
+    </button>
+  </mat-menu>
 </div>

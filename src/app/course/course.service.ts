@@ -42,8 +42,7 @@ export class CourseService {
   }
 
   getCompletionStatus(courseId: number): Observable<Completion> {
-    return this.http.get(appUrl + '/courses/completion/' + courseId, {headers: new HttpHeaders('Content-Type: application/json')})
-      .pipe(catchError(Util.handleError(null)));
+    return this.http.get<Completion>(appUrl + '/courses/completion/' + courseId, {headers: new HttpHeaders('Content-Type: application/json')});
   }
 
   private mapCourse(course: CourseData) {
@@ -79,6 +78,11 @@ export class CourseService {
       headers: new HttpHeaders('Content-Type: application/json'),
       responseType: 'text'
     })
+      .pipe(catchError(Util.handleError(null)));
+  }
+
+  getCoursesMetadataForGroup(groupId: number): Observable<CourseData[]> {
+    return this.http.get(appUrl + '/courses/groups/'+ groupId, {headers: new HttpHeaders('Content-Type: application/json')})
       .pipe(catchError(Util.handleError(null)));
   }
 }

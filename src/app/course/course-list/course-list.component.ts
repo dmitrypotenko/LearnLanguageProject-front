@@ -13,32 +13,19 @@ import {appUrl} from '../../../environments/environment';
 })
 export class CourseListComponent implements OnInit {
   private courseService: CourseService;
-  private _courses: CourseData[];
+  courses: CourseData[];
   private authService: AuthService;
   modeControl: FormControl;
   mode: string = 'all';
   private roles = [];
-  spinnerVisible = true;
+
 
   schema: any;
 
   public userData: UserData;
 
 
-  get courses(): CourseData[] {
-    this.mode = this.modeControl.value;
-    if (this._courses != null) {
-      return this._courses.filter(course => {
-        if (this.mode == 'completed') {
-          return course.completion.isCompleted;
-        } else if (this.mode == 'started') {
-          return course.completion.isStarted && !course.completion.isCompleted;
-        }
-        return true;
-      });
-    }
-    return [];
-  }
+
 
   constructor(courseService: CourseService, authService: AuthService,
               private formBuilder: FormBuilder,
@@ -56,7 +43,7 @@ export class CourseListComponent implements OnInit {
     });
     this.titleService.setTitle('LessonsBox - The list of online English courses.');
     this.courseService.getAllCoursesMetadata().subscribe(courses => {
-      this._courses = courses;
+      this.courses = courses;
       this.schema = {
         '@context': 'https://schema.org',
         '@type': 'ItemList',
@@ -69,7 +56,6 @@ export class CourseListComponent implements OnInit {
         })
       };
 
-      this.spinnerVisible = false;
       this.courses.forEach(course => {
         this.courseService.getCompletionStatus(course.id)
           .subscribe(completion => {
@@ -90,10 +76,5 @@ export class CourseListComponent implements OnInit {
 
   get isLoggedId(): boolean {
     return this.roles.length == 0;
-  }
-
-  deleteCourse(id: number) {
-    let courseData = this._courses.find(data => data.id == id);
-    this._courses.splice(this._courses.indexOf(courseData), 1);
   }
 }

@@ -387,7 +387,8 @@ export class CourseEditComponent implements OnInit {
       height: '70vh',
       width: '60vw',
       hasBackdrop: true,
-      data: {courseId: this.courseForm.get('id').value}
+      data: {id: this.courseForm.get('id').value,
+        securityEntityName: 'courses'}
     });
   }
 

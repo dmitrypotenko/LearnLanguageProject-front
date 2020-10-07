@@ -4,8 +4,8 @@
     <div class="d-flex flex-column">
 
       <div class="doc-image-wrap">
-        <img *ngIf="!isPdf()" class="doc-image d-block" src="assets/doc.png"/>
-        <img *ngIf="isPdf()" class="doc-image d-block" src="assets/pdf.png"/>
+        <img *ngIf="!isPdf()" class="doc-image d-block" src="assets/doc.png" alt="word doc icon"/>
+        <img *ngIf="isPdf()" class="doc-image d-block" src="assets/pdf.png" alt="pdf icon"/>
       </div>
       <div>
         <p class="doc-title text-center">{{title}}</p>

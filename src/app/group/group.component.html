@@ -1,0 +1,41 @@
+<div *ngIf="group!=null">
+  <ng-template [ngIf]="authService.isAdmin() | async">
+    <button class="btn btn-info m-2" type="button"
+            (click)='generateLink()'>Generate private link
+      <mat-icon svgIcon="link"></mat-icon>
+    </button>
+  </ng-template>
+  <span style="background: white">Private link <a href="{{shareableLink}}">{{shareableLink}}</a></span>
+
+  <h3 class="text-center">Students</h3>
+  <mat-list *ngIf="students!=null">
+    <mat-list-item class="group-user shadow" *ngFor="let access of students">
+      <app-user [user]="access.userDto"></app-user>
+    </mat-list-item>
+  </mat-list>
+  <button *ngIf="authService.isAdmin() | async" class="btn btn-primary group-btn text-center d-block"
+          (click)='openAccessDialog()'>Manage students
+    <mat-icon svgIcon="key"></mat-icon>
+  </button>
+  <mat-divider style="margin: 20px"></mat-divider>
+  <h3 class="text-center">Courses</h3>
+
+  <ng-template [ngIf]="authService.isAdmin() | async">
+    <mat-selection-list #groupSelectedCourse>
+      <app-course-pure-list [selectable]="true" [courses]="groupCourses"></app-course-pure-list>
+    </mat-selection-list>
+
+    <button *ngIf="groupSelectedCourse.selectedOptions.selected.length>0"
+            class="btn btn-warning group-btn text-center d-block"
+            (click)='excludeCourses(groupSelectedCourse.selectedOptions.selected)'>Exclude courses
+      <mat-icon svgIcon="key"></mat-icon>
+    </button>
+
+    <button class="btn btn-primary group-btn text-center d-block" (click)='openCoursesDialog()'>Add courses
+      <mat-icon svgIcon="key"></mat-icon>
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="!(authService.isAdmin() | async)">
+    <app-course-pure-list [selectable]="false" [courses]="groupCourses"></app-course-pure-list>
+  </ng-template>
+</div>

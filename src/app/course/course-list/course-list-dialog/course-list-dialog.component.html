@@ -1,0 +1,10 @@
+<mat-dialog-content style="height: 90%">
+  <mat-selection-list #selectedCourses>
+    <app-course-pure-list [courses]="courses" [mode]="'assignable'" [selectable]="true"></app-course-pure-list>
+  </mat-selection-list>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button  mat-button  (click)="assignCourses(selectedCourses.selectedOptions.selected)">Assign Courses</button>
+
+  <button  mat-button  [mat-dialog-close]="true">Cancel</button>
+</mat-dialog-actions>

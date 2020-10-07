@@ -1,0 +1,18 @@
+<div style="width: 100%; height: 50vh;" class="d-flex justify-content-center" *ngIf="spinnerVisible">
+  <mat-progress-spinner [mode]="'indeterminate'" style="margin: auto">
+  </mat-progress-spinner>
+</div>
+<div class="d-flex flex-column" *ngIf="courses?.length">
+
+
+  <div *ngFor='let course of courses' class="card shadow m-2 course-option">
+    <mat-list-option style="height: auto" [value]="course"
+                     *ngIf="selectable && userInfo!=null && (userInfo.isSuperAdmin || isBelongTo(course.ownerIds, userInfo)); else elseTpl">
+      <ng-container *ngTemplateOutlet="elseTpl"></ng-container>
+    </mat-list-option>
+    <ng-template #elseTpl>
+      <app-course-card [course]="course" (deleteCourse)="deleteCourse($event)"></app-course-card>
+    </ng-template>
+  </div>
+
+</div>

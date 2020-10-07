@@ -20,17 +20,6 @@
       <mat-option value="completed">My completed courses</mat-option>
     </mat-select>
   </mat-form-field>
-  <div style="width: 100%; height: 50vh;" class="d-flex justify-content-center" *ngIf="spinnerVisible">
-    <mat-progress-spinner [mode]="'indeterminate'" style="margin: auto">
-    </mat-progress-spinner>
-  </div>
 
-  <div class="d-flex flex-column" *ngIf="courses?.length">
-    <div *ngFor='let course of courses' class="card shadow m-2">
-      <app-course-card [course]="course" (deleteCourse)="deleteCourse($event)"></app-course-card>
-    </div>
-  </div>
-  <div *ngIf="userData!=null && (userData.isSuperAdmin || userData.isAdmin)">
-    <a class="btn btn-primary" routerLink="/courses/create" role="button">Create course</a>
-  </div>
+  <app-course-pure-list [courses]="courses" [mode]="mode"></app-course-pure-list>
 </div>

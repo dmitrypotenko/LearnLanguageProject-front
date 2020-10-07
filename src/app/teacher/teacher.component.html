@@ -1,0 +1,19 @@
+<div *ngIf="userData!=null && (userData.isSuperAdmin || userData.isAdmin); else elseBlock" style="text-align: center">
+  <mat-divider style="margin: 20px"></mat-divider>
+  <div class="teacher-action">
+    <a class="btn btn-primary m-2" routerLink="/courses/create" role="button">Create course</a>
+    <p>Create a course that has lessons or tests.</p>
+  </div>
+  <mat-divider style="margin: 20px"></mat-divider>
+  <div class="teacher-action">
+    <a class="btn btn-primary m-2" routerLink="/groups" role="button">Group management</a>
+    <p>Manage groups of students. Assign courses to groups.</p>
+  </div>
+</div>
+<ng-template #elseBlock>
+  <div style="text-align: center;">
+    <p>Please email us to request teachers permissions.</p>
+    <p>Write your name and describe your teaching experience.</p>
+    <a [href]="'mailto:dzmitry_potenko@epam.com'">Write an email</a>
+  </div>
+</ng-template>

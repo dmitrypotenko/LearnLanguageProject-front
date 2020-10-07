@@ -1,0 +1,23 @@
+.group {
+  border-style: groove;
+  border-radius: 30px;
+  margin: 30px;
+  padding: 30px;
+  flex-basis: 90%;
+}
+
+.group-list-option {
+  min-height: 48px;
+}
+
+.save-group-icon {
+  margin: auto auto auto 10px;
+  pointer-events: all;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.group-creation {
+  pointer-events: all;
+}

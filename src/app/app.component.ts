@@ -35,6 +35,12 @@ export class AppComponent {
     iconRegistry.addSvgIcon(
       'eye',
       sanitizer.bypassSecurityTrustResourceUrl('assets/eye.svg'));
+    iconRegistry.addSvgIcon(
+      'check',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/check-circle-regular.svg'));
+    iconRegistry.addSvgIcon(
+      'arrow-left',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/arrow-left.svg'));
     if (isPlatformBrowser(platformId)) {
 
       router.events

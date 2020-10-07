@@ -31,7 +31,7 @@ app.get('/robots.txt', function (req, res, next) {
 });
 
 
-app.get('/donate', function (req, res, next) {
+/*app.get('/donate', function (req, res, next) {
   var options = {
     root: distFolder
   };
@@ -41,7 +41,7 @@ app.get('/donate', function (req, res, next) {
       next(err)
     }
   })
-});
+});*/
 
 app.use(express.static(distFolder));
 

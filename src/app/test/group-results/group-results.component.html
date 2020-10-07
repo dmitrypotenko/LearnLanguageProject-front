@@ -1,0 +1,20 @@
+<div class="d-flex" *ngIf="currentGroup==null">
+  <div class="shadow">
+    <mat-selection-list (selectionChange)="switchToGroup($event.option.value)" [multiple]="false" *ngIf="groups!=null">
+      <h3 matSubheader>Groups' results</h3>
+      <mat-list-option [value]="groupData" [selected]="isSelected(groupData)" *ngFor="let groupData of groups">
+        <div class="group-name" style="width: 100%">{{groupData.name}}. Test completed {{groupData.users.length}}
+          students
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+
+</div>
+<div *ngIf="currentGroup!=null">
+  <div (click)="switchToGroup(null)" style="cursor: pointer">
+    <mat-icon [svgIcon]="'arrow-left'"></mat-icon>
+    <span>Back to groups</span>
+  </div>
+  <app-test-results [shouldFetchStudents]="false" [testId]="testId" [students]="currentGroup.users"></app-test-results>
+</div>

@@ -11,7 +11,7 @@ import {Subscription} from 'rxjs';
 })
 export class TestResultsComponent implements OnInit, OnDestroy {
 
-  students: UserData[] = [];
+  private _students: UserData[] = [];
 
   studentTestData: TestData;
 
@@ -21,27 +21,48 @@ export class TestResultsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   @Input()
+  shouldFetchStudents = true;
+
+
+  @Input()
+  set students(value: UserData[]) {
+    this._students = value;
+    this.switchToStudent();
+  }
+
+  @Input()
   set testId(testId: number) {
-    this.students = null;
+    this._students = null;
     if (testId != null) {
-      this.subscription = this.userService.getSubmittedTestUsers(testId).subscribe(result => {
-        this.students = result;
-        this._testId = testId;
-        let foundCurrentStudent = this.students.find(student => this.currentStudent?.id == student.id);
-        if (foundCurrentStudent != null) {
-          this.testService.getCheckedTest(this._testId, foundCurrentStudent.id).subscribe(test => {
-            this.studentTestData = test;
-          });
-        } else {
-          this.studentTestData = null;
-          this.currentStudent = null;
-        }
+      this._testId = testId;
+      if (this.shouldFetchStudents) {
+        this.subscription = this.userService.getSubmittedTestUsers(testId).subscribe(result => {
+          this._students = result;
+          this.switchToStudent();
+        });
+      }
+    }
+  }
+
+
+  get students(): UserData[] {
+    return this._students;
+  }
+
+  private switchToStudent() {
+    let foundCurrentStudent = this._students.find(student => this.currentStudent?.id == student.id);
+    if (foundCurrentStudent != null) {
+      this.testService.getCheckedTest(this._testId, foundCurrentStudent.id).subscribe(test => {
+        this.studentTestData = test;
       });
+    } else {
+      this.studentTestData = null;
+      this.currentStudent = null;
     }
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   constructor(private userService: UserService, private testService: TestService) {
@@ -65,9 +86,9 @@ export class TestResultsComponent implements OnInit, OnDestroy {
     this.testService.invalidateTestForUser(this._testId, student.id)
       .subscribe(response => {
         if (response.status == 200) {
-          const index: number = this.students.indexOf(student);
+          const index: number = this._students.indexOf(student);
           if (index !== -1) {
-            this.students.splice(index, 1);
+            this._students.splice(index, 1);
           }
         }
       });

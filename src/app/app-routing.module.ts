@@ -9,6 +9,9 @@ import {DonateComponent} from './donate/donate.component';
 import {ErrorComponent} from './error/error.component';
 import {PolicyComponent} from "./landing/policy/policy.component";
 import {LoginPageComponent} from "./auth/login-page/login-page.component";
+import {TeacherComponent} from './teacher/teacher.component';
+import {GroupListComponent} from './group/group-list/group-list.component';
+import {GroupComponent} from './group/group.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'welcome', pathMatch: 'full'},
@@ -20,6 +23,9 @@ const routes: Routes = [
   {path: 'courses/:id', component: CourseComponent},
   {path: 'courses/:id/steps/:stepId', component: CourseComponent},
   {path: 'courses', component: CourseListComponent},
+  {path: 'teachers', component: TeacherComponent},
+  {path: 'groups', component: GroupListComponent},
+  {path: 'groups/:groupId', component: GroupComponent},
   {path: 'donate', component: DonateComponent},
   {path: 'policy', component: PolicyComponent},
   {path: 'login', component: LoginPageComponent},

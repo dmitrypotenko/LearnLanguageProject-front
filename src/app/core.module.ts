@@ -68,6 +68,12 @@ import { TestInternalComponent } from './test/test-internal/test-internal.compon
 import { CourseCardComponent } from './course/course-list/course-card/course-card.component';
 import { LoginPageComponent } from './auth/login-page/login-page.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { TeacherComponent } from './teacher/teacher.component';
+import { GroupListComponent } from './group/group-list/group-list.component';
+import { GroupComponent } from './group/group.component';
+import { CoursePureListComponent } from './course/course-list/course-pure-list/course-pure-list.component';
+import { CourseListDialogComponent } from './course/course-list/course-list-dialog/course-list-dialog.component';
+import { GroupResultsComponent } from './test/group-results/group-results.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +112,13 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     TestResultsComponent,
     TestInternalComponent,
     CourseCardComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    TeacherComponent,
+    GroupListComponent,
+    GroupComponent,
+    CoursePureListComponent,
+    CourseListDialogComponent,
+    GroupResultsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'serverApp'}),
