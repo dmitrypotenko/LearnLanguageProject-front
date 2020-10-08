@@ -16,11 +16,9 @@ export class CoursePureListComponent implements OnInit {
   private userInfo: UserData;
   @Input()
   selectable: boolean = false;
-  spinnerVisible = true;
 
   @Input()
   set courses(value: CourseData[]) {
-    this.spinnerVisible = false;
     this._courses = value;
   }
 

@@ -1,20 +1,22 @@
 <div class="d-flex">
-  <mat-selection-list (selectionChange)="switchToGroup($event.option.value)" class="group-list" [multiple]="false" *ngIf="groups!=null">
-    <h2 matSubheader>Groups</h2>
-    <mat-list-option [value]="group" [selected]="isSelected(group)" *ngFor="let group of groups" class="group-list-option" [disabled]="group.id==null">
-      <div *ngIf="group.id!=null;else createForm" class="group-name" style="width: 100%">{{group.name}}</div>
-      <ng-template #createForm>
-        <form class="d-flex" >
-          <mat-form-field appearance="legacy">
-            <mat-label>New group</mat-label>
-            <input class="group-creation" [formControl]="newName" matInput placeholder="New group name">
-          </mat-form-field>
-          <mat-icon (click)="saveGroup(group)" class="save-group-icon" [svgIcon]="'check'"></mat-icon>
-        </form>
-      </ng-template>
-    </mat-list-option>
-    <button class="btn btn-success m-2" (click)="createGroup()">Add group</button>
-  </mat-selection-list>
+  <div class="d-flex flex-column">
+    <mat-selection-list (selectionChange)="switchToGroup($event.option.value)"
+                        class="group-list" [multiple]="false" *ngIf="groups!=null">
+      <h2 matSubheader>Groups</h2>
+      <mat-list-option [value]="group" [selected]="isSelected(group)" *ngFor="let group of groups"
+                       class="group-list-option">
+        <div class="group-name" style="width: 100%">{{group.name}}</div>
+      </mat-list-option>
+
+    </mat-selection-list>
+    <ng-template [ngIf]="newGroup!=null">
+      <form class="d-flex m-2">
+        <input class="group-creation" [formControl]="newName" placeholder="New group name">
+        <mat-icon (click)="saveGroup()" class="save-group-icon" [svgIcon]="'check'"></mat-icon>
+      </form>
+    </ng-template>
+    <button class="btn btn-success m-2" (click)="createGroup()" [disabled]="newGroup!=null">Add group</button>
+  </div>
   <app-group class="group" [group]="currentGroup"></app-group>
 </div>
 

@@ -20,6 +20,10 @@
       <mat-option value="completed">My completed courses</mat-option>
     </mat-select>
   </mat-form-field>
+  <div style="width: 100%; height: 50vh;" class="d-flex justify-content-center" *ngIf="spinnerVisible">
+    <mat-progress-spinner [mode]="'indeterminate'" style="margin: auto">
+    </mat-progress-spinner>
+  </div>
 
   <app-course-pure-list [courses]="courses" [mode]="mode"></app-course-pure-list>
 </div>

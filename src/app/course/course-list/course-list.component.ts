@@ -18,13 +18,12 @@ export class CourseListComponent implements OnInit {
   modeControl: FormControl;
   mode: string = 'all';
   private roles = [];
+  spinnerVisible = true;
 
 
   schema: any;
 
   public userData: UserData;
-
-
 
 
   constructor(courseService: CourseService, authService: AuthService,
@@ -43,6 +42,7 @@ export class CourseListComponent implements OnInit {
     });
     this.titleService.setTitle('LessonsBox - The list of online English courses.');
     this.courseService.getAllCoursesMetadata().subscribe(courses => {
+      this.spinnerVisible = false;
       this.courses = courses;
       this.schema = {
         '@context': 'https://schema.org',

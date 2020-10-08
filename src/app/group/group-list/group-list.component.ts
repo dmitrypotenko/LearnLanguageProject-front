@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupService} from '../group.service';
 import {GroupData} from '../group.data';
-import {CourseService} from '../../course/course.service';
 import {FormControl} from '@angular/forms';
 
 @Component({
@@ -13,6 +12,7 @@ export class GroupListComponent implements OnInit {
   groups: GroupData[];
   currentGroup: GroupData;
   newName = new FormControl();
+  newGroup: GroupData;
 
   constructor(private groupService: GroupService) {
   }
@@ -32,13 +32,16 @@ export class GroupListComponent implements OnInit {
   }
 
   createGroup() {
-    let newGroup = new GroupData(null, '', null, []);
-    this.groups = this.groups.concat(newGroup);
+    this.newGroup = new GroupData(null, '', null, []);
   }
 
-  saveGroup(group: GroupData) {
-    group.name = this.newName.value;
+  saveGroup() {
+    this.newGroup.name = this.newName.value;
     this.newName.setValue('');
-    this.groupService.saveGroup(group).subscribe(savedGroup => group.id = savedGroup.id);
+    this.groupService.saveGroup(this.newGroup).subscribe(savedGroup => {
+      this.newGroup.id = savedGroup.id;
+      this.groups = this.groups.concat(this.newGroup);
+      this.newGroup = null;
+    });
   }
 }
