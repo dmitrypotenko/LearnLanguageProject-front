@@ -10,8 +10,19 @@ import {GroupData} from '../../group/group.data';
 export class GroupResultsComponent implements OnInit {
 
 
+  private _testId: number;
+
   @Input()
-  testId: number;
+  set testId(value: number) {
+    this._testId = value;
+    this.getGroup();
+  }
+
+
+  get testId(): number {
+    return this._testId;
+  }
+
   groups: GroupData[];
   currentGroup: GroupData;
 
@@ -19,8 +30,20 @@ export class GroupResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.groupService.getGroupsForTest(this.testId)
-      .subscribe(groups => this.groups = groups);
+    this.getGroup();
+  }
+
+  private getGroup() {
+    this.groupService.getGroupsForTest(this._testId)
+      .subscribe(groups => {
+        this.groups = groups;
+        let foundGroup = this.groups.find(group => this.currentGroup?.id == group.id);
+        if (foundGroup == null) {
+          this.currentGroup = null;
+        } else {
+          this.currentGroup.users = foundGroup.users;
+        }
+      });
   }
 
   isSelected(groupData: GroupData): boolean {

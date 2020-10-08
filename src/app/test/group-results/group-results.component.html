@@ -14,7 +14,7 @@
 <div *ngIf="currentGroup!=null">
   <div (click)="switchToGroup(null)" style="cursor: pointer">
     <mat-icon [svgIcon]="'arrow-left'"></mat-icon>
-    <span>Back to groups</span>
+    <span class="btn btn-link">Back to groups</span>
   </div>
   <app-test-results [shouldFetchStudents]="false" [testId]="testId" [students]="currentGroup.users"></app-test-results>
 </div>
