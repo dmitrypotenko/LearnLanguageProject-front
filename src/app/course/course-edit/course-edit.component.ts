@@ -104,6 +104,7 @@ export class CourseEditComponent implements OnInit {
 
     this.ckConfig = {
       allowedContent: true,
+      disableNativeSpellChecker: false,
       on: {
         fileUploadRequest: function(evt) {
           CourseEditComponent.fileSender.sendFile(evt.data.requestData.upload.file).subscribe(response => {

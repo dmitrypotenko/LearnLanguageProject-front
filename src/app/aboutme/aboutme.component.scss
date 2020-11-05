@@ -8,6 +8,9 @@
 
 .aboutme-section {
   background-color: #333333;
+  img {
+    width: 10%;
+  }
 }
 
 
@@ -20,17 +23,3 @@
   }
 }
 
-.aboutme-section-min {
-  display: none !important;
-  background-color: #333333;
-}
-
-@media screen and (max-width: 800px) {
-  .aboutme-section {
-    display: none !important;
-  //  @extend .flex-column
-  }
-  .aboutme-section-min {
-    display: block !important;
-  }
-}
