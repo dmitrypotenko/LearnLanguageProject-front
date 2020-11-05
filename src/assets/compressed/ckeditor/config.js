@@ -6,7 +6,6 @@
 CKEDITOR.editorConfig = function( config ) {
   config.skin = 'moonocolor';
   config.extraPlugins = 'autogrow';
-  config.removePlugins = 'contextmenu'
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';

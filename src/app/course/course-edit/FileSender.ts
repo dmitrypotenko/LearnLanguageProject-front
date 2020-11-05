@@ -11,8 +11,14 @@ export class FileSender {
       .append('Content-Type', 'multipart/form-data');
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
+    const  fileType = file['type'];
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+    let urlPostfix = '';
+    if (validImageTypes.includes(fileType)) {
+      urlPostfix = 'upload'
+    }
     return this.http
-      .post<UploadUrl>(appUrl + '/files/', formData);
+      .post<UploadUrl>(appUrl + '/files/' + urlPostfix, formData);
   }
 }
 
