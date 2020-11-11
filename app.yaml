@@ -6,3 +6,7 @@ handlers:
     script: auto
     secure: always
     redirect_http_response_code: 301
+    http_headers:
+      Cache-Control: no-cache, no-store, must-revalidate
+      Expires: -1
+      Pragma: no-cache
