@@ -1,4 +1,6 @@
 //@import "~node_modules/bootstrap/scss/f";
+@use "sass:color";
+$background-color-about-me: #333333;
 .aboutme {
   line-height: 1.37;
   font-weight: 500;
@@ -7,9 +9,9 @@
 }
 
 .aboutme-section {
-  background-color: #333333;
+  background-color: $background-color-about-me;
   img {
-    width: 10%;
+    width: 200px;
   }
 }
 
@@ -23,3 +25,24 @@
   }
 }
 
+.contactLinkedIn {
+  fill:#0077B7;
+}
+
+.contactGmail {
+  fill:#F44336;
+}
+
+.contactFacebook {
+  fill: #3b5999;
+}
+.contacts {
+  a:hover {
+    background-color: color.adjust($background-color-about-me, $lightness: 10%)
+  }
+  svg {
+    width: 60px;
+    height: 60px;
+    margin: 0 20px 0 20px;
+  }
+}

@@ -43,13 +43,15 @@ app.get('/robots.txt', function (req, res, next) {
   })
 });*/
 
-app.use(express.static(distFolder));
-
-app.get('/*', nocache, function (req, res, next) {
+app.get('/', function (req, res, next) {
   var options = {
-    root: distFolder
+    root: distFolder,
+    etag: false
   };
 
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.header('Expires', '0');
+  res.header('Pragma', 'no-cache');
   res.sendFile('index.html', options, function (err) {
     if (err) {
       next(err)
@@ -57,12 +59,25 @@ app.get('/*', nocache, function (req, res, next) {
   })
 });
 
-function nocache(req, res, next) {
+app.use(express.static(distFolder, {
+  etag: false
+}));
+
+app.get('/*', function (req, res, next) {
+  var options = {
+    root: distFolder,
+    etag: false
+  };
+
   res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.header('Expires', '-1');
+  res.header('Expires', '0');
   res.header('Pragma', 'no-cache');
-  next();
-}
+  res.sendFile('index.html', options, function (err) {
+    if (err) {
+      next(err)
+    }
+  })
+});
 
 
 app.listen(port, () => console.log(`Front server is listening at http://localhost:${port}`));
