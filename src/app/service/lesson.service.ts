@@ -5,6 +5,7 @@ import {Listable} from '../listable';
 import {catchError} from 'rxjs/operators';
 import {Util} from '../utils/util';
 import {appUrl} from '../../environments/environment';
+import {TestData} from './test.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +34,15 @@ export class LessonService {
       .pipe(catchError(Util.handleError(null)))
       .subscribe();
   }
+
+  getLesson(lessonId: number): Observable<LessonData> {
+    return this.http.get(appUrl + '/lessons/' + lessonId)
+      .pipe(catchError(Util.handleError(null)));
+  }
 }
 
 export class LessonData implements Listable {
+  private _isLoaded: boolean = false;
   get order(): number {
     return this._order;
   }
@@ -55,6 +62,14 @@ export class LessonData implements Listable {
 
   get isCompleted(): boolean {
     return this._isCompleted;
+  }
+
+  get isLoaded(): boolean {
+    return this._isLoaded;
+  }
+
+  set isLoaded(value: boolean) {
+    this._isLoaded = value;
   }
 
   set isCompleted(value: boolean) {

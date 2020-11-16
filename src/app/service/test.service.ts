@@ -54,6 +54,12 @@ export class TestService {
       .pipe(catchError(Util.handleError(null)))
   }
 
+  getTest(testId: number): Observable<TestData> {
+    return this.http.get(appUrl + '/tests/' + testId)
+      .pipe(catchError(Util.handleError(null)));
+  }
+
+
   invalidateTestForUser(testId: number, userId: number): Observable<Response>  {
     return this.http.post(appUrl + '/tests/invalidate/' + testId + '/users/' + userId, "",
       {
@@ -94,6 +100,7 @@ export class TestData implements Listable {
   private _successThreshold: number;
   private _isRetryable: boolean;
   private _instruction: string;
+  private _isLoaded: boolean = false;
 
 
   constructor(questions: QuestionData[], id: number, order: number, name: string, isCompleted = false, successThreshold: number, isRetryable: boolean, testInstruction: string) {
@@ -112,6 +119,14 @@ export class TestData implements Listable {
     return this._questions;
   }
 
+
+  get isLoaded(): boolean {
+    return this._isLoaded;
+  }
+
+  set isLoaded(value: boolean) {
+    this._isLoaded = value;
+  }
 
   get isRetryable(): boolean {
     return this._isRetryable;

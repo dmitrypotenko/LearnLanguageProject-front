@@ -5,7 +5,7 @@
     <mat-sidenav id="sidenavStep" #sidenav position="start"
                  [mode]="sidenavmode()? 'side': 'push'" class="sidebar" style="overflow: hidden" opened="true">
       <app-course-panel
-        [stepSwitcher]="stepSwitcher"></app-course-panel>
+        [stepSwitcher]="stepSwitcher" [currentLesson]="currentLesson" [currentTest]="currentTest"></app-course-panel>
       <button type="button" class="close" aria-label="Close" (click)="sidenav.toggle()">
         <span aria-hidden="true">×</span>
       </button>
@@ -20,8 +20,8 @@
           <mat-progress-spinner [mode]="'indeterminate'" style="margin: auto">
           </mat-progress-spinner>
         </div>
-        <app-lesson class="content-page"></app-lesson>
-        <app-test class="content-page" [isOwner]="isOwner"></app-test>
+        <app-lesson [lessonData]="currentLesson" class="content-page"></app-lesson>
+        <app-test [testData]="currentTest" class="content-page" [isOwner]="isOwner"></app-test>
         <img src="assets/up.png" class="up-arrow" id="upBtn" (click)="topFunction()">
       </div>
     </mat-sidenav-content>

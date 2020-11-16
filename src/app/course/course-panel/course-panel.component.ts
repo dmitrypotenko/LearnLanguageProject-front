@@ -13,6 +13,8 @@ import {ActivatedRoute} from "@angular/router";
 export class CoursePanelComponent implements OnInit {
   private _lessonCounter: number = 1;
   private _testCounter: number = 1;
+  private _currentLesson: LessonData;
+  private _currentTest: TestData;
 
   private counters = new Map<number, number>();
 
@@ -54,20 +56,27 @@ export class CoursePanelComponent implements OnInit {
   ngOnInit() {
   }
 
+
   get currentLesson(): LessonData {
-    return this._stepSwitcher.currentLesson;
+    return this._currentLesson;
+  }
+
+  @Input()
+  set currentLesson(value: LessonData) {
+    this._currentLesson = value;
   }
 
   get currentTest(): TestData {
-    return this._stepSwitcher.currentTest;
+    return this._currentTest;
+  }
+
+  @Input()
+  set currentTest(value: TestData) {
+    this._currentTest = value;
   }
 
   onSelect(widgetName: string) {
     this.currentWidget = widgetName;
-  }
-
-  onStepChanged(listable: Listable) {
-    this.stepSwitcher.switchTo(listable);
   }
 
   get ordered(): Listable[] {

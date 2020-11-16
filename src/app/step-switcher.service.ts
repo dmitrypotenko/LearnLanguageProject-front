@@ -2,61 +2,70 @@ import {Injectable} from '@angular/core';
 import {LessonData, LessonService} from './service/lesson.service';
 import {TestData, TestService} from './service/test.service';
 import {Listable} from './listable';
+import {map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StepSwitcherService {
-  private _lessonsOfTheCourse: LessonData[];
-  private _testsOfTheCourse: TestData[];
   private lessonService: LessonService;
   private testService: TestService;
   private _ordered: Listable[] = [];
-  currentLesson: LessonData;
-  currentTest: TestData;
 
 
   constructor(lessonService: LessonService, testService: TestService) {
     this.lessonService = lessonService;
     this.testService = testService;
-
-    this.lessonService.getCurrentLessonData().subscribe(lesson => this.currentLesson = lesson);
-    this.testService.getCurrentTestData().subscribe(test => this.currentTest = test);
   }
 
-  switchTo(listable: Listable) {
+  switchTo(listable: Listable) : Observable<Listable>{
     if (listable instanceof TestData) {
-      this.testService.pushTest(listable as TestData);
-      this.lessonService.pushLesson(null);
+      let test = listable as TestData;
+      if (test.isLoaded) {
+        return of(test)
+      } else {
+        return this.prepareTest(test);
+      }
+
     } else if (listable instanceof LessonData) {
-      this.lessonService.pushLesson(listable as LessonData);
-      this.testService.pushTest(null);
+      let lesson = listable as LessonData;
+      if (lesson.isLoaded) {
+        return of(lesson)
+      } else {
+        return this.prepareLesson(lesson);
+      }
     }
   }
-
 
   get ordered(): Listable[] {
     return this._ordered;
   }
 
-
-  get lessonsOfTheCourse(): LessonData[] {
-    return this._lessonsOfTheCourse;
-  }
-
   set lessonsOfTheCourse(value: LessonData[]) {
-    this._lessonsOfTheCourse = value;
     this._ordered = this.ordered.concat(value);
     this.ordered.sort((l1, l2) => l1.getOrder() - l2.getOrder());
   }
 
-  get testsOfTheCourse(): TestData[] {
-    return this._testsOfTheCourse;
+  prepareTest(test: TestData): Observable<TestData> {
+    return this.testService.getTest(test.id)
+      .pipe(map(testResponse => {
+        test.isLoaded = true;
+        test.questions = testResponse.questions;
+        return test;
+      }));
+  }
 
+  prepareLesson(lesson: LessonData): Observable<LessonData> {
+    return this.lessonService.getLesson(lesson.id)
+      .pipe(map(lessonResponse => {
+        lesson.isLoaded = true;
+        lesson.lessonText = lessonResponse.lessonText;
+        return lesson;
+      }));
   }
 
   set testsOfTheCourse(value: TestData[]) {
-    this._testsOfTheCourse = value;
     this._ordered = this.ordered.concat(value);
     this.ordered.sort((l1, l2) => l1.getOrder() - l2.getOrder());
   }

@@ -10,6 +10,7 @@ import {appUrl} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 import {AuthService} from '../auth/auth.service';
 import {UserData} from '../auth/user.data';
+import {Listable} from '../listable';
 
 @Component({
   selector: 'app-course',
@@ -32,6 +33,8 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
   sticky;
   private stepId: number;
   isOwner = false;
+  currentTest: TestData;
+  currentLesson: LessonData;
 
   constructor(courseService: CourseService, lessonService: LessonService, route: ActivatedRoute,
               cd: ChangeDetectorRef,
@@ -58,7 +61,6 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stepSwitcher = new StepSwitcherService(this.lessonService, this._testService);
 
     this.courseService.getCourseById(id, key).subscribe(course => {
-      this.spinnerVisible = false;
       this.courseService.getCompletionStatus(course.id)
         .subscribe(completion => {
           course.completion = completion;
@@ -114,36 +116,46 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private tryToUpdate(): boolean {
-
+    this.currentTest = null;
+    this.currentLesson = null;
+    this.spinnerVisible = true;
     if (this.stepSwitcher != null && this.stepSwitcher.ordered != null && this.stepSwitcher.ordered.length != 0) {
       let ordered = this.stepSwitcher.ordered;
       if (this.stepId != null) {
         let step = ordered.find(step => step.getOrder() == this.stepId);
         if (step != null) {
-          this.stepSwitcher.switchTo(step);
+          this.stepSwitcher.switchTo(step).subscribe(listable => {
+            this.spinnerVisible = false;
+            this.updateCurrentData(listable);
+          });
           return true;
         }
       }
-      this.stepSwitcher.switchTo(ordered[0]);
+      this.stepSwitcher.switchTo(ordered[0]).subscribe(listable => {
+        this.spinnerVisible = false;
+        this.updateCurrentData(listable);
+      });
       return true;
     }
     return false;
   }
 
-  get currentLesson(): LessonData {
-    return this.stepSwitcher.currentLesson;
-  }
 
-  get currentTest(): TestData {
-    return this.stepSwitcher.currentTest;
+  private updateCurrentData(listable: Listable) {
+    if (listable instanceof TestData) {
+      this.currentTest = listable as TestData;
+      this.currentLesson = null;
+    } else if (listable instanceof LessonData) {
+      this.currentTest = null;
+      this.currentLesson = listable as LessonData;
+    }
   }
-
 
   /*  @HostListener('window:scroll', []) onWindowScroll() {
-      this.scrollFunction();
-      /!*if
-      }*!/
-    }*/
+        this.scrollFunction();
+        /!*if
+        }*!/
+      }*/
 
   // When the user scrolls down 20px from the top of the document, show the button
   scrollFunction() {

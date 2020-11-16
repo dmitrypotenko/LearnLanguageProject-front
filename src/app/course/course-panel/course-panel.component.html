@@ -1,9 +1,6 @@
 <div class="container panel-content">
   <div class="row">
     <ul class="nav nav-pills nav-fill m-3">
-      <!--      <li class="nav-item m-2" [class.invisible]="currentLesson==null">
-              <button type="button" class="btn btn-primary btn-sm" (click)="onSelect('Content')">Content</button>
-            </li>-->
       <li class="nav-item m-2" [class.invisible]="currentLesson==null" (click)="onSelect('Attachment')">
         <button type="button" class="btn btn-sm nav-btn" [class.btn-primary]="currentWidget === 'Attachment'"
                 [class.btn-light]="currentWidget != 'Attachment'">Attachments
@@ -18,9 +15,6 @@
   </div>
 
   <div class="row">
-    <!-- <div *ngIf="currentLesson!=null">
-       <div style="display: none" [class.displayed]="currentWidget === 'Content'">{{currentLesson.lessonText}}</div>
-     </div>-->
     <div *ngIf="currentLesson!=null">
       <div class="attachment-list mx-auto" style="display: none" [class.displayed]="currentWidget === 'Attachment'">
         <div *ngIf="currentLesson.attachments.length">

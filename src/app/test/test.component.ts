@@ -15,6 +15,10 @@ export class TestComponent implements OnInit {
 
   @Input()
   set testData(testData: TestData) {
+    if (testData != null) {
+      this.titleService.setTitle('LessonsBox: ' + testData.getName());
+      this.meta.removeTag('name="description"');
+    }
     this._testData = testData;
   }
 
@@ -33,18 +37,6 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCurrentTest();
-  }
-
-  getCurrentTest(): void {
-    this.testService.getCurrentTestData()
-      .subscribe(testData => {
-        if (testData != null) {
-          this.titleService.setTitle('LessonsBox: ' + testData.getName());
-          this.meta.removeTag('name="description"');
-        }
-        this._testData = testData;
-      });
   }
 
   checkTest(testData: TestData) {

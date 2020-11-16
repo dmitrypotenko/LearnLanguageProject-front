@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {LessonData, LessonService} from '../service/lesson.service';
 import {DomSanitizer, Meta, SafeHtml, Title} from '@angular/platform-browser';
@@ -10,7 +10,7 @@ import {DomSanitizer, Meta, SafeHtml, Title} from '@angular/platform-browser';
 })
 export class LessonComponent implements OnInit {
 
-  lessonData: LessonData;
+  private _lessonData: LessonData;
   lessonText: SafeHtml;
 
   private lessonService: LessonService;
@@ -31,27 +31,29 @@ export class LessonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCurrentLesson();
   }
 
-  getCurrentLesson(): void {
-    this.lessonService.getCurrentLessonData()
-      .subscribe(lessonData => {
-        this.lessonData = lessonData;
-        if (lessonData!=null) {
-          this.titleService.setTitle('LessonsBox: ' + lessonData.getName());
-          this.meta.removeTag('name="description"');
-        }
-        if (this.lessonData != null && lessonData.videoLink != null) {
-          this.lessonText = this.sanitizer.bypassSecurityTrustHtml(this.lessonData.lessonText);
 
-        }
-      });
+  get lessonData(): LessonData {
+    return this._lessonData;
+  }
+
+  @Input()
+  set lessonData(lessonData: LessonData) {
+    this._lessonData = lessonData;
+    if (lessonData!=null) {
+      this.titleService.setTitle('LessonsBox: ' + lessonData.getName());
+      this.meta.removeTag('name="description"');
+    }
+    if (this._lessonData != null) {
+      this.lessonText = this.sanitizer.bypassSecurityTrustHtml(this._lessonData.lessonText);
+
+    }
   }
 
   markAsCompleted(id: number) {
     this.lessonService.markAsCompleted(id);
-    this.lessonData.isCompleted = true;
+    this._lessonData.isCompleted = true;
   }
 
   getRandom(): number {
@@ -59,7 +61,7 @@ export class LessonComponent implements OnInit {
   }
 
   getAttachmentsCount(): number {
-    return this.lessonData.attachments.length;
+    return this._lessonData.attachments.length;
   }
 
 }
