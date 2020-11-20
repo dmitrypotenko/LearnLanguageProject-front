@@ -85,6 +85,10 @@ export class CourseService {
     return this.http.get(appUrl + '/courses/groups/'+ groupId, {headers: new HttpHeaders('Content-Type: application/json')})
       .pipe(catchError(Util.handleError(null)));
   }
+
+  constructCourseUrl(course: CourseData): string {
+    return course.id + '/' +  Util.formatNameToUrlFragment(course.name)  ;
+  }
 }
 
 

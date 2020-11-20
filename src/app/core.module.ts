@@ -74,6 +74,7 @@ import { GroupComponent } from './group/group.component';
 import { CoursePureListComponent } from './course/course-list/course-pure-list/course-pure-list.component';
 import { CourseListDialogComponent } from './course/course-list/course-list-dialog/course-list-dialog.component';
 import { GroupResultsComponent } from './test/group-results/group-results.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { GroupResultsComponent } from './test/group-results/group-results.compon
     GroupComponent,
     CoursePureListComponent,
     CourseListDialogComponent,
-    GroupResultsComponent
+    GroupResultsComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'serverApp'}),

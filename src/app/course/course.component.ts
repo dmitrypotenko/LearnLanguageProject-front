@@ -76,7 +76,7 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.schema = {
         '@type': 'Course',
-        url: appUrl + '/courses/' + course.id + '/steps/0',
+        url: appUrl + '/courses/' + this.courseService.constructCourseUrl(course),
         description: course.description,
         name: course.name
       };

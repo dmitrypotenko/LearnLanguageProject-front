@@ -18,7 +18,7 @@
         <a #descriptionCollapse class="collapsed collapse-description-btn" href="#course-description{{course.id}}"
            data-toggle="collapse"
            aria-expanded="false" (click)="checkShadow(descriptionShadow)" style="text-align: center"></a>
-        <a style="margin-top: 10px" mat-raised-button color="primary" routerLink="/courses/{{course.id}}/steps/0">
+        <a style="margin-top: 10px" mat-raised-button color="primary" routerLink="/courses/{{constructCourseUrl(course)}}">
           <span *ngIf="!course.completion?.isStarted">Start course</span>
           <span *ngIf="course.completion?.isStarted && !course.completion?.isCompleted">Continue</span>
           <span *ngIf="course.completion?.isCompleted">View</span>

@@ -5,7 +5,6 @@ import {Listable} from '../listable';
 import {catchError} from 'rxjs/operators';
 import {Util} from '../utils/util';
 import {appUrl} from '../../environments/environment';
-import {TestData} from './test.service';
 
 @Injectable({
   providedIn: 'root'
@@ -232,6 +231,4 @@ export class Attachment implements File {
   text(): Promise<string> {
     return undefined;
   }
-
-
 }

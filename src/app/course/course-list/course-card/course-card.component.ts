@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {CourseData, CourseService} from "../../course.service";
-import {ConcessionDialogComponent} from "../concession-dialog/concession-dialog.component";
-import {AuthService} from "../../../auth/auth.service";
-import {UserData} from "../../../auth/user.data";
-import {MatDialog} from "@angular/material/dialog";
+import {CourseData, CourseService} from '../../course.service';
+import {ConcessionDialogComponent} from '../concession-dialog/concession-dialog.component';
+import {AuthService} from '../../../auth/auth.service';
+import {UserData} from '../../../auth/user.data';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-course-card',
@@ -76,5 +76,9 @@ export class CourseCardComponent implements OnInit, AfterViewInit {
           });
       }
     });
+  }
+
+  constructCourseUrl(course: CourseData) {
+    return this.courseService.constructCourseUrl(course);
   }
 }

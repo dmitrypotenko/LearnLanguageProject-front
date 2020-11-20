@@ -7,4 +7,9 @@ export class Util {
       return throwError(error);
     };
   }
+
+
+  static formatNameToUrlFragment(name: string): string {
+    return name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()+]/g, '').toLowerCase().replace(/ +/g, '-');
+  }
 }

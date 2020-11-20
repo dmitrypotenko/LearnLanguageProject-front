@@ -20,8 +20,8 @@ const routes: Routes = [
   {path: 'lesson', component: LessonComponent},
   {path: 'courses/create', component: CourseEditComponent},
   {path: 'courses/edit/:id', component: CourseEditComponent},
-  {path: 'courses/:id', component: CourseComponent},
-  {path: 'courses/:id/steps/:stepId', component: CourseComponent},
+  {path: 'courses/:id/:courseName', component: CourseComponent},
+  {path: 'courses/:id/:courseName/steps/:stepId/:stepName', component: CourseComponent},
   {path: 'courses', component: CourseListComponent},
   {path: 'teachers', component: TeacherComponent},
   {path: 'groups', component: GroupListComponent},
@@ -29,7 +29,8 @@ const routes: Routes = [
   {path: 'donate', component: DonateComponent},
   {path: 'policy', component: PolicyComponent},
   {path: 'login', component: LoginPageComponent},
-  {path: '**', component: ErrorComponent}
+  {path: '**', component: ErrorComponent},
+  {path: 'error', component: ErrorComponent}
 ];
 
 @NgModule({

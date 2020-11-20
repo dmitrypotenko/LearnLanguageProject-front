@@ -3,7 +3,8 @@ import {LessonData} from '../../service/lesson.service';
 import {TestData} from '../../service/test.service';
 import {StepSwitcherService} from '../../step-switcher.service';
 import {Listable} from '../../listable';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
+import {Util} from '../../utils/util';
 
 @Component({
   selector: 'app-course-panel',
@@ -49,7 +50,7 @@ export class CoursePanelComponent implements OnInit {
   currentWidget: string = 'Lessons';
   private _stepSwitcher: StepSwitcherService;
 
-  constructor(private activatedRoute: ActivatedRoute/*, private location: Location*/) {
+  constructor(private activatedRoute: ActivatedRoute) {
 
   }
 
@@ -89,12 +90,14 @@ export class CoursePanelComponent implements OnInit {
 
   isFailedTest(listable: Listable): boolean {
     if (listable instanceof TestData) {
-      return (listable as TestData).isFailed()
+      return (listable as TestData).isFailed();
     }
-    return false
+    return false;
   }
 
   getUrlForStep(step: Listable) {
-    return '/courses/' + this.activatedRoute.snapshot.paramMap.get('id') + '/steps/' + step.getOrder();
+    return '/courses/' + this.activatedRoute.snapshot.paramMap.get('id') + '/'
+      + this.activatedRoute.snapshot.paramMap.get('courseName') + '/steps/'
+      + step.getOrder() + '/' + Util.formatNameToUrlFragment(step.getName());
   }
 }
