@@ -18,7 +18,7 @@ export class ErrorComponent implements OnInit {
   ngOnInit(): void {
     let shouldRedirect = this.route.snapshot.queryParamMap.get('shouldRedirect');
     if (!shouldRedirect) {
-      window.location.replace(appUiUrl + '/not-found?shouldRedirect=true');
+      window.location.replace(appUiUrl + '/not-found?shouldRedirect=false');
     } else {
       this.meta.updateTag({
         name: 'robots',
