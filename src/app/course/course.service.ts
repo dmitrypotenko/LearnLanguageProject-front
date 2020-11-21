@@ -86,8 +86,12 @@ export class CourseService {
       .pipe(catchError(Util.handleError(null)));
   }
 
-  constructCourseUrl(course: CourseData): string {
+  constructCourseUrlFromDto(course: CourseData): string {
     return course.id + '/' +  Util.formatNameToUrlFragment(course.name)  ;
+  }
+
+  constructCourseUrl(courseName: string, courseId: number): string {
+    return courseId + '/' +  Util.formatNameToUrlFragment(courseName)  ;
   }
 }
 

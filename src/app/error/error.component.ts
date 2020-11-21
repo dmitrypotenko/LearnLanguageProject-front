@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit, Optional} from '@angular/core';
-import {Meta} from "@angular/platform-browser";
-import {RESPONSE} from "@nguniversal/express-engine/tokens";
+import {Meta} from '@angular/platform-browser';
+import {RESPONSE} from '@nguniversal/express-engine/tokens';
+import {ActivatedRoute, Router} from '@angular/router';
+import {appUiUrl} from '../../environments/environment';
 
 @Component({
   selector: 'app-error',
@@ -9,15 +11,22 @@ import {RESPONSE} from "@nguniversal/express-engine/tokens";
 })
 export class ErrorComponent implements OnInit {
 
-  constructor(private meta: Meta, @Optional() @Inject(RESPONSE) private response: any) { }
+  constructor(private meta: Meta, @Optional() @Inject(RESPONSE) private response: any,
+              private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit(): void {
-    this.meta.updateTag({
-      name: 'robots',
-      content: 'noindex'
-    });
-    if (this.response) {
-      this.response.statusCode = 404;
+    let shouldRedirect = this.route.snapshot.queryParamMap.get('shouldRedirect');
+    if (!shouldRedirect) {
+      window.location.replace(appUiUrl + '/not-found?shouldRedirect=true');
+    } else {
+      this.meta.updateTag({
+        name: 'robots',
+        content: 'noindex'
+      });
+      if (this.response) {
+        this.response.statusCode = 404;
+      }
     }
   }
 

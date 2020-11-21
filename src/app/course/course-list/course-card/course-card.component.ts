@@ -79,6 +79,6 @@ export class CourseCardComponent implements OnInit, AfterViewInit {
   }
 
   constructCourseUrl(course: CourseData) {
-    return this.courseService.constructCourseUrl(course);
+    return this.courseService.constructCourseUrlFromDto(course);
   }
 }

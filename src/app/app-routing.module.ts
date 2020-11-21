@@ -30,7 +30,7 @@ const routes: Routes = [
   {path: 'policy', component: PolicyComponent},
   {path: 'login', component: LoginPageComponent},
   {path: '**', component: ErrorComponent},
-  {path: 'error', component: ErrorComponent}
+  {path: 'not-found', component: ErrorComponent}
 ];
 
 @NgModule({

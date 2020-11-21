@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 4200;
 
 const distFolder = path.join(process.cwd(), 'dist/browser');
 
@@ -43,12 +43,7 @@ app.get('/robots.txt', function (req, res, next) {
   })
 });*/
 
-app.get('/', function (req, res, next) {
-  var options = {
-    root: distFolder,
-    etag: false
-  };
-
+function setHeaders(res, options, next) {
   res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.header('Expires', '0');
   res.header('Pragma', 'no-cache');
@@ -57,6 +52,25 @@ app.get('/', function (req, res, next) {
       next(err)
     }
   })
+}
+
+app.get('/', function (req, res, next) {
+  var options = {
+    root: distFolder,
+    etag: false
+  };
+
+  setHeaders(res, options, next);
+});
+
+app.get('/not-found', function (req, res, next) {
+  var options = {
+    root: distFolder,
+    etag: false
+  };
+
+  res.status(404);
+  setHeaders(res, options, next);
 });
 
 app.use(express.static(distFolder, {
@@ -69,14 +83,7 @@ app.get('/*', function (req, res, next) {
     etag: false
   };
 
-  res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.header('Expires', '0');
-  res.header('Pragma', 'no-cache');
-  res.sendFile('index.html', options, function (err) {
-    if (err) {
-      next(err)
-    }
-  })
+  setHeaders(res, options, next);
 });
 
 

@@ -10,6 +10,6 @@ export class Util {
 
 
   static formatNameToUrlFragment(name: string): string {
-    return name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()+]/g, '').toLowerCase().replace(/ +/g, '-');
+    return name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()+?]/g, '').toLowerCase().replace(/ +/g, '-');
   }
 }

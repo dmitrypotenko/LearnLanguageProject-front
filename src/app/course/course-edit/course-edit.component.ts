@@ -419,7 +419,7 @@ export class CourseEditComponent implements OnInit {
   getShareableLink() {
     let key = this.courseForm.get('key').value;
     if (key != null && (key as string).length > 0) {
-      return appUiUrl + '/courses/' + this.courseForm.get('id').value + '/steps/0?key=' + key;
+      return appUiUrl + '/courses/' + this.courseService.constructCourseUrl(this.courseForm.get("name").value, this.courseForm.get("id").value) + '?key=' + key;
     }
     return '';
   }
