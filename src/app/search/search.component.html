@@ -10,7 +10,7 @@
              [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="mapView">
         <mat-option *ngFor="let option of options | async" [value]="option" style="height: auto; border-bottom: 2px solid gray; border-top: 2px solid gray;">
-          <a class="disabledLink" [routerLink]="'/courses/' + option.courseId+ '/steps/' + option.orderNumber">
+          <a class="disabledLink" [routerLink]="'/courses/' + courseService.constructCourseUrl(option.courseName, option.courseId) + '/steps/' + courseService.constructCourseUrl(option.lessonName, option.orderNumber) ">
             <div style="color: #1d75b3">{{option.lessonName}}</div>
             <div class="text-wrap" [innerHTML]="option.matchedExtract"></div>
           </a>

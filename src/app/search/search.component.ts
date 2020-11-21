@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {SearchData} from "./SearchData";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 import {SearchService} from "./search.service";
+import {CourseService} from '../course/course.service';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +16,7 @@ export class SearchComponent implements OnInit {
   options: Observable<SearchData[]>;
 
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService, public courseService: CourseService) {
   }
 
   ngOnInit() {

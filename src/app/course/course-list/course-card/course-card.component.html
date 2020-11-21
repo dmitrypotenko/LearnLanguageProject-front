@@ -2,9 +2,15 @@
   <div class="d-flex">
     <span class="course-status" *ngIf="course.type == 'PRIVATE'"> Private course <mat-icon>lock</mat-icon> </span>
     <span class="course-status" *ngIf="course.type == 'DRAFT'"> Draft <mat-icon>edit</mat-icon> </span>
-    <div class="col" *ngIf="userData!=null && (userData.isSuperAdmin || isBelongTo(course.ownerIds, userData)) ">
+    <div *ngIf="userData!=null && (userData.isSuperAdmin || isBelongTo(course.ownerIds, userData)) ">
       <button class="btn btn-primary edit-course-btn" routerLink="/courses/edit/{{course.id}}">Edit</button>
       <button class="btn btn-danger edit-course-btn" (click)="delete(course.id)">Delete</button>
+    </div>
+    <div *ngIf="course.completion?.isStarted && !course.completion?.isCompleted">
+      <span style="color: green; margin-left: 5px">IN PROGRESS</span>
+    </div>
+    <div *ngIf="course.completion?.isCompleted">
+      <span style="color: gray; margin-left: 5px">COMPLETED</span>
     </div>
   </div>
   <div class="row">
@@ -26,11 +32,6 @@
       </div>
     </div>
 
-    <div class="col" *ngIf="course.completion?.isStarted && !course.completion?.isCompleted">
-      <h2><span style="color: green">IN PROGRESS</span></h2>
-    </div>
-    <div class="col" *ngIf="course.completion?.isCompleted">
-      <h2><span style="color: gray">COMPLETED</span></h2>
-    </div>
+
   </div>
 </div>

@@ -61,10 +61,10 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stepSwitcher = new StepSwitcherService(this.lessonService, this._testService);
 
     this.courseService.getCourseById(id, key).subscribe(course => {
-      this.courseService.getCompletionStatus(course.id)
+      /*this.courseService.getCompletionStatus(course.id)
         .subscribe(completion => {
           course.completion = completion;
-        });
+        });*/
       this.authService.getUserInfo().subscribe(user => {
         this.checkIsOwner(user);
       });

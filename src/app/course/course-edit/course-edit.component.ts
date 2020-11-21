@@ -223,7 +223,8 @@ export class CourseEditComponent implements OnInit {
       });
       this.isSaving = false;
       if ($event.submitter.id === 'saveAndViewBtn') {
-        this.router.navigateByUrl('/courses/' + this.courseForm.get('id').value + '/steps/0').then();
+        this.router.navigateByUrl('/courses/' +  this.courseService.constructCourseUrl(this.courseForm.get("name").value, this.courseForm.get("id").value)).then();
+
       } else {
         this.notificationService.showSuccess('The course is saved successfully!');
       }
