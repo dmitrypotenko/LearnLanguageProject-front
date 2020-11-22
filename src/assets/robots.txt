@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lessonsbox.com/assets/sitemap.xml
+Sitemap: https://lessonsbox.com/back/sitemap
