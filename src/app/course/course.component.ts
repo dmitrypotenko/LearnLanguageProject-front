@@ -145,17 +145,16 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
       '@type': 'Course',
       name: this.currentCourse.name,
       url: null,
-      description: null
     };
     schema.url = appUiUrl + '/courses/' + this.courseService.constructCourseUrlFromDto(this.currentCourse) + '/steps/' + this.courseService.constructCourseUrl(listable.getName(), listable.getOrder());
     if (listable instanceof TestData) {
       this.currentTest = listable as TestData;
-      schema.description = 'Test with the instruction: ' + this.currentTest.instruction;
+      schema.name = 'Test with the instruction: ' + this.currentTest.instruction;
       this.currentLesson = null;
     } else if (listable instanceof LessonData) {
       this.currentTest = null;
       this.currentLesson = listable as LessonData;
-      schema.description = 'This lesson is about: ' + this.currentLesson.getName();
+      schema.name = 'This lesson is about: ' + this.currentLesson.getName();
     }
     this.schema = schema;
   }
