@@ -56,12 +56,12 @@ export class CourseListComponent implements OnInit {
         })
       };
 
-      this.courses.forEach(course => {
+      /*this.courses.forEach(course => {
         this.courseService.getCompletionStatus(course.id)
           .subscribe(completion => {
             course.completion = completion;
           });
-      });
+      });*/
     });
 
     this.authService.user.subscribe(user => {
