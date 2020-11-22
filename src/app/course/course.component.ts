@@ -6,7 +6,7 @@ import {TestData, TestService} from '../service/test.service';
 import {StepSwitcherService} from '../step-switcher.service';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {Meta, Title} from '@angular/platform-browser';
-import {appUrl} from '../../environments/environment';
+import {appUiUrl} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 import {AuthService} from '../auth/auth.service';
 import {UserData} from '../auth/user.data';
@@ -28,7 +28,6 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
   private _testService: TestService;
   spinnerVisible: boolean = true;
   schema: any;
-  appUrl = appUrl;
 
   sticky;
   private stepId: number;
@@ -76,7 +75,7 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       this.schema = {
         '@type': 'Course',
-        url: appUrl + '/courses/' + this.courseService.constructCourseUrlFromDto(course),
+        url: appUiUrl + '/courses/' + this.courseService.constructCourseUrlFromDto(course),
         description: course.description,
         name: course.name
       };
@@ -142,13 +141,23 @@ export class CourseComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   private updateCurrentData(listable: Listable) {
+    let schema = {
+      '@type': 'Course',
+      name: this.currentCourse.name,
+      url: null,
+      description: null
+    };
+    schema.url = appUiUrl + '/courses/' + this.courseService.constructCourseUrlFromDto(this.currentCourse) + '/steps/' + this.courseService.constructCourseUrl(listable.getName(), listable.getOrder());
     if (listable instanceof TestData) {
       this.currentTest = listable as TestData;
+      schema.description = 'Test with the instruction: ' + this.currentTest.instruction;
       this.currentLesson = null;
     } else if (listable instanceof LessonData) {
       this.currentTest = null;
       this.currentLesson = listable as LessonData;
+      schema.description = 'This lesson is about: ' + this.currentLesson.getName();
     }
+    this.schema = schema;
   }
 
   /*  @HostListener('window:scroll', []) onWindowScroll() {

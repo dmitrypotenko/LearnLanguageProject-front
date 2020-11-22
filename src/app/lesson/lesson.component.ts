@@ -56,10 +56,6 @@ export class LessonComponent implements OnInit {
     this._lessonData.isCompleted = true;
   }
 
-  getRandom(): number {
-    return Math.random();
-  }
-
   getAttachmentsCount(): number {
     return this._lessonData.attachments.length;
   }
