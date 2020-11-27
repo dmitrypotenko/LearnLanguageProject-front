@@ -61,6 +61,7 @@ export class StepSwitcherService {
       .pipe(map(lessonResponse => {
         lesson.isLoaded = true;
         lesson.lessonText = lessonResponse.lessonText;
+        lesson.attachments = lessonResponse.attachments;
         return lesson;
       }));
   }
