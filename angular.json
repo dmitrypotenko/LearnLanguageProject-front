@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "kirill": {
+    "lessonsbox": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -71,18 +71,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "host": "0.0.0.0",
-            "browserTarget": "kirill:build"
+            "browserTarget": "lessonsbox:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "kirill:build:production"
+              "browserTarget": "lessonsbox:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kirill:build"
+            "browserTarget": "lessonsbox:build"
           }
         },
         "test": {
@@ -137,21 +137,21 @@
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "browserTarget": "kirill:build",
-            "serverTarget": "kirill:server"
+            "browserTarget": "lessonsbox:build",
+            "serverTarget": "lessonsbox:server"
           },
           "configurations": {
             "production": {
-              "browserTarget": "kirill:build:production",
-              "serverTarget": "kirill:server:production"
+              "browserTarget": "lessonsbox:build:production",
+              "serverTarget": "lessonsbox:server:production"
             }
           }
         },
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "browserTarget": "kirill:build:production",
-            "serverTarget": "kirill:server:production",
+            "browserTarget": "lessonsbox:build:production",
+            "serverTarget": "lessonsbox:server:production",
             "routes": [
               "/donate"
             ]
@@ -162,7 +162,7 @@
         }
       }
     },
-    "kirill-e2e": {
+    "lessonsbox-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -171,11 +171,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "kirill:serve"
+            "devServerTarget": "lessonsbox:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "kirill:serve:production"
+              "devServerTarget": "lessonsbox:serve:production"
             }
           }
         },
@@ -191,7 +191,7 @@
       }
     }
   },
-  "defaultProject": "kirill",
+  "defaultProject": "lessonsbox",
   "cli": {
     "analytics": "ab23583b-b7a3-44a7-89d8-d8fd7157d074"
   },
