@@ -1,9 +1,8 @@
-import {ErrorHandler, Injectable, Injector, PLATFORM_ID} from '@angular/core';
+import {ErrorHandler, Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorService} from './ErrorService';
 import {NotificationService} from './NotificationService';
 import {Router} from '@angular/router';
-import {isPlatformBrowser} from "@angular/common";
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
@@ -22,7 +21,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       // Server error
       if (!navigator.onLine) {
         errorService
-          .log({message: "You are offline"})
+          .log({message: 'You are offline'})
           .subscribe(errorWithContextInfo => {
             router.navigate(['/error'], {queryParams: errorWithContextInfo});
           });
@@ -31,15 +30,11 @@ export class GlobalErrorHandler implements ErrorHandler {
 
       message = errorService.getServerErrorMessage(error);
       //stackTrace = errorService.getServerErrorStackTrace(error);
-      if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
-        notifier.showError(message);
-      }
+      notifier.showError(message);
     } else {
       // Client Error
-      message = "Something went wrong on the page: " + errorService.getClientErrorMessage(error);
-      if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
-        notifier.showError(message);
-      }
+      message = 'Something went wrong on the page: ' + errorService.getClientErrorMessage(error);
+      notifier.showError(message);
     }
     // Always log errors
     errorService.log(error);

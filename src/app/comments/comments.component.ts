@@ -30,11 +30,9 @@ export class CommentsComponent implements OnInit {
   @Input()
   set threadId(threadId: string) {
     this._threadId = threadId;
-    if (this.authService.isPlatformBrowser()) {
       this.commentService.getComments(this.threadId).subscribe(comments => {
         this.comments = comments;
       })
-    }
     this.invalidate();
   }
 

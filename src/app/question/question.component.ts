@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, Injector, Input, OnInit, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, Component, Injector, Input, OnInit} from '@angular/core';
 import {QuestionType} from '../course/course-edit/QuestionType';
 import {NgElement, WithProperties} from '@angular/elements';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {isPlatformBrowser} from "@angular/common";
 
 @Component({
   selector: 'app-question',
@@ -13,7 +12,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
 
   @Input() questionIndex: number;
 
-  constructor(private sanitizer: DomSanitizer, private injector: Injector) {
+  constructor(private sanitizer: DomSanitizer) {
   }
 
   safeQuestionHtml: SafeHtml;
@@ -25,22 +24,20 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input()
   set questionData(value: QuestionData) {
     let style = '';
-    if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
-      let parsedQuestion = new DOMParser().parseFromString(value.question, 'text/html');
-      let allEmbeddedElements: HTMLCollectionOf<Element> = parsedQuestion.body.getElementsByTagName('span');
-      let i = 0;
-      let fontSize = null;
-      while (i < allEmbeddedElements.length) {
-        let spanHtml = allEmbeddedElements[i] as HTMLElement;
-        let elementFontSize = spanHtml.style.fontSize;
-        if (elementFontSize != null && elementFontSize.length != 0) {
-          fontSize = elementFontSize;
-        }
-        i++;
+    let parsedQuestion = new DOMParser().parseFromString(value.question, 'text/html');
+    let allEmbeddedElements: HTMLCollectionOf<Element> = parsedQuestion.body.getElementsByTagName('span');
+    let i = 0;
+    let fontSize = null;
+    while (i < allEmbeddedElements.length) {
+      let spanHtml = allEmbeddedElements[i] as HTMLElement;
+      let elementFontSize = spanHtml.style.fontSize;
+      if (elementFontSize != null && elementFontSize.length != 0) {
+        fontSize = elementFontSize;
       }
-      if (fontSize != null) {
-        style = 'style=\'font-size: ' + fontSize + '\'';
-      }
+      i++;
+    }
+    if (fontSize != null) {
+      style = 'style=\'font-size: ' + fontSize + '\'';
     }
     this.safeQuestionHtml = this.sanitizer.bypassSecurityTrustHtml('<span ' + style + '>' + (this.questionIndex + 1) + '.&nbsp;</span>' +
       '<div>' + value.question + '</div>');
@@ -48,8 +45,8 @@ export class QuestionComponent implements OnInit, AfterViewInit {
 
     this._questionData = value;
     let _this = this;
-    setTimeout(function () {
-      _this.runCustomQuestionDetection(value)
+    setTimeout(function() {
+      _this.runCustomQuestionDetection(value);
     }, 100);
   }
 
@@ -73,7 +70,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
       map.set(option.inputName, rightOptions);
     });
 
-    let answers = Array.from(map.values()).map(value => value.join(" or ")).join(" | ");
+    let answers = Array.from(map.values()).map(value => value.join(' or ')).join(' | ');
 
     return answers;
   }
@@ -83,23 +80,21 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   }
 
   runCustomQuestionDetection(question: QuestionData) {
-    if (isPlatformBrowser(this.injector.get(PLATFORM_ID))) {
-      console.log('ngAfterViewChecked Start');
-      let questionsSelector = document.querySelector('#question' + this.questionData.id);
-      if (questionsSelector == null) {
-        return;
-      }
-      let allSelects = questionsSelector.querySelectorAll('select-element,input-element') as NodeListOf<NgElement & WithProperties<{
-        name: string,
-        question: QuestionData
-      }>>;
-      allSelects.forEach(select => {
-        console.log('ngAfterViewChecked');
-        if (select.question == null) {
-          select.question = question;
-        }
-      });
+    console.log('ngAfterViewChecked Start');
+    let questionsSelector = document.querySelector('#question' + this.questionData.id);
+    if (questionsSelector == null) {
+      return;
     }
+    let allSelects = questionsSelector.querySelectorAll('select-element,input-element') as NodeListOf<NgElement & WithProperties<{
+      name: string,
+      question: QuestionData
+    }>>;
+    allSelects.forEach(select => {
+      console.log('ngAfterViewChecked');
+      if (select.question == null) {
+        select.question = question;
+      }
+    });
   }
 
 

@@ -1,7 +1,6 @@
-import {Component, Inject, OnInit, Optional} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Meta} from '@angular/platform-browser';
-import {RESPONSE} from '@nguniversal/express-engine/tokens';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {appUiUrl} from '../../environments/environment';
 
 @Component({
@@ -11,8 +10,8 @@ import {appUiUrl} from '../../environments/environment';
 })
 export class ErrorComponent implements OnInit {
 
-  constructor(private meta: Meta, @Optional() @Inject(RESPONSE) private response: any,
-              private route: ActivatedRoute, private router: Router) {
+  constructor(private meta: Meta,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -24,9 +23,6 @@ export class ErrorComponent implements OnInit {
         name: 'robots',
         content: 'noindex'
       });
-      if (this.response) {
-        this.response.statusCode = 404;
-      }
     }
   }
 
