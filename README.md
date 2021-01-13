@@ -1,5 +1,7 @@
 # The project for language learning - frontend part.
 The angular project that is currently under development. The puprose is to make an educational platform that will hold courses and tests for enlish learners. 
+<br/>
+The web app is available now at https://lessonsbox.com/welcome.
 
 ## Development server
 
