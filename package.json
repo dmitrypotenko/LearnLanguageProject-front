@@ -37,7 +37,7 @@
     "bootstrap": "^4.5.2",
     "ckeditor4-angular": "^1.1.0",
     "document-register-element": "1.8.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jarallax": "^1.12.0",
     "jquery": "^3.5.1",
     "moment": "^2.25.3",
